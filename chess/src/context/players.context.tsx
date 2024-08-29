@@ -5,7 +5,8 @@ import { Player } from "../types/models";
 export const PlayersContext = createContext({
   loading: false,
   playerOne: {} as Player,
-  playerTwo: {} as Player
+  playerTwo: {} as Player,
+  handlePieceMove: () => {},
 });
 
 interface PlayersProviderProps {
@@ -15,6 +16,20 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
   const [playerOne, setPlayerOne] = useState({} as Player);
   const [playerTwo, setPlayerTwo] = useState({} as Player);
   const [loading, setLoading] = useState(true)
+
+  const handlePieceMove = () => {
+    setLoading(true)
+
+    setPlayerOne({
+      ...playerOne,
+      pieces: {
+        ...playerOne.pieces,
+        pawnOne: 'A3'
+      }
+    })
+
+    setLoading(false)
+  }
 
   useEffect(() => {
     setPlayerOne({
@@ -56,7 +71,7 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
     setLoading(false)
   }, [])
 
-  const value = { playerOne, playerTwo, loading };
+  const value = { playerOne, playerTwo, loading, handlePieceMove };
 
 
 

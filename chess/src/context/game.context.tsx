@@ -3,7 +3,8 @@ import { createContext, useEffect, useState } from "react";
 
 export const GameContext = createContext({
   loading: false,
-  playerTurn: 'p1'
+  playerTurn: 'p1',
+  changeTurn: () => {},
 });
 
 interface GameProviderProps {
@@ -18,9 +19,15 @@ export const GameProvider = ({ children }: GameProviderProps) => {
     setLoading(false)
   }, [])
 
-  const value = { playerTurn, loading };
+  const changeTurn = () => {
+    if (playerTurn === 'p1') {
+      setPlayerTurn('p2')
+    } else {
+      setPlayerTurn('p1')
+    }
+  }
 
-
+  const value = { playerTurn, changeTurn, loading };
 
   return <GameContext.Provider value={value}>
     {children}
