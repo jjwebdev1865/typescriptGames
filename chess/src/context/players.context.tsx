@@ -21,14 +21,20 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
       playerName : 'Player One',
       shortName: 'p1',
       pieces: {
-        king: 'E1'
+        king: 'E1',
+        queen: 'D1',
+        rookOne: 'A1',
+        rookTwo: 'H1'
       }
     })
     setPlayerTwo({
       playerName : 'Player Two',
       shortName: 'p2',
       pieces: {
-        king: 'E8'
+        king: 'E8',
+        queen: 'D8',
+        rookOne: 'A8',
+        rookTwo: 'H8'
       }
     })
     setLoading(false)

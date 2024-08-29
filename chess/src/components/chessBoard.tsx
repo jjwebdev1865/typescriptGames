@@ -35,8 +35,23 @@ const ChessBoardFiles = ({number, playerOne, playerTwo}: ChessBoardFilesProps) =
     <div data-test={`chess-board-files-${number}`} style={{display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', gridTemplateRows: '75px'}}>
       {columnLetters.map(letter => {
         const square = `${letter}${number}`
-        const hasPlayerOnePiece = square === playerOne.pieces.king ? true : false
-        const hasPlayerTwoPiece = square === playerTwo.pieces.king ? true : false
+        let hasPlayerOnePiece = false
+        let hasPlayerTwoPiece = false
+
+        for (const [key, value] of Object.entries(playerOne.pieces)) {
+          if (value === square) {
+            hasPlayerOnePiece = true
+          }
+        }
+
+        for (const [key, value] of Object.entries(playerTwo.pieces)) {
+          if (value === square) {
+            hasPlayerTwoPiece = true
+          }
+        }
+
+        // const hasPlayerOnePiece = square === playerOne.pieces.king ? true : false
+        // const hasPlayerTwoPiece = square === playerTwo.pieces.king ? true : false
 
         return <ChestBoardColumn key={square} square={square} hasPlayerOnePiece={hasPlayerOnePiece} hasPlayerTwoPiece={hasPlayerTwoPiece} />
       })}
