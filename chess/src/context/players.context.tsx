@@ -24,7 +24,15 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
         king: 'E1',
         queen: 'D1',
         rookOne: 'A1',
-        rookTwo: 'H1'
+        rookTwo: 'H1',
+        pawnOne: "A2",
+        pawnTwo: "B2",
+        pawnThree: "C2",
+        pawnFour: "D2",
+        pawnFive: "E2",
+        pawnSix: "F2",
+        pawnSeven: "G2",
+        pawnEight: "H2"
       }
     })
     setPlayerTwo({
@@ -34,7 +42,15 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
         king: 'E8',
         queen: 'D8',
         rookOne: 'A8',
-        rookTwo: 'H8'
+        rookTwo: 'H8',
+        pawnOne: "A7",
+        pawnTwo: "B7",
+        pawnThree: "C7",
+        pawnFour: "D7",
+        pawnFive: "E7",
+        pawnSix: "F7",
+        pawnSeven: "G7",
+        pawnEight: "H7"
       }
     })
     setLoading(false)

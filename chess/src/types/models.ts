@@ -6,5 +6,13 @@ export type Player = {
         queen: string;
         rookOne: string
         rookTwo: string
+        pawnOne: string
+        pawnTwo: string
+        pawnThree: string
+        pawnFour: string
+        pawnFive: string
+        pawnSix: string
+        pawnSeven: string
+        pawnEight: string
     }
 }
