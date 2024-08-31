@@ -10,15 +10,23 @@ export const MovesTile = ({ player }: MovesTileProps) => {
   const { changeTurn } = useContext(GameContext)
   const {  handlePieceMove } = useContext(PlayersContext)
 
-  const handlePawnMove = (position: any) => {
+  const handlePawnMove = (position: string, piece: string) => {
     console.log('position', position)
-    handlePieceMove()
-    changeTurn()
+    console.log('piece', piece)
+    handlePieceMove(position, piece)
+    // changeTurn()
   }
 
   return (
     <div>
-      <button onClick={() => handlePawnMove(player.pieces.pawnOne)}>Pawn One</button>
+      <ul style={{ listStyle: 'none', display: 'flex'}}>
+        {Object.entries(player.pieces).map(([key, value]) => (
+          <li key={key}>
+            <button onClick={() => handlePawnMove(value, key)}>{key}</button>
+          </li>
+        ))}
+
+      </ul>
     </div>
   )
 }

@@ -6,7 +6,7 @@ import { MovesTile } from './components/movesTile';
 
 function App() {
   const { playerTurn } = useContext(GameContext)
-  const { playerOne, handlePieceMove, loading} = useContext(PlayersContext)
+  const { playerOne, loading} = useContext(PlayersContext)
 
   if (loading) {
     return <div>Loading</div>

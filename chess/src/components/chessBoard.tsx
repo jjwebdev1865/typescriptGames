@@ -50,9 +50,6 @@ const ChessBoardFiles = ({number, playerOne, playerTwo}: ChessBoardFilesProps) =
           }
         }
 
-        // const hasPlayerOnePiece = square === playerOne.pieces.king ? true : false
-        // const hasPlayerTwoPiece = square === playerTwo.pieces.king ? true : false
-
         return <ChestBoardColumn key={square} square={square} hasPlayerOnePiece={hasPlayerOnePiece} hasPlayerTwoPiece={hasPlayerTwoPiece} />
       })}
 

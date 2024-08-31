@@ -1,12 +1,12 @@
 import { createContext, useEffect, useState } from "react";
-import { Player } from "../types/models";
+import { Pieces, Player } from "../types/models";
 
 
 export const PlayersContext = createContext({
   loading: false,
   playerOne: {} as Player,
   playerTwo: {} as Player,
-  handlePieceMove: () => {},
+  handlePieceMove: (position: string, piece: string) => {},
 });
 
 interface PlayersProviderProps {
@@ -17,7 +17,7 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
   const [playerTwo, setPlayerTwo] = useState({} as Player);
   const [loading, setLoading] = useState(true)
 
-  const handlePieceMove = () => {
+  const handlePieceMove = (position: string, piece: string) => {
     setLoading(true)
 
     setPlayerOne({
