@@ -4,24 +4,15 @@ export type Player = {
     pieces: Pieces
 }
 
-// export type Pieces = {
-//     king: string,
-//     queen: string;
-//     rookOne: string
-//     rookTwo: string
-//     pawnOne: string
-//     pawnTwo: string
-//     pawnThree: string
-//     pawnFour: string
-//     pawnFive: string
-//     pawnSix: string
-//     pawnSeven: string
-//     pawnEight: string
-// }
-
 export type Pieces = {
     pawnOne: PieceInfo
     pawnTwo: PieceInfo
+    pawnThree: PieceInfo
+    pawnFour: PieceInfo
+    pawnFive: PieceInfo
+    pawnSix: PieceInfo
+    pawnSeven: PieceInfo
+    pawnEight: PieceInfo
 }
 
 export type PieceInfo = {

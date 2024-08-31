@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { PieceInfo, Pieces, Player } from "../types/models";
+import { getPieceMoves } from "../utils/getPieceMoves";
 
 
 export const PlayersContext = createContext({
@@ -7,6 +8,7 @@ export const PlayersContext = createContext({
   playerOne: {} as Player,
   playerTwo: {} as Player,
   handlePieceMove: (position: string, piece: PieceInfo) => {},
+  getMoveOptions: (currentPosition: string) => '' as string
 });
 
 interface PlayersProviderProps {
@@ -38,6 +40,11 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
     setLoading(false)
   }
 
+  const getMoveOptions = (currentPosition: string): string => {
+    const newPosition = getPieceMoves(currentPosition) as string
+    return newPosition
+  }
+
   useEffect(() => {
     setPlayerOne({
       playerName : 'Player One',
@@ -50,6 +57,30 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
         pawnTwo: {
           name: 'Pawn',
           position: 'B2'
+        },
+        pawnThree: {
+          name: 'Pawn',
+          position: 'C2'
+        },
+        pawnFour: {
+          name: 'Pawn',
+          position: 'D2'
+        },
+        pawnFive: {
+          name: 'Pawn',
+          position: 'E2'
+        },
+        pawnSix: {
+          name: 'Pawn',
+          position: 'F2'
+        },
+        pawnSeven: {
+          name: 'Pawn',
+          position: 'G2'
+        },
+        pawnEight: {
+          name: 'Pawn',
+          position: 'H2'
         },
       }
     })
@@ -66,48 +97,37 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
           name: 'Pawn',
           position: 'B7'
         },
+        pawnThree: {
+          name: 'Pawn',
+          position: 'C7'
+        },
+        pawnFour: {
+          name: 'Pawn',
+          position: 'D7'
+        },
+        pawnFive: {
+          name: 'Pawn',
+          position: 'E7'
+        },
+        pawnSix: {
+          name: 'Pawn',
+          position: 'F7'
+        },
+        pawnSeven: {
+          name: 'Pawn',
+          position: 'G7'
+        },
+        pawnEight: {
+          name: 'Pawn',
+          position: 'H7'
+        },
       }
     })
-    // setPlayerOne({
-    //   playerName : 'Player One',
-    //   shortName: 'p1',
-    //   pieces: {
-    //     king: 'E1',
-    //     queen: 'D1',
-    //     rookOne: 'A1',
-    //     rookTwo: 'H1',
-    //     pawnOne: "A2",
-    //     pawnTwo: "B2",
-    //     pawnThree: "C2",
-    //     pawnFour: "D2",
-    //     pawnFive: "E2",
-    //     pawnSix: "F2",
-    //     pawnSeven: "G2",
-    //     pawnEight: "H2"
-    //   }
-    // })
-    // setPlayerTwo({
-    //   playerName : 'Player Two',
-    //   shortName: 'p2',
-    //   pieces: {
-    //     king: 'E8',
-    //     queen: 'D8',
-    //     rookOne: 'A8',
-    //     rookTwo: 'H8',
-    //     pawnOne: "A7",
-    //     pawnTwo: "B7",
-    //     pawnThree: "C7",
-    //     pawnFour: "D7",
-    //     pawnFive: "E7",
-    //     pawnSix: "F7",
-    //     pawnSeven: "G7",
-    //     pawnEight: "H7"
-    //   }
-    // })
+
     setLoading(false)
   }, [])
 
-  const value = { playerOne, playerTwo, loading, handlePieceMove };
+  const value = { playerOne, playerTwo, loading, handlePieceMove, getMoveOptions };
 
 
 

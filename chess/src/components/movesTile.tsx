@@ -8,23 +8,21 @@ interface MovesTileProps {
 }
 export const MovesTile = ({ player }: MovesTileProps) => {
   const { changeTurn } = useContext(GameContext)
-  const {  handlePieceMove } = useContext(PlayersContext)
+  const {  handlePieceMove, getMoveOptions } = useContext(PlayersContext)
 
   const handlePawnMove = (piece: string, pieceInfo: PieceInfo) => {
-    console.log('piece', piece)
-    console.log('pieceInfo', pieceInfo)
     // TODO: get move options
+    const newPosition = getMoveOptions(pieceInfo.position)
     handlePieceMove(piece, {
       name: pieceInfo.name,
-      position: 'A3'
+      position: newPosition
     })
     // changeTurn()
   }
 
   return (
     <div>
-      {/* <ul style={{ listStyle: 'none', display: 'flex'}}> */}
-      <ul style={{ listStyle: 'none'}}>
+      <ul style={{ listStyle: 'none', display: 'flex'}}>
         {Object.entries(player.pieces).map(([key, value]) => (
           <li key={key}>
             <button onClick={() => handlePawnMove(key, value)}>{key}</button>
