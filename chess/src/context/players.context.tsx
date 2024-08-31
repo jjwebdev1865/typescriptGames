@@ -8,7 +8,8 @@ export const PlayersContext = createContext({
   playerOne: {} as Player,
   playerTwo: {} as Player,
   handlePieceMove: (position: string, piece: PieceInfo) => {},
-  getMoveOptions: (currentPosition: string) => '' as string
+  getMoveOptions: (currentPosition: string) => '' as string,
+  isOpponentInPosition: (newPosition: string) => false as boolean
 });
 
 interface PlayersProviderProps {
@@ -43,6 +44,15 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
   const getMoveOptions = (currentPosition: string): string => {
     const newPosition = getPieceMoves(currentPosition) as string
     return newPosition
+  }
+
+  function isOpponentInPosition(newPosition: string) {
+    for (const [key, value] of Object.entries(playerTwo.pieces)) {
+      if (newPosition === value.position) {
+        return true
+      }
+    }
+    return false
   }
 
   useEffect(() => {
@@ -127,7 +137,7 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
     setLoading(false)
   }, [])
 
-  const value = { playerOne, playerTwo, loading, handlePieceMove, getMoveOptions };
+  const value = { playerOne, playerTwo, loading, handlePieceMove, getMoveOptions, isOpponentInPosition };
 
 
 

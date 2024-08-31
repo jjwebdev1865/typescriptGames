@@ -74,6 +74,23 @@ export function getPieceMoves(position: string) {
     case 'H5':
       return 'H6'
     
+     // Pawns Row 6
+     case 'A6':
+      return 'A7'
+    case 'B6':
+      return 'B7'
+    case 'C6':
+      return 'C7'
+    case 'D6':
+      return 'D7'
+    case 'E6':
+      return 'E7'
+    case 'F6':
+      return 'F7'
+    case 'G6':
+      return 'G7'
+    case 'H6':
+      return 'H7'
 
     
     default: 

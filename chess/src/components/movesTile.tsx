@@ -8,21 +8,26 @@ interface MovesTileProps {
 }
 export const MovesTile = ({ player }: MovesTileProps) => {
   const { changeTurn } = useContext(GameContext)
-  const { handlePieceMove, getMoveOptions } = useContext(PlayersContext)
+  const { handlePieceMove, getMoveOptions, isOpponentInPosition } = useContext(PlayersContext)
   const [moveOptions, setMoveOptions] = useState([] as (string | PieceInfo)[][])
 
-  const handleMoveOptions = (piece: string, pieceInfo: PieceInfo) => {
+  function handleMoveOptions(piece: string, pieceInfo: PieceInfo) {
     const newPosition = getMoveOptions(pieceInfo.position)
+    const doesOpponentHoldPosition = isOpponentInPosition(newPosition)
 
-    const newMoveOption = [piece, {
-      ...pieceInfo,
-      position: newPosition
-    }]
-    
-    setMoveOptions([newMoveOption])
+    if (doesOpponentHoldPosition) {
+      setMoveOptions([])
+    } else {
+      const newMoveOption = [piece, {
+        ...pieceInfo,
+        position: newPosition
+      }]
+      
+      setMoveOptions([newMoveOption])
+    }
   }
 
-  const handlePawnMove = (piece: string, pieceInfo: PieceInfo) => {
+  function handlePawnMove(piece: string, pieceInfo: PieceInfo) {
     handlePieceMove(piece, pieceInfo)
     setMoveOptions([])
     // changeTurn()
