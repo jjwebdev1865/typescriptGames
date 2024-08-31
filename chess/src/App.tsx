@@ -13,11 +13,7 @@ function App() {
   }
   return (
     <div className="App">
-      <h1 style={{ textAlign: 'center'}}>Jims Chess Board</h1>
-
-      <div style={{ width: '100%', display: 'flex', justifyContent: 'center'}}>
-        <ChessBoard />
-      </div>
+      <h1 style={{ textAlign: 'center', margin: '0'}}>Jims Chess Board</h1>
       <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0 12%'}}>
         <div style={{display: 'flex'}}>
           <p style={{ fontWeight: 'bold', marginLeft: '10%'}}>index:</p>
@@ -27,13 +23,18 @@ function App() {
         </div>
 
         <div style={{ textAlign: 'center', padding: '0'}}>
-          <h2>Player moves</h2>
           <p>player turn: {playerTurn}</p>
         </div>
+      </div>
 
-        <div style={{ textAlign: 'center', padding: '0'}}>
-          <h2>Move Options</h2>
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center'}}>
+        <ChessBoard />
+      </div>
+        <div style={{ display: 'flex', paddingLeft: '12.5%', alignContent: 'center'}}>
           <div>
+            <p style={{ fontWeight: 'bold', paddingRight: '10px'}}>Move Options: </p>
+          </div>
+          <div style={{marginTop: '16px'}}>
             {playerTurn === 'p1' ? (
               <MovesTile player={playerOne} />
             ) : (
@@ -41,10 +42,6 @@ function App() {
             )}
           </div>
         </div>
-        
-      </div>
-
-      
     </div>
   );
 }
