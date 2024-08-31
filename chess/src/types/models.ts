@@ -4,17 +4,27 @@ export type Player = {
     pieces: Pieces
 }
 
+// export type Pieces = {
+//     king: string,
+//     queen: string;
+//     rookOne: string
+//     rookTwo: string
+//     pawnOne: string
+//     pawnTwo: string
+//     pawnThree: string
+//     pawnFour: string
+//     pawnFive: string
+//     pawnSix: string
+//     pawnSeven: string
+//     pawnEight: string
+// }
+
 export type Pieces = {
-    king: string,
-    queen: string;
-    rookOne: string
-    rookTwo: string
-    pawnOne: string
-    pawnTwo: string
-    pawnThree: string
-    pawnFour: string
-    pawnFive: string
-    pawnSix: string
-    pawnSeven: string
-    pawnEight: string
+    pawnOne: PieceInfo
+    pawnTwo: PieceInfo
+}
+
+export type PieceInfo = {
+    name: string,
+    position: string
 }

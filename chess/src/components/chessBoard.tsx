@@ -39,13 +39,13 @@ const ChessBoardFiles = ({number, playerOne, playerTwo}: ChessBoardFilesProps) =
         let hasPlayerTwoPiece = false
 
         for (const [key, value] of Object.entries(playerOne.pieces)) {
-          if (value === square) {
+          if (value.position === square) {
             hasPlayerOnePiece = true
           }
         }
 
         for (const [key, value] of Object.entries(playerTwo.pieces)) {
-          if (value === square) {
+          if (value.position === square) {
             hasPlayerTwoPiece = true
           }
         }
