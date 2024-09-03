@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { PieceInfo, Pieces, Player } from "../types/models";
 import { getPieceMoves } from "../utils/getPieceMoves";
+import { getPieceAttacks } from "../utils/getPieceAttacks";
 
 
 export const PlayersContext = createContext({
@@ -9,6 +10,7 @@ export const PlayersContext = createContext({
   playerTwo: {} as Player,
   handlePieceMove: (position: string, piece: PieceInfo) => {},
   getMoveOptions: (currentPosition: string) => '' as string,
+  getAttackOptions: (currentPosition: string) => [''] as string[],
   isOpponentInPosition: (newPosition: string) => false as boolean
 });
 
@@ -43,6 +45,11 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
 
   const getMoveOptions = (currentPosition: string): string => {
     const newPosition = getPieceMoves(currentPosition) as string
+    return newPosition
+  }
+
+  const getAttackOptions = (currentPosition: string): string[] => {
+    const newPosition = getPieceAttacks(currentPosition) as string[]
     return newPosition
   }
 
@@ -137,7 +144,7 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
     setLoading(false)
   }, [])
 
-  const value = { playerOne, playerTwo, loading, handlePieceMove, getMoveOptions, isOpponentInPosition };
+  const value = { playerOne, playerTwo, loading, handlePieceMove, getMoveOptions, getAttackOptions, isOpponentInPosition };
 
 
 

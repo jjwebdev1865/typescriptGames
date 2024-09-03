@@ -13,7 +13,7 @@ function App() {
   }
   return (
     <div className="App">
-      <h1 style={{ textAlign: 'center', margin: '0'}}>Jims Chess Board</h1>
+      <h1 style={{ textAlign: 'center', margin: '0', fontSize: '1rem'}}>Jims Chess Board</h1>
       <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0 12%'}}>
         <div style={{display: 'flex'}}>
           <p style={{ fontWeight: 'bold', marginLeft: '10%'}}>index:</p>
