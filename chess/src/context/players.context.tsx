@@ -11,7 +11,8 @@ export const PlayersContext = createContext({
   handlePieceMove: (position: string, piece: PieceInfo) => {},
   getMoveOptions: (currentPosition: string, pieceType: any) => [''] as string[],
   getAttackOptions: (currentPosition: string, pieceType: any) => [''] as string[],
-  isOpponentInPosition: (newPosition: string) => false as boolean
+  isOpponentInPosition: (newPosition: string) => false as boolean,
+  isPlayerPieceInPosition: (newPosition: string) => false as boolean
 });
 
 interface PlayersProviderProps {
@@ -81,6 +82,15 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
 
   function isOpponentInPosition(newPosition: string) {
     for (const [key, value] of Object.entries(playerTwo.pieces)) {
+      if (newPosition === value.position) {
+        return true
+      }
+    }
+    return false
+  }
+
+  function isPlayerPieceInPosition(newPosition: string) {
+    for (const [key, value] of Object.entries(playerOne.pieces)) {
       if (newPosition === value.position) {
         return true
       }
@@ -188,7 +198,7 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
     setLoading(false)
   }, [])
 
-  const value = { playerOne, playerTwo, loading, handlePieceMove, getMoveOptions, getAttackOptions, isOpponentInPosition };
+  const value = { playerOne, playerTwo, loading, handlePieceMove, getMoveOptions, getAttackOptions, isOpponentInPosition, isPlayerPieceInPosition };
 
 
 

@@ -8,7 +8,7 @@ interface MovesTileProps {
 }
 export const MovesTile = ({ player }: MovesTileProps) => {
   const { changeTurn } = useContext(GameContext)
-  const { handlePieceMove, getMoveOptions, getAttackOptions, isOpponentInPosition } = useContext(PlayersContext)
+  const { handlePieceMove, getMoveOptions, getAttackOptions, isOpponentInPosition, isPlayerPieceInPosition } = useContext(PlayersContext)
   const [moveOptions, setMoveOptions] = useState([] as (string | PieceInfo | boolean)[][]) // piece, piece info, isDisabled
   const [attackOptions, setAttackOptions] = useState([] as (string | PieceInfo | boolean)[][]) // piece, piece info, isDisabled
 
@@ -18,28 +18,31 @@ export const MovesTile = ({ player }: MovesTileProps) => {
 
     const newMoveList: any[] = []
     movePositions.forEach(move => {
-      const isPieceInPosition = isOpponentInPosition(move)
+      const isOpponentPieceInPosition = isOpponentInPosition(move)
+      const isMyPieceInPosition = isPlayerPieceInPosition(move)
       const newMove = [
         piece,
         {
           ...pieceInfo,
           position: move
         },
-        isPieceInPosition ? true : false
+        (isMyPieceInPosition || isOpponentPieceInPosition) ? true : false
       ]
       newMoveList.push(newMove)
     })
 
     const attackOptionsList: any[] = []
     attackPositions.forEach(attack => {
-      const isPieceInPosition = isOpponentInPosition(attack)
+      const isOpponentPieceInPosition = isOpponentInPosition(attack)
+      // TODO: fix attack logic
+      // const isMyPieceInPosition = isPlayerPieceInPosition(attack)
       const newAttack = [
         piece,
         {
           ...pieceInfo,
           position: attack
         },
-        isPieceInPosition ? true : false
+        isOpponentPieceInPosition ? true : false
       ]
 
       attackOptionsList.push(newAttack)
@@ -60,12 +63,12 @@ export const MovesTile = ({ player }: MovesTileProps) => {
     return (
       <ul style={{ listStyle: 'none', display: 'flex'}}>
         <p style={{ margin: '0', paddingRight: '10px'}}>Moves:</p>
-        {moveOptions.map(option => {
+        {moveOptions.map((option, index) => {
           const piece = option[0] as string
           const pieceInfo = option[1] as PieceInfo
-          const isMovedNotAllowed = moveOptions[moveOptions.length - 1][2] as boolean
+          const isMovedNotAllowed = moveOptions[index][2] as boolean
           return (
-            <li key={`move-option-${option}`}>
+            <li key={`move-option-${option}-${pieceInfo.position}`}>
               <button 
                 onClick={() => handlePawnMove(piece, pieceInfo)}
                 disabled={isMovedNotAllowed}
@@ -83,7 +86,7 @@ export const MovesTile = ({ player }: MovesTileProps) => {
     return (
       <ul style={{ listStyle: 'none', display: 'flex'}}>
         <p style={{ margin: '0', paddingRight: '10px'}}>Attacks:</p>
-        {attackOptions.map(attack => {
+        {attackOptions.map((attack, index) => {
           const piece = attack[0] as string
           const pieceInfo = attack[1] as PieceInfo
           const isPieceInPosition = moveOptions[moveOptions.length - 1][2] as boolean
