@@ -14,6 +14,8 @@ export type Pieces = {
     pawnSix: PieceInfo
     pawnSeven: PieceInfo
     pawnEight: PieceInfo
+    knightOne: PieceInfo
+    knightTwo: PieceInfo
 }
 
 export type PieceInfo = {

@@ -1,6 +1,6 @@
 
 
-export function getPieceMoves(position: string) {
+export function getPawnMoves(position: string) {
 
   switch (position) {
     case 'A2':
@@ -95,5 +95,13 @@ export function getPieceMoves(position: string) {
     
     default: 
       return null
+  }
+}
+
+export function getKnightMoves(position: string) {
+  switch (position) {
+
+    case 'B1':
+      return 'A3'
   }
 }

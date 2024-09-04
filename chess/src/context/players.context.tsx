@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { PieceInfo, Pieces, Player } from "../types/models";
-import { getPieceMoves } from "../utils/getPieceMoves";
-import { getPieceAttacks } from "../utils/getPieceAttacks";
+import { getKnightMoves, getPawnMoves } from "../utils/getPieceMoves";
+import { getKnightAttacks, getPawnAttacks } from "../utils/getPieceAttacks";
 
 
 export const PlayersContext = createContext({
@@ -9,8 +9,8 @@ export const PlayersContext = createContext({
   playerOne: {} as Player,
   playerTwo: {} as Player,
   handlePieceMove: (position: string, piece: PieceInfo) => {},
-  getMoveOptions: (currentPosition: string) => '' as string,
-  getAttackOptions: (currentPosition: string) => [''] as string[],
+  getMoveOptions: (currentPosition: string, pieceType: any) => '' as string,
+  getAttackOptions: (currentPosition: string, pieceType: any) => [''] as string[],
   isOpponentInPosition: (newPosition: string) => false as boolean
 });
 
@@ -61,14 +61,22 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
     setLoading(false)
   }
 
-  const getMoveOptions = (currentPosition: string): string => {
-    const newPosition = getPieceMoves(currentPosition) as string
-    return newPosition
+  const getMoveOptions = (currentPosition: string, pieceType: 'pawn' | 'knight'): string => {
+    if (pieceType === 'pawn') {
+      return getPawnMoves(currentPosition) as string
+    } else {
+      return getKnightMoves(currentPosition) as string
+    }
   }
 
-  const getAttackOptions = (currentPosition: string): string[] => {
-    const newPosition = getPieceAttacks(currentPosition) as string[]
-    return newPosition
+  const getAttackOptions = (currentPosition: string, pieceType: 'pawn' | 'knight'): string[] => {
+    if (pieceType === 'pawn') {
+      return getPawnAttacks(currentPosition) as string[]
+    } else {
+      return getKnightAttacks(currentPosition) as string[]
+    }
+    // const newPosition = getPawnAttacks(currentPosition) as string[]
+    // return newPosition
   }
 
   function isOpponentInPosition(newPosition: string) {
@@ -118,6 +126,14 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
           name: 'Pawn',
           position: 'H2'
         },
+        knightOne: {
+          name: 'Knight',
+          position: 'B1'
+        },
+        knightTwo: {
+          name: 'Knight',
+          position: 'G1'
+        }
       }
     })
 
@@ -158,6 +174,14 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
           name: 'Pawn',
           position: 'H7'
         },
+        knightOne: {
+          name: 'Knight',
+          position: 'B8'
+        },
+        knightTwo: {
+          name: 'Knight',
+          position: 'G8'
+        }
       }
     })
 

@@ -32,7 +32,7 @@ const ChessBoardFiles = ({number, playerOne, playerTwo}: ChessBoardFilesProps) =
   const columnLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
 
   return (
-    <div data-test={`chess-board-files-${number}`} style={{display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', gridTemplateRows: '75px'}}>
+    <div data-test={`chess-board-files-${number}`} style={{display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', gridTemplateRows: '65px'}}>
       {columnLetters.map(letter => {
         const square = `${letter}${number}`
         let hasPlayerOnePiece = false

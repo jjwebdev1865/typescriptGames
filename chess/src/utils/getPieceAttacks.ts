@@ -1,6 +1,6 @@
 
 
-export function getPieceAttacks(position: string) {
+export function getPawnAttacks(position: string) {
   switch (position) {
     case 'A2':
       return ["B3"]
@@ -108,5 +108,12 @@ export function getPieceAttacks(position: string) {
       return ["F8", "H8"]
     case 'H7':
       return ["G8"]
+  }
+}
+
+export function getKnightAttacks(position: string) {
+  switch (position) {
+    case 'B1':
+      return ["A3", "C3"]
   }
 }

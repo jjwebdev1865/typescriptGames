@@ -13,9 +13,11 @@ export const MovesTile = ({ player }: MovesTileProps) => {
   const [attackOptions, setAttackOptions] = useState([] as (string | PieceInfo | boolean)[][]) // piece, piece info, isDisabled
 
   function handleMoveOptions(piece: string, pieceInfo: PieceInfo) {
-    const newPosition = getMoveOptions(pieceInfo.position)
+    const newPosition = getMoveOptions(pieceInfo.position, pieceInfo.name.toLowerCase())
+    console.log('newPosition', newPosition)
     const doesOpponentHoldPosition = isOpponentInPosition(newPosition)
-    const attackPositions = getAttackOptions(pieceInfo.position)
+    console.log('doesOpponentHoldPosition', doesOpponentHoldPosition)
+    const attackPositions = getAttackOptions(pieceInfo.position, pieceInfo.name.toLowerCase())
 
     const newMoveOption = [
       piece,
