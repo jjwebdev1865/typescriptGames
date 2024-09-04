@@ -66,6 +66,7 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
     setPlayerOne({
       playerName : 'Player One',
       shortName: 'p1',
+      graveyard: [],
       pieces: {
         pawnOne: {
           name: 'Pawn',
@@ -105,6 +106,7 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
     setPlayerTwo({
       playerName : 'Player Two',
       shortName: 'p2',
+      graveyard: [],
       pieces: {
         pawnOne: {
           name: 'Pawn',

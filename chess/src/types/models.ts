@@ -2,6 +2,7 @@ export type Player = {
     playerName: string
     shortName: 'p1' | 'p2'
     pieces: Pieces
+    graveyard: string[]
 }
 
 export type Pieces = {

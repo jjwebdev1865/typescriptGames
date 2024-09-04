@@ -10,7 +10,7 @@ export const ChessBoard = () => {
   }
 
   return (
-    <div data-testid='chest-board-container' style={{ border: '3px solid black', width: '80%'}}>
+    <div data-testid='chest-board-container' style={{ border: '3px solid black', width: '75%'}}>
       <ChessBoardFiles number={8} playerTwo={playerTwo} playerOne={playerOne} />
       <ChessBoardFiles number={7} playerTwo={playerTwo} playerOne={playerOne} />
       <ChessBoardFiles number={6} playerTwo={playerTwo} playerOne={playerOne} />

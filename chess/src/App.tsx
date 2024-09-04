@@ -3,10 +3,11 @@ import { ChessBoard } from './components/chessBoard';
 import { GameContext } from './context/game.context';
 import { PlayersContext } from './context/players.context';
 import { MovesTile } from './components/movesTile';
+import { Graveyard } from './components/graveyard';
 
 function App() {
   const { playerTurn } = useContext(GameContext)
-  const { playerOne, loading} = useContext(PlayersContext)
+  const { playerOne, playerTwo, loading} = useContext(PlayersContext)
 
   if (loading) {
     return <div>Loading</div>
@@ -27,8 +28,10 @@ function App() {
         </div>
       </div>
 
-      <div style={{ width: '100%', display: 'flex', justifyContent: 'center'}}>
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', gap: '2.5%'}}>
+        <Graveyard player={playerOne} />
         <ChessBoard />
+        <Graveyard player={playerTwo} />
       </div>
         <div style={{ display: 'flex', paddingLeft: '12.5%', alignContent: 'center'}}>
           <div>
