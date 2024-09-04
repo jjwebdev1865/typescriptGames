@@ -13,20 +13,22 @@ export const MovesTile = ({ player }: MovesTileProps) => {
   const [attackOptions, setAttackOptions] = useState([] as (string | PieceInfo | boolean)[][]) // piece, piece info, isDisabled
 
   function handleMoveOptions(piece: string, pieceInfo: PieceInfo) {
-    const newPosition = getMoveOptions(pieceInfo.position, pieceInfo.name.toLowerCase())
-    console.log('newPosition', newPosition)
-    const doesOpponentHoldPosition = isOpponentInPosition(newPosition)
-    console.log('doesOpponentHoldPosition', doesOpponentHoldPosition)
+    const movePositions = getMoveOptions(pieceInfo.position, pieceInfo.name.toLowerCase())
     const attackPositions = getAttackOptions(pieceInfo.position, pieceInfo.name.toLowerCase())
 
-    const newMoveOption = [
-      piece,
-      {
-        ...pieceInfo,
-        position: newPosition
-      },
-      doesOpponentHoldPosition ? true : false
-    ]
+    const newMoveList: any[] = []
+    movePositions.forEach(move => {
+      const isPieceInPosition = isOpponentInPosition(move)
+      const newMove = [
+        piece,
+        {
+          ...pieceInfo,
+          position: move
+        },
+        isPieceInPosition ? true : false
+      ]
+      newMoveList.push(newMove)
+    })
 
     const attackOptionsList: any[] = []
     attackPositions.forEach(attack => {
@@ -43,7 +45,7 @@ export const MovesTile = ({ player }: MovesTileProps) => {
       attackOptionsList.push(newAttack)
     })
 
-    setMoveOptions([newMoveOption])
+    setMoveOptions(newMoveList)
     setAttackOptions(attackOptionsList)
   }
 

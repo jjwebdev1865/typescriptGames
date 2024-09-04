@@ -9,7 +9,7 @@ export const PlayersContext = createContext({
   playerOne: {} as Player,
   playerTwo: {} as Player,
   handlePieceMove: (position: string, piece: PieceInfo) => {},
-  getMoveOptions: (currentPosition: string, pieceType: any) => '' as string,
+  getMoveOptions: (currentPosition: string, pieceType: any) => [''] as string[],
   getAttackOptions: (currentPosition: string, pieceType: any) => [''] as string[],
   isOpponentInPosition: (newPosition: string) => false as boolean
 });
@@ -61,11 +61,11 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
     setLoading(false)
   }
 
-  const getMoveOptions = (currentPosition: string, pieceType: 'pawn' | 'knight'): string => {
+  const getMoveOptions = (currentPosition: string, pieceType: 'pawn' | 'knight'): string[] => {
     if (pieceType === 'pawn') {
-      return getPawnMoves(currentPosition) as string
+      return getPawnMoves(currentPosition) as string[]
     } else {
-      return getKnightMoves(currentPosition) as string
+      return getKnightMoves(currentPosition) as string[]
     }
   }
 
