@@ -25,19 +25,37 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
   const handlePieceMove = (piece: string, pieceInfo: PieceInfo) => {
     setLoading(true)
 
-  const pieces: any = playerOne.pieces
-  const newPieces: any ={}
-  for (const property in playerOne.pieces) {
-    if (property === piece) {
-      newPieces[property] = pieceInfo as PieceInfo
-    } else {
-      newPieces[property] = pieces[property] as PieceInfo
+    const pieces: any = playerOne.pieces
+    const newPieces: any ={}
+    for (const property in playerOne.pieces) {
+      if (property === piece) {
+        newPieces[property] = pieceInfo as PieceInfo
+      } else {
+        newPieces[property] = pieces[property] as PieceInfo
+      }
     }
-  }
+
+    const playerTwoPieces: any = playerTwo.pieces
+    const newPlayerTwoPieces: any = {}
+    const graveYard: string[] = playerTwo.graveyard
+    for (const property in playerTwo.pieces) {
+      const currentPiece = playerTwoPieces[property] as PieceInfo 
+      if (currentPiece.position === pieceInfo.position) {
+        graveYard.push(playerTwoPieces[property].name)
+      } else {
+        newPlayerTwoPieces[property] = playerTwoPieces[property] as PieceInfo
+      }
+    }
 
     setPlayerOne({
       ...playerOne,
       pieces: newPieces
+    })
+
+    setPlayerTwo({
+      ...playerTwo,
+      pieces: newPlayerTwoPieces,
+      graveyard: graveYard
     })
 
     setLoading(false)
