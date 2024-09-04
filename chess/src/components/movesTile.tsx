@@ -10,12 +10,11 @@ export const MovesTile = ({ player }: MovesTileProps) => {
   const { changeTurn } = useContext(GameContext)
   const { handlePieceMove, getMoveOptions, getAttackOptions, isOpponentInPosition } = useContext(PlayersContext)
   const [moveOptions, setMoveOptions] = useState([] as (string | PieceInfo | boolean)[][]) // piece, piece info, isDisabled
-  const [attackOptions, setAttackOptions] = useState([] as (string | PieceInfo)[][]) // piece, piece info
+  const [attackOptions, setAttackOptions] = useState([] as (string | PieceInfo | boolean)[][]) // piece, piece info, isDisabled
 
   function handleMoveOptions(piece: string, pieceInfo: PieceInfo) {
     const newPosition = getMoveOptions(pieceInfo.position)
     const doesOpponentHoldPosition = isOpponentInPosition(newPosition)
-
     const attackPositions = getAttackOptions(pieceInfo.position)
 
     const newMoveOption = [
@@ -29,12 +28,14 @@ export const MovesTile = ({ player }: MovesTileProps) => {
 
     const attackOptionsList: any[] = []
     attackPositions.forEach(attack => {
+      const isPieceInPosition = isOpponentInPosition(attack)
       const newAttack = [
         piece,
         {
           ...pieceInfo,
           position: attack
-        }
+        },
+        isPieceInPosition ? true : false
       ]
 
       attackOptionsList.push(newAttack)
@@ -81,10 +82,12 @@ export const MovesTile = ({ player }: MovesTileProps) => {
         {attackOptions.map(attack => {
           const piece = attack[0] as string
           const pieceInfo = attack[1] as PieceInfo
+          const isPieceInPosition = moveOptions[moveOptions.length - 1][2] as boolean
           return (
             <li key={`attack-option-${piece}-${pieceInfo.position}`}>
               <button 
                 onClick={() => handlePawnMove(piece, pieceInfo)}
+                disabled={!isPieceInPosition}
               >
                 {pieceInfo.position}
               </button> 
