@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react"
 import { PlayersContext } from "../context/players.context"
 import { PieceInfo, Player } from "../types/models"
 import { GameContext } from "../context/game.context"
+import { GetAttackList } from '../utils/getAttackOptions'
+import { GetMoveList } from "../utils/getMoveList"
 
 interface MovesTileProps {
   player: Player
@@ -16,37 +18,8 @@ export const MovesTile = ({ player }: MovesTileProps) => {
     const movePositions = getMoveOptions(pieceInfo.position, pieceInfo.name.toLowerCase())
     const attackPositions = getAttackOptions(pieceInfo.position, pieceInfo.name.toLowerCase())
 
-    const newMoveList: any[] = []
-    movePositions.forEach(move => {
-      const isOpponentPieceInPosition = isOpponentInPosition(move)
-      const isMyPieceInPosition = isPlayerPieceInPosition(move)
-      const newMove = [
-        piece,
-        {
-          ...pieceInfo,
-          position: move
-        },
-        (isMyPieceInPosition || isOpponentPieceInPosition) ? true : false
-      ]
-      newMoveList.push(newMove)
-    })
-
-    const attackOptionsList: any[] = []
-    attackPositions.forEach(attack => {
-      const isOpponentPieceInPosition = isOpponentInPosition(attack)
-      // TODO: fix attack logic
-      // const isMyPieceInPosition = isPlayerPieceInPosition(attack)
-      const newAttack = [
-        piece,
-        {
-          ...pieceInfo,
-          position: attack
-        },
-        isOpponentPieceInPosition ? true : false
-      ]
-
-      attackOptionsList.push(newAttack)
-    })
+    const newMoveList = GetMoveList(piece, pieceInfo, movePositions, isOpponentInPosition, isPlayerPieceInPosition)
+    const attackOptionsList = GetAttackList(piece, pieceInfo, attackPositions, newMoveList, isOpponentInPosition)
 
     setMoveOptions(newMoveList)
     setAttackOptions(attackOptionsList)

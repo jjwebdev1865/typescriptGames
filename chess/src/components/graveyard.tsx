@@ -20,7 +20,6 @@ export const Graveyard = ({player, width = '10%'}: GraveyardProps) => {
       ) : (
         <p>Graveyard Empty</p>
       )}
-
     </div>
   )
 }

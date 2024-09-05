@@ -76,8 +76,6 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
     } else {
       return getKnightAttacks(currentPosition) as string[]
     }
-    // const newPosition = getPawnAttacks(currentPosition) as string[]
-    // return newPosition
   }
 
   function isOpponentInPosition(newPosition: string) {
@@ -143,6 +141,14 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
         knightTwo: {
           name: 'Knight',
           position: 'G1'
+        },
+        rookOne: {
+          name: 'Rook',
+          position: 'A1'
+        },
+        rookTwo: {
+          name: 'Rook',
+          position: 'H1'
         }
       }
     })
@@ -191,6 +197,14 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
         knightTwo: {
           name: 'Knight',
           position: 'G8'
+        },
+        rookOne: {
+          name: 'Rook',
+          position: 'A8'
+        },
+        rookTwo: {
+          name: 'Rook',
+          position: 'H8'
         }
       }
     })

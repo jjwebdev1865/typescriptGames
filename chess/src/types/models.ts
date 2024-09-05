@@ -16,9 +16,11 @@ export type Pieces = {
     pawnEight: PieceInfo
     knightOne: PieceInfo
     knightTwo: PieceInfo
+    rookOne: PieceInfo
+    rookTwo: PieceInfo
 }
 
 export type PieceInfo = {
-    name: string,
+    name: "Pawn" | 'Knight' | 'Rook',
     position: string
 }
