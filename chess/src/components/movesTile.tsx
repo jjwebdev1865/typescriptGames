@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react"
 import { PlayersContext } from "../context/players.context"
 import { PieceInfo, Player } from "../types/models"
 import { GameContext } from "../context/game.context"
-import { GetAttackList } from '../utils/getAttackOptions'
+import { GetAttackList, GetPawnAttackList } from '../utils/getAttackOptions'
 import { GetMoveList } from "../utils/getMoveList"
 
 interface MovesTileProps {
@@ -19,11 +19,16 @@ export const MovesTile = ({ player }: MovesTileProps) => {
     const attackPositions = getAttackOptions(pieceInfo.position, pieceInfo.name.toLowerCase())
 
     const newMoveList = GetMoveList(piece, pieceInfo, movePositions, isOpponentInPosition, isPlayerPieceInPosition)
-    const attackOptionsList = GetAttackList(piece, pieceInfo, attackPositions, newMoveList, isOpponentInPosition)
-    console.log('attackOptionsList', attackOptionsList)
+    let attackOptionsList: any[] = []
+    if (pieceInfo.name.toLocaleLowerCase() === 'pawn') {
+      attackOptionsList = GetPawnAttackList(piece, pieceInfo, attackPositions, isOpponentInPosition)
+    } else {
+      attackOptionsList = GetAttackList(piece, pieceInfo, attackPositions, newMoveList, isOpponentInPosition)
+    }
 
     setMoveOptions(newMoveList)
     setAttackOptions(attackOptionsList)
+    // setAttackOptions()
   }
 
   function handlePawnMove(piece: string, pieceInfo: PieceInfo) {
@@ -63,10 +68,12 @@ export const MovesTile = ({ player }: MovesTileProps) => {
         {attackOptions.map((attack, index) => {
           const piece = attack[0] as string
           const pieceInfo = attack[1] as PieceInfo
+          const isOpponentPieceInPosition = attackOptions[index][2] as boolean
           return (
             <li key={`attack-option-${piece}-${pieceInfo.position}`}>
               <button 
                 onClick={() => handlePawnMove(piece, pieceInfo)}
+                disabled={isOpponentPieceInPosition === false}
               >
                 {pieceInfo.position}
               </button> 
