@@ -20,6 +20,7 @@ export const MovesTile = ({ player }: MovesTileProps) => {
 
     const newMoveList = GetMoveList(piece, pieceInfo, movePositions, isOpponentInPosition, isPlayerPieceInPosition)
     const attackOptionsList = GetAttackList(piece, pieceInfo, attackPositions, newMoveList, isOpponentInPosition)
+    console.log('attackOptionsList', attackOptionsList)
 
     setMoveOptions(newMoveList)
     setAttackOptions(attackOptionsList)
@@ -62,12 +63,10 @@ export const MovesTile = ({ player }: MovesTileProps) => {
         {attackOptions.map((attack, index) => {
           const piece = attack[0] as string
           const pieceInfo = attack[1] as PieceInfo
-          const isPieceInPosition = moveOptions[moveOptions.length - 1][2] as boolean
           return (
             <li key={`attack-option-${piece}-${pieceInfo.position}`}>
               <button 
                 onClick={() => handlePawnMove(piece, pieceInfo)}
-                disabled={!isPieceInPosition}
               >
                 {pieceInfo.position}
               </button> 

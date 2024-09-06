@@ -13,8 +13,8 @@ export const Graveyard = ({player, width = '10%'}: GraveyardProps) => {
       <h2>{playerName}</h2>
       {graveyard.length > 0 ? (
         <ul>
-          {graveyard.map(piece => (
-            <li key={`graveyard-piece-${piece}`}>{piece}</li>
+          {graveyard.map((piece, index) => (
+            <li key={`graveyard-piece-${index}-${piece}`}>{piece}</li>
           ))}
         </ul>
       ) : (
