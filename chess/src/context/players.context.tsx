@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { PieceInfo, Pieces, Player } from "../types/models";
-import { getKnightMoves, getPawnMoves } from "../utils/getPieceMoves";
-import { getKnightAttacks, getPawnAttacks } from "../utils/getPieceAttacks";
+import { getKnightMoves, getPawnMoves, getRookMoves } from "../utils/getPieceMoves";
+import { getKnightAttacks, getPawnAttacks, getRookAttacks } from "../utils/getPieceAttacks";
 
 
 export const PlayersContext = createContext({
@@ -62,19 +62,25 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
     setLoading(false)
   }
 
-  const getMoveOptions = (currentPosition: string, pieceType: 'pawn' | 'knight'): string[] => {
+  const getMoveOptions = (currentPosition: string, pieceType: 'pawn' | 'knight' | 'rook'): string[] => {
     if (pieceType === 'pawn') {
       return getPawnMoves(currentPosition) as string[]
-    } else {
+    } else if (pieceType === 'knight') {
       return getKnightMoves(currentPosition) as string[]
+    } else {
+      return getRookMoves(currentPosition) as string[]
     }
   }
 
-  const getAttackOptions = (currentPosition: string, pieceType: 'pawn' | 'knight'): string[] => {
+  const getAttackOptions = (currentPosition: string, pieceType: 'pawn' | 'knight' | 'rook'): string[] => {
     if (pieceType === 'pawn') {
       return getPawnAttacks(currentPosition) as string[]
-    } else {
+    } else if (pieceType === 'knight') {
       return getKnightAttacks(currentPosition) as string[]
+    } else {
+      const potentialAttacks = getRookAttacks(currentPosition) as string[]
+      // todo: update to check if pieces are in the way
+      return potentialAttacks
     }
   }
 
