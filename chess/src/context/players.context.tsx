@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { PieceInfo, Pieces, Player } from "../types/models";
-import { getKnightMoves, getPawnMoves, getRookMoves } from "../utils/getPieceMoves";
-import { getKnightAttacks, getPawnAttacks, getRookAttacks } from "../utils/getPieceAttacks";
+import { getBishopMoves, getKnightMoves, getPawnMoves, getRookMoves } from "../utils/getPieceMoves";
+import { getBishopAttacks, getKnightAttacks, getPawnAttacks, getRookAttacks } from "../utils/getPieceAttacks";
 
 
 export const PlayersContext = createContext({
@@ -62,21 +62,25 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
     setLoading(false)
   }
 
-  const getMoveOptions = (currentPosition: string, pieceType: 'pawn' | 'knight' | 'rook'): string[] => {
+  const getMoveOptions = (currentPosition: string, pieceType: 'pawn' | 'knight' | 'rook' | 'bishop'): string[] => {
     if (pieceType === 'pawn') {
       return getPawnMoves(currentPosition) as string[]
     } else if (pieceType === 'knight') {
       return getKnightMoves(currentPosition) as string[]
+    } else if (pieceType === 'bishop') {
+      return getBishopMoves(currentPosition) as string[]
     } else {
       return getRookMoves(currentPosition) as string[]
     }
   }
 
-  const getAttackOptions = (currentPosition: string, pieceType: 'pawn' | 'knight' | 'rook'): string[] => {
+  const getAttackOptions = (currentPosition: string, pieceType: 'pawn' | 'knight' | 'rook' | 'bishop'): string[] => {
     if (pieceType === 'pawn') {
       return getPawnAttacks(currentPosition) as string[]
     } else if (pieceType === 'knight') {
       return getKnightAttacks(currentPosition) as string[]
+    } else if (pieceType === 'bishop') {
+      return getBishopAttacks(currentPosition) as string[]
     } else {
       const potentialAttacks = getRookAttacks(currentPosition) as string[]
       // todo: update to check if pieces are in the way
@@ -155,6 +159,14 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
         rookTwo: {
           name: 'Rook',
           position: 'H1'
+        },
+        bishopOne: {
+          name: 'Bishop',
+          position: 'C1'
+        },
+        bishopTwo: {
+          name: 'Bishop',
+          position: 'F1'
         }
       }
     })
@@ -211,6 +223,14 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
         rookTwo: {
           name: 'Rook',
           position: 'H8'
+        },
+        bishopOne: {
+          name: 'Bishop',
+          position: 'C8'
+        },
+        bishopTwo: {
+          name: 'Bishop',
+          position: 'F8'
         }
       }
     })

@@ -406,3 +406,34 @@ case 'H8':
   return ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'H7', 'A8', 'B8', 'C8', 'D8', 'E8', 'F8', 'G8']
   }
 }
+
+export function getBishopAttacks(position: string) {
+  switch (position) {
+    case 'C1':
+      return ['B2', 'A3', 'D2', 'E3', 'F4', 'G5', 'H6']
+    
+    // Bishop Row 2
+    case 'B2':
+      return ['A1', 'A3', 'C1', 'C3', 'D4', 'E5', 'F6', 'G7', 'H8']
+    case 'D2':
+      return ['C1', 'C3', 'B4', 'A5', 'E1', 'E3', 'F4', 'G5', 'H6']
+
+    // Bishop Row 3
+    case 'A3':
+      return ['B2', 'C1', 'B4', 'C5', 'D6', 'E7', 'F8']
+    case 'E3':
+      return ['D2', 'C1', 'D4', 'C5', 'B6', 'A7', 'F2', 'G1', 'F4', 'G5', 'H6']
+    
+    // Bishop Row 4
+    case 'F4':
+      return ['E3', 'D2', 'C1', 'E5', 'D6', 'C7', 'B8', 'G3', 'H2', 'G5', 'H6']
+    
+    // Bishop Row 5
+    case 'G5':
+      return ['F4', 'E3', 'D2', 'C1', 'F6', 'E7', 'D8', 'H4', 'H6']
+    
+    // Bishop Row 6
+    case 'H6':
+      return ['G5', 'F4', 'E3', 'D2', 'C1', 'G7', 'F8']
+  }
+}
