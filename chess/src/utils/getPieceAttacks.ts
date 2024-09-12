@@ -3,111 +3,111 @@
 export function getPawnAttacks(position: string) {
   switch (position) {
     case 'A2':
-      return ["B3"]
+      return ['B3']
     case 'B2':
-      return ["A3", "C3"]
+      return ['A3', 'C3']
     case 'C2':
-      return ["B3", "D3"]
+      return ['B3', 'D3']
     case 'D2':
-      return ["C3", "E3"]
+      return ['C3', 'E3']
     case 'E2':
-      return ["D3", "F3"]
+      return ['D3', 'F3']
     case 'F2':
-      return ["E3", "G3"]
+      return ['E3', 'G3']
     case 'G2':
-      return ["F3", "H3"]
+      return ['F3', 'H3']
     case 'H2':
-      return ["G3"]
+      return ['G3']
 
     // Pawns Row 3
     case 'A3':
-      return ["B4"]
+      return ['B4']
     case 'B3':
-      return ["A4", "C4"]
+      return ['A4', 'C4']
     case 'C3':
-      return ["B4", "D4"]
+      return ['B4', 'D4']
     case 'D3':
-      return ["C4", "E4"]
+      return ['C4', 'E4']
     case 'E3':
-      return ["D4", "F4"]
+      return ['D4', 'F4']
     case 'F3':
-      return ["E4", "G4"]
+      return ['E4', 'G4']
     case 'G3':
-      return ["F4", "H4"]
+      return ['F4', 'H4']
     case 'H3':
-      return ["G4"]
+      return ['G4']
     
     // Pawns Row 4
     case 'A4':
-      return ["B5"]
+      return ['B5']
     case 'B4':
-      return ["A5", "C5"]
+      return ['A5', 'C5']
     case 'C4':
-      return ["B5", "D5"]
+      return ['B5', 'D5']
     case 'D4':
-      return ["C5", "E5"]
+      return ['C5', 'E5']
     case 'E4':
-      return ["D5", "F5"]
+      return ['D5', 'F5']
     case 'F4':
-      return ["E5", "G5"]
+      return ['E5', 'G5']
     case 'G4':
-      return ["F5", "H5"]
+      return ['F5', 'H5']
     case 'H4':
-      return ["G5"]
+      return ['G5']
 
     // Pawns Row 5
     case 'A5':
-      return ["B6"]
+      return ['B6']
     case 'B5':
-      return ["A6", "C6"]
+      return ['A6', 'C6']
     case 'C5':
-      return ["B6", "D6"]
+      return ['B6', 'D6']
     case 'D5':
-      return ["C6", "E6"]
+      return ['C6', 'E6']
     case 'E5':
-      return ["D6", "F6"]
+      return ['D6', 'F6']
     case 'F5':
-      return ["E6", "G6"]
+      return ['E6', 'G6']
     case 'G5':
-      return ["F6", "H6"]
+      return ['F6', 'H6']
     case 'H5':
-      return ["G6"]
+      return ['G6']
 
     // Pawns Row 6
     case 'A6':
-      return ["B7"]
+      return ['B7']
     case 'B6':
-      return ["A7", "C7"]
+      return ['A7', 'C7']
     case 'C6':
-      return ["B7", "D7"]
+      return ['B7', 'D7']
     case 'D6':
-      return ["C7", "E7"]
+      return ['C7', 'E7']
     case 'E6':
-      return ["D7", "F7"]
+      return ['D7', 'F7']
     case 'F6':
-      return ["E7", "G7"]
+      return ['E7', 'G7']
     case 'G6':
-      return ["F7", "H7"]
+      return ['F7', 'H7']
     case 'H6':
-      return ["G7"]
+      return ['G7']
     
     // Pawns Row 7
     case 'A7':
-      return ["B8"]
+      return ['B8']
     case 'B7':
-      return ["A8", "C8"]
+      return ['A8', 'C8']
     case 'C7':
-      return ["B8", "D8"]
+      return ['B8', 'D8']
     case 'D7':
-      return ["C8", "E8"]
+      return ['C8', 'E8']
     case 'E7':
-      return ["D8", "F8"]
+      return ['D8', 'F8']
     case 'F7':
-      return ["E8", "G8"]
+      return ['E8', 'G8']
     case 'G7':
-      return ["F8", "H8"]
+      return ['F8', 'H8']
     case 'H7':
-      return ["G8"]
+      return ['G8']
   }
 }
 
@@ -409,31 +409,93 @@ case 'H8':
 
 export function getBishopAttacks(position: string) {
   switch (position) {
+    case 'A1':
+      return ['B2', 'C3', 'D4', 'E5', 'F6', 'G7', 'H8']
+    case 'B1': 
+      return ['A2', 'C2', 'D3', 'E4', 'F5', 'G6', 'H7']
     case 'C1':
       return ['B2', 'A3', 'D2', 'E3', 'F4', 'G5', 'H6']
+    case 'D1': 
+      return ['A4', 'B3', 'C2', 'E2', 'F3', 'G4', 'H5']
+    case 'H1':
+      return ['G2', 'F3', 'E4', 'D5', 'C6', 'B7', 'A8']
     
     // Bishop Row 2
+    case 'A2': 
+      return ['B1', 'B3', 'C4', 'D5', 'E6', 'F7', 'G8']
     case 'B2':
       return ['A1', 'A3', 'C1', 'C3', 'D4', 'E5', 'F6', 'G7', 'H8']
+    case 'C2': 
+      return ['A4', 'B1', 'B3', 'D1', 'D3', 'E4', 'F5', 'G6', 'H7']
     case 'D2':
       return ['C1', 'C3', 'B4', 'A5', 'E1', 'E3', 'F4', 'G5', 'H6']
 
     // Bishop Row 3
     case 'A3':
       return ['B2', 'C1', 'B4', 'C5', 'D6', 'E7', 'F8']
+    case 'B3': 
+      return ['A2', 'A4', 'C2', 'C4', 'D1', 'D5', 'E6', 'F7', 'G8']
+    case 'C3': 
+      return ['A1', 'A5', 'B2', 'B4', 'D2', 'D4', 'E1', 'E5', 'F6', 'G7', 'H8']
+    case 'D3': 
+      return ['A6', 'B1', 'B5', 'C2', 'C4', 'E2', 'E4', 'F1', 'F5', 'G6', 'H7']
     case 'E3':
       return ['D2', 'C1', 'D4', 'C5', 'B6', 'A7', 'F2', 'G1', 'F4', 'G5', 'H6']
     
     // Bishop Row 4
+    case 'A4': 
+      return ['B3', 'B5', 'C2', 'C6', 'D1', 'D7', 'E8']
+    case 'B4': 
+      return ['A3', 'A5', 'C3', 'C5', 'D2', 'D6', 'E1', 'E7', 'F8']
+    case 'C4': 
+      return ['A2', 'A6', 'B3', 'B5', 'D3', 'D5', 'E2', 'E6', 'F1', 'F7', 'G8']
+    case 'D4': 
+      return ['A1', 'A7', 'B2', 'B6', 'C3', 'C5', 'E3', 'E5', 'F2', 'F6', 'G1', 'G7', 'H8']
     case 'F4':
       return ['E3', 'D2', 'C1', 'E5', 'D6', 'C7', 'B8', 'G3', 'H2', 'G5', 'H6']
     
     // Bishop Row 5
+    case 'A5': 
+      return['B4', 'B6', 'C3', 'C7', 'D2', 'D8', 'E1']
+    case 'B5': 
+      return['A4', 'A6', 'C4', 'C6', 'D3', 'D7', 'E2', 'E8', 'F1']
+    case 'C5': 
+      return ['A3', 'A7', 'B4', 'B6', 'D4', 'D6', 'E3', 'E7', 'F2', 'F8', 'G1']
+    case 'D5': 
+      return ['A2', 'A8', 'B3', 'B7', 'C4', 'C6', 'E4', 'E6', 'F3', 'F7', 'G2', 'G8', 'H1']
     case 'G5':
       return ['F4', 'E3', 'D2', 'C1', 'F6', 'E7', 'D8', 'H4', 'H6']
     
     // Bishop Row 6
+    case 'A6': 
+      return ['B5', 'B7', 'C4', 'C8', 'D3', 'E2', 'F1']
+    case 'B6': 
+      return ['A5', 'A7', 'C5', 'C7', 'D4', 'D8', 'E3', 'F2', 'G1']
+    case 'C6': 
+      return ['A4', 'A8', 'B5', 'B7', 'D5', 'D7', 'E4', 'E8', 'F3', 'G2', 'H1']
+    case 'D6': 
+      return ['A3', 'B4', 'B8', 'C5', 'C7', 'E5', 'E7', 'F4', 'F8', 'G3', 'H2']
     case 'H6':
       return ['G5', 'F4', 'E3', 'D2', 'C1', 'G7', 'F8']
+    
+    // Bishop Row 7
+    case 'A7': 
+      return ['B6', 'B8', 'C5', 'D4', 'E3', 'F2', 'G1']
+    case 'B7': 
+      return ['A6', 'A8', 'C6', 'C8', 'D5', 'E4', 'F3', 'G2', 'H1']
+    case 'C7': 
+      return ['A5', 'B6', 'B8', 'D6', 'D8', 'E5', 'F4', 'G3', 'H2']
+    case 'D7': 
+      return ['A4', 'B5', 'C6', 'C8', 'E6', 'E8', 'F5', 'G4', 'H3']
+    
+    // Bishop Row 8
+    case 'A8': 
+      return ['B7', 'C6', 'D5', 'E4', 'F3', 'G2', 'H1']
+    case 'B8': 
+      return ['A7', 'C7', 'D6', 'E5', 'F4', 'G3', 'H2']
+    case 'C8': 
+      return ['A6', 'B7', 'D7', 'E6', 'F5', 'G4', 'H3']
+    case 'D8': 
+      return ['A5', 'B6', 'C7', 'E7', 'F6', 'G5', 'H4']
   }
 }
