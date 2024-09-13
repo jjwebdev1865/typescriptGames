@@ -405,6 +405,12 @@ export function getBishopMoves(position: string) {
       return ['B2', 'A3', 'D2', 'E3', 'F4', 'G5', 'H6']
     case 'D1': 
       return ['A4', 'B3', 'C2', 'E2', 'F3', 'G4', 'H5']
+    case 'E1':
+      return ['A5', 'B4', 'C3', 'D2', 'F2', 'G3', 'H4']
+    case 'F1': 
+      return ['A6', 'B5', 'C4', 'D3', 'E2', 'G2', 'H3']
+    case 'G1': 
+      return ['A7', 'B6', 'C5', 'D4', 'E3', 'F2', 'H2']
     case 'H1':
       return ['G2', 'F3', 'E4', 'D5', 'C6', 'B7', 'A8']
     
@@ -417,6 +423,14 @@ export function getBishopMoves(position: string) {
       return ['A4', 'B1', 'B3', 'D1', 'D3', 'E4', 'F5', 'G6', 'H7']
     case 'D2':
       return ['C1', 'C3', 'B4', 'A5', 'E1', 'E3', 'F4', 'G5', 'H6']
+    case 'E2': 
+      return ['A6', 'B5', 'C4', 'D1', 'D3', 'F1', 'F3', 'G4', 'H5']
+    case 'F2': 
+      return ['A7', 'B6', 'C5', 'D4', 'E1', 'E3', 'G1', 'G3', 'H4']
+    case 'G2': 
+      return ['A8', 'B7', 'C6', 'D5', 'E4', 'F1', 'F3', 'H1', 'H3']
+    case 'H2': 
+      return ['B8', 'C7', 'D6', 'E5', 'F4', 'G1', 'G3']
 
     // Bishop Row 3
     case 'A3':
@@ -429,6 +443,12 @@ export function getBishopMoves(position: string) {
       return ['A6', 'B1', 'B5', 'C2', 'C4', 'E2', 'E4', 'F1', 'F5', 'G6', 'H7']
     case 'E3':
       return ['D2', 'C1', 'D4', 'C5', 'B6', 'A7', 'F2', 'G1', 'F4', 'G5', 'H6']
+    case 'F3': 
+      return ['A8', 'B7', 'C6', 'D1', 'D5', 'E2', 'E4', 'G2', 'G4', 'H1', 'H5']
+    case 'G3': 
+      return ['B8', 'C7', 'D6', 'E1', 'E5', 'F2', 'F4', 'H2', 'H4']
+    case  'H3': 
+      return ['C8', 'D7', 'E6', 'F1', 'F5', 'G2', 'G4']
     
     // Bishop Row 4
     case 'A4': 
@@ -439,8 +459,14 @@ export function getBishopMoves(position: string) {
       return ['A2', 'A6', 'B3', 'B5', 'D3', 'D5', 'E2', 'E6', 'F1', 'F7', 'G8']
     case 'D4': 
       return ['A1', 'A7', 'B2', 'B6', 'C3', 'C5', 'E3', 'E5', 'F2', 'F6', 'G1', 'G7', 'H8']
+    case 'E4': 
+      return ['A8', 'B1', 'B7', 'C2', 'C6', 'D3', 'D5', 'F3', 'F5', 'G2', 'G6', 'H1', 'H7']
     case 'F4':
       return ['E3', 'D2', 'C1', 'E5', 'D6', 'C7', 'B8', 'G3', 'H2', 'G5', 'H6']
+    case 'G4': 
+      return ['C8', 'D1', 'D7', 'E2', 'E6', 'F3', 'F5', 'H3', 'H5']
+    case 'H4': 
+      return ['D8', 'E1', 'E7', 'F2', 'F6', 'G3', 'G5']
     
     // Bishop Row 5
     case 'A5': 
@@ -451,8 +477,14 @@ export function getBishopMoves(position: string) {
       return ['A3', 'A7', 'B4', 'B6', 'D4', 'D6', 'E3', 'E7', 'F2', 'F8', 'G1']
     case 'D5': 
       return ['A2', 'A8', 'B3', 'B7', 'C4', 'C6', 'E4', 'E6', 'F3', 'F7', 'G2', 'G8', 'H1']
+    case 'E5': 
+      return ['A1', 'B2', 'B8', 'C3', 'C7', 'D4', 'D6', 'F4', 'F6', 'G3', 'G7', 'H2', 'H8']
+    case 'F5': 
+      return ['B1', 'C2', 'C8', 'D3', 'D7', 'E4', 'E6', 'G4', 'G6', 'H3', 'H7']
     case 'G5':
       return ['F4', 'E3', 'D2', 'C1', 'F6', 'E7', 'D8', 'H4', 'H6']
+    case 'H5': 
+      return ['D1', 'E2', 'E8', 'F3', 'F7', 'G4', 'G6']
     
     // Bishop Row 6
     case 'A6': 
@@ -463,6 +495,12 @@ export function getBishopMoves(position: string) {
       return ['A4', 'A8', 'B5', 'B7', 'D5', 'D7', 'E4', 'E8', 'F3', 'G2', 'H1']
     case 'D6': 
       return ['A3', 'B4', 'B8', 'C5', 'C7', 'E5', 'E7', 'F4', 'F8', 'G3', 'H2']
+    case 'E6': 
+      return ['A2', 'B3', 'C4', 'C8', 'D5', 'D7', 'F5', 'F7', 'G4', 'G8', 'H3']
+    case 'F6': 
+      return ['A1', 'B2', 'C3', 'D4', 'D8', 'E5', 'E7', 'G5', 'G7', 'H4', 'H8']
+    case 'G6': 
+      return ['B1', 'C2', 'D3', 'E4', 'E8', 'F5', 'F7', 'H5', 'H7']
     case 'H6':
       return ['G5', 'F4', 'E3', 'D2', 'C1', 'G7', 'F8']
     
@@ -475,6 +513,14 @@ export function getBishopMoves(position: string) {
       return ['A5', 'B6', 'B8', 'D6', 'D8', 'E5', 'F4', 'G3', 'H2']
     case 'D7': 
       return ['A4', 'B5', 'C6', 'C8', 'E6', 'E8', 'F5', 'G4', 'H3']
+    case 'E7': 
+      return ['A3', 'B4', 'C5', 'D6', 'D8', 'F6', 'F8', 'G5', 'H4']
+    case 'F7': 
+      return ['A2', 'B3', 'C4', 'D5', 'E6', 'E8', 'G6', 'G8', 'H5']
+    case 'G7': 
+      return ['A1', 'B2', 'C3', 'D4', 'E5', 'F6', 'F8', 'H6', 'H8']
+    case 'H7':
+      return ['B1', 'C2', 'D3', 'E4', 'F5', 'G6', 'G8']
     
     // Bishop Row 8
     case 'A8': 
@@ -485,5 +531,13 @@ export function getBishopMoves(position: string) {
       return ['A6', 'B7', 'D7', 'E6', 'F5', 'G4', 'H3']
     case 'D8': 
       return ['A5', 'B6', 'C7', 'E7', 'F6', 'G5', 'H4']
+    case 'E8': 
+      return ['A4', 'B5', 'C6', 'D7', 'F7', 'G6', 'H5']
+    case 'F8': 
+      return ['A3', 'B4', 'C5', 'D6', 'E7', 'G7', 'H6']
+    case 'G8': 
+      return ['A2', 'B3', 'C4', 'D5', 'E6', 'F7', 'H7']
+    case 'H8': 
+      return ['A1', 'B2', 'C3', 'D4', 'E5', 'F6', 'G7']
   }
 }
