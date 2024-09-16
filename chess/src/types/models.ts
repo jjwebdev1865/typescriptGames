@@ -20,9 +20,10 @@ export type Pieces = {
     rookTwo: PieceInfo
     bishopOne: PieceInfo
     bishopTwo: PieceInfo
+    king: PieceInfo
 }
 
 export type PieceInfo = {
-    name: "Pawn" | 'Knight' | 'Rook' | 'Bishop',
+    name: "Pawn" | 'Knight' | 'Rook' | 'Bishop' | 'King' | 'Queen',
     position: string
 }

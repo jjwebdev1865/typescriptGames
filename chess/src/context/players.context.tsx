@@ -167,6 +167,10 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
         bishopTwo: {
           name: 'Bishop',
           position: 'F1'
+        },
+        king: {
+          name: 'King',
+          position: 'E1'
         }
       }
     })
@@ -231,6 +235,10 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
         bishopTwo: {
           name: 'Bishop',
           position: 'F8'
+        },
+        king: {
+          name: 'King',
+          position: 'E8'
         }
       }
     })

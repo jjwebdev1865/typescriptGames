@@ -541,3 +541,32 @@ export function getBishopMoves(position: string) {
       return ['A1', 'B2', 'C3', 'D4', 'E5', 'F6', 'G7']
   }
 }
+
+export function getKingMoves(position: string) {
+  switch (position) {
+    case 'A1':
+      return ['A2', 'B1', 'B2']
+    case 'B1':
+      return ['A1', 'A2', 'B2', 'C1', 'C2']
+    case 'C1':
+      return ['B1', 'B2', 'C2', 'D1', 'D2']
+    case 'D1':
+      return ['C1', 'C2', 'D2', 'E1', 'E2']
+    case 'E1':
+      return ['D1', 'D2', 'E2', 'F1', 'F2']
+    case 'F1':
+      return ['E1', 'E2', 'F2', 'G1', 'G2']
+    case 'G1':
+      return ['F1', 'F2', 'G2', 'H1', 'H2']
+    case 'H1':
+      return ['G1', 'G2', 'H2']
+
+    // King row 2
+    case 'A2':
+      return ['A1', 'A3', 'B1', 'B2', 'B3']
+    case 'B2':
+      return ['A1', 'A2', 'A3', 'B1', 'B3', 'C1', 'C2', 'C3']
+    case 'C2':
+      return ['B1', 'B2', 'B3', 'C1', 'C3', 'D1', 'D2', 'D3']
+  }
+}
