@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import BoardStartingLayout from './utils/helperFunctions/boardStartSetup';
 import { getBoardRowsArray } from './utils/helperFunctions/getBoardRowsArray';
 import { GameContext } from './context/gameContext';
+import { PieceSpot } from './component/PieceSpot/pieceSpot';
 
 export type PieceInfo = {
   position: number,
@@ -17,35 +18,16 @@ function App() {
   const { playerTurn } = useContext(GameContext)
   const board: Object = BoardStartingLayout()
 
-  console.log('player turn:' , playerTurn)
-
-  // TODO: Add styling - red and black alternating board pieces
   function getBoardRows() {
     const boardDisplay = getBoardRowsArray(board)
-    const boardHtmlDisplay = boardDisplay.map(row => {
+    const boardHtmlDisplay = boardDisplay.map((row, index) => {
       const rowKey = row[0].key.split("")[0]
 
       return <li key={`board-row-${rowKey}`} style={{ listStyle: 'none'}}>
-        <ul style={{ padding: 0, display: 'grid', gridTemplateColumns: 'repeat(8, auto)' }}>
+        <ul style={{ padding: 0, display: 'grid', gridTemplateColumns: 'repeat(8, auto)', gridTemplateRows: 'repeat(1, 55px)'}}>
           {row.map(piece => {
-            const pieceNumber = piece.key.split("")[1]
-            let backgroundColor = '#F5E6D3'
-            let textColor = 'black'
-            if (Number(pieceNumber)  % 2 === 0) {
-              backgroundColor = '#3D2B1F'
-              textColor = '#FFFFFF'
-            }
-            return <li 
-              key={`board-spot-${piece.key}`} 
-              style={{ 
-                listStyle: 'none', 
-                backgroundColor: backgroundColor,
-                color: textColor,
-                textAlign: 'center'
-              }}
-              >
-                {piece.key}
-              </li>
+            
+            return <PieceSpot key={`board-spot-${piece.key}`} piece={piece} rowIndex={index} />
           })}
         </ul>
       </li>
