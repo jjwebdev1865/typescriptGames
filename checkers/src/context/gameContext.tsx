@@ -27,7 +27,7 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
         value.forEach((piece: any, index: number) => {
           newRow.push({
             position: piece.position,
-            piece: 2
+            piece: 1
           })
         })
         startingBoard[key] = newRow

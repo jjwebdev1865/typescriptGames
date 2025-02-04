@@ -34,7 +34,7 @@ function App() {
         <ul style={{ padding: 0, display: 'grid', gridTemplateColumns: 'repeat(8, auto)', gridTemplateRows: 'repeat(1, 55px)'}}>
           {row.map(piece => {
             
-            return <PieceSpot key={`board-spot-${piece.key}`} piece={piece} rowIndex={index} />
+            return <PieceSpot key={`board-spot-${piece.key}`} checkerPiece={piece} rowIndex={index} />
           })}
         </ul>
       </li>

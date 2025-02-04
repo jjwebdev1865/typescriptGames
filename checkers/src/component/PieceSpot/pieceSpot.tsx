@@ -1,12 +1,12 @@
 import React from "react";
 
 interface PieceSpotProps {
-  piece: any,
+  checkerPiece: any,
   rowIndex: number
 }
 
-export const PieceSpot = ({piece, rowIndex}: PieceSpotProps) => {
-  const pieceNumber = piece.key.split("")[1]
+export const PieceSpot = ({checkerPiece, rowIndex}: PieceSpotProps) => {
+  const pieceNumber = checkerPiece.key.split("")[1]
   let backgroundColor = '#F5E6D3'
   let textColor = 'black'
 
@@ -17,10 +17,16 @@ export const PieceSpot = ({piece, rowIndex}: PieceSpotProps) => {
     backgroundColor = '#3D2B1F'
     textColor = '#FFFFFF'
   }
+  
+  const buttonTextColor = '#FFFFFF'
+  let buttonColor = 'black'
+  if (checkerPiece.piece !== null && checkerPiece.piece === 1) {
+    buttonColor = 'red'
+  }
 
   return (
     <li 
-      key={`board-spot-${piece.key}`} 
+      key={`board-spot-${checkerPiece.key}`} 
       style={{ 
         listStyle: 'none', 
         backgroundColor: backgroundColor,
@@ -28,7 +34,15 @@ export const PieceSpot = ({piece, rowIndex}: PieceSpotProps) => {
         textAlign: 'center'
       }}
       >
-        {piece.key}
+        {checkerPiece.piece !== null ? (
+          <button 
+            style={{ backgroundColor: buttonColor , padding: '5px 10px', color: buttonTextColor}}
+            onClick={() => alert('clicked')}
+          >{checkerPiece.key}</button>
+        ): (
+          <>{checkerPiece.key}</>
+        )}
+        
     </li>
   )
 }
