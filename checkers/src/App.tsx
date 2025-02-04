@@ -1,48 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import BoardStartingLayout from './utils/helperFunctions/boardStartSetup';
+import { getBoardRowsArray } from './utils/helperFunctions/getBoardRowsArray';
 
-const rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+export type PieceInfo = {
+  position: number,
+  piece: null
+}
+
+export type PieceInfoFE = {
+  key: string
+  piece: null
+}
 
 function App() {
+  const board: Object = BoardStartingLayout()
 
-  const board: Object = {}
-  for (let i = 0; i< rows.length; i++) {
-    board[rows[i]] = [
-      { position: 1, piece: null },
-      { position: 2, piece: null },
-      { position: 3, piece: null },
-      { position: 4, piece: null },
-      { position: 5, piece: null },
-      { position: 6, piece: null },
-      { position: 7, piece: null },
-      { position: 8, piece: null }
-    ]
-  }
-
-  function getBoardRowsArray() {
-    const boardDisplay: any[] = []
-    Object.entries(board).forEach(([key, value]) => {
-      const rowDetails: string[] = []
-      for (let i = 0; i < value.length; i++) {
-        rowDetails.push(`${key}${value[i].position}`)
-      }
-      boardDisplay.push(rowDetails)
-    })
-    return boardDisplay
-  }
-
+  // TODO: Add styling - red and black alternating board pieces
   function getBoardRows() {
-    const boardDisplay = getBoardRowsArray()
+    const boardDisplay = getBoardRowsArray(board)
     const boardHtmlDisplay = boardDisplay.map(row => {
-      const rowKey = row[0].split("")[0]
+      const rowKey = row[0].key.split("")[0]
 
       return <li key={`board-row-${rowKey}`} style={{ listStyle: 'none'}}>
         <ul style={{ display: 'grid', gridTemplateColumns: 'repeat(8, auto)' }}>
-          {row.map((piece: string) => {
-            return (
-              <li key={`board-spot-${piece}`} style={{ listStyle: 'none'}}>
-                {piece}
-              </li>
-            )
+          {row.map(piece => {
+            return <div key={`board-spot-${piece.key}`}>{piece.key}</div>
           })}
         </ul>
       </li>
