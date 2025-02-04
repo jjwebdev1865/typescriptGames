@@ -23,12 +23,46 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     const startingBoard: Board = {} as Board
     Object.entries(board).forEach(([ key, value]) => {
       const newRow = [] as any[]
-      if (key === 'H') {
+      if (['F', 'G', 'H'].includes(key)) {
         value.forEach((piece: any, index: number) => {
-          newRow.push({
-            position: piece.position,
-            piece: 1
-          })
+          const isDivisible = index % 2 === 0
+          if (isDivisible && (key === 'H' || key === 'F')) {
+            newRow.push({
+              position: piece.position,
+              piece: 1
+            })
+          } else if (!isDivisible && key === 'G') {
+            newRow.push({
+              position: piece.position,
+              piece: 1
+            })
+          } else {
+            newRow.push({
+              position: piece.position,
+              piece: null
+            })
+          }
+        })
+        startingBoard[key] = newRow
+      } else if (['A', 'B', 'C'].includes(key)) {
+        value.forEach((piece: any, index: number) => {
+          const isDivisible = index % 2 === 0
+          if (isDivisible && (key === 'A' || key === 'C')) {
+            newRow.push({
+              position: piece.position,
+              piece: 2
+            })
+          } else if (!isDivisible && key === 'B') {
+            newRow.push({
+              position: piece.position,
+              piece: 2
+            })
+          } else {
+            newRow.push({
+              position: piece.position,
+              piece: null
+            })
+          }
         })
         startingBoard[key] = newRow
       } else {
