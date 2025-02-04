@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import BoardStartingLayout from './utils/helperFunctions/boardStartSetup';
 import { getBoardRowsArray } from './utils/helperFunctions/getBoardRowsArray';
+import { GameContext } from './context/gameContext';
 
 export type PieceInfo = {
   position: number,
@@ -13,7 +14,10 @@ export type PieceInfoFE = {
 }
 
 function App() {
+  const { playerTurn } = useContext(GameContext)
   const board: Object = BoardStartingLayout()
+
+  console.log('player turn:' , playerTurn)
 
   // TODO: Add styling - red and black alternating board pieces
   function getBoardRows() {
@@ -53,6 +57,8 @@ function App() {
   return (
     <div className="App">
       <h1>Checkers</h1>
+
+      <h2>Player turn: {playerTurn.toUpperCase()}</h2>
 
       <ul style={{ padding: 0}}>
         {getBoardRows()}
