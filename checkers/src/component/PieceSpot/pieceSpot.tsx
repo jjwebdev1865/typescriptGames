@@ -5,8 +5,6 @@ interface PieceSpotProps {
   rowIndex: number
 }
 
-const oddRows = ['A', 'C', 'E', 'G']
-
 export const PieceSpot = ({piece, rowIndex}: PieceSpotProps) => {
   const pieceNumber = piece.key.split("")[1]
   let backgroundColor = '#F5E6D3'
@@ -19,6 +17,7 @@ export const PieceSpot = ({piece, rowIndex}: PieceSpotProps) => {
     backgroundColor = '#3D2B1F'
     textColor = '#FFFFFF'
   }
+
   return (
     <li 
       key={`board-spot-${piece.key}`} 

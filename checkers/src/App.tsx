@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import BoardStartingLayout from './utils/helperFunctions/boardStartSetup';
 import { getBoardRowsArray } from './utils/helperFunctions/getBoardRowsArray';
-import { GameContext } from './context/gameContext';
 import { PieceSpot } from './component/PieceSpot/pieceSpot';
+import { useGame } from './context/gameContext';
 
 export type PieceInfo = {
   position: number,
@@ -14,9 +14,16 @@ export type PieceInfoFE = {
   piece: null
 }
 
+export interface Board {
+  [key: string]: any[],
+}
+
 function App() {
-  const { playerTurn } = useContext(GameContext)
-  const board: Object = BoardStartingLayout()
+  const { playerTurn, handleInitialBoardSetup}  = useGame()
+  let board: Board | string = BoardStartingLayout()
+  board = handleInitialBoardSetup(board as Board)
+  // TODO: will see row H has a row full of pieces. Need to show them on the board now
+  console.log('board', board)
 
   function getBoardRows() {
     const boardDisplay = getBoardRowsArray(board)
