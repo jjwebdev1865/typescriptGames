@@ -1,11 +1,15 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
+import { useMoves } from "../../context/movesContext";
+import { PieceInfoFE } from "../../App";
 
 interface PieceSpotProps {
-  checkerPiece: any,
-  rowIndex: number
+  checkerPiece: PieceInfoFE,
+  rowIndex: number,
+  setAvailableMoves: Dispatch<SetStateAction<string[]>>
 }
 
-export const PieceSpot = ({checkerPiece, rowIndex}: PieceSpotProps) => {
+export const PieceSpot = ({ checkerPiece, rowIndex, setAvailableMoves }: PieceSpotProps) => {
+  const { getPieceMoves, handlePieceMove} = useMoves()
   const pieceNumber = checkerPiece.key.split("")[1]
   let backgroundColor = '#F5E6D3'
   let textColor = 'black'
@@ -24,6 +28,11 @@ export const PieceSpot = ({checkerPiece, rowIndex}: PieceSpotProps) => {
     buttonColor = 'red'
   }
 
+  const onClickGetPieceMoves = () => {
+    const moveOptions = getPieceMoves(checkerPiece)
+    setAvailableMoves(moveOptions)
+  }
+
   return (
     <li 
       key={`board-spot-${checkerPiece.key}`} 
@@ -37,7 +46,7 @@ export const PieceSpot = ({checkerPiece, rowIndex}: PieceSpotProps) => {
         {checkerPiece.piece !== null ? (
           <button 
             style={{ backgroundColor: buttonColor , padding: '5px 10px', color: buttonTextColor}}
-            onClick={() => alert('clicked')}
+            onClick={onClickGetPieceMoves}
           >{checkerPiece.key}</button>
         ): (
           <>{checkerPiece.key}</>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import BoardStartingLayout from './utils/helperFunctions/boardStartSetup';
 import { getBoardRowsArray } from './utils/helperFunctions/getBoardRowsArray';
 import { PieceSpot } from './component/PieceSpot/pieceSpot';
@@ -19,7 +19,8 @@ export interface Board {
 }
 
 function App() {
-  const { playerTurn, handleInitialBoardSetup}  = useGame()
+  const [availableMoves, setAvailableMoves] = useState<Array<string>>([])
+  const { playerTurn, handleInitialBoardSetup} = useGame()
   let board: Board | string = BoardStartingLayout()
   board = handleInitialBoardSetup(board as Board)
   // TODO: will see row H has a row full of pieces. Need to show them on the board now
@@ -34,7 +35,7 @@ function App() {
         <ul style={{ padding: 0, display: 'grid', gridTemplateColumns: 'repeat(8, auto)', gridTemplateRows: 'repeat(1, 55px)'}}>
           {row.map(piece => {
             
-            return <PieceSpot key={`board-spot-${piece.key}`} checkerPiece={piece} rowIndex={index} />
+            return <PieceSpot key={`board-spot-${piece.key}`} checkerPiece={piece} rowIndex={index} setAvailableMoves={setAvailableMoves}/>
           })}
         </ul>
       </li>
@@ -52,6 +53,21 @@ function App() {
       <ul style={{ padding: 0}}>
         {getBoardRows()}
       </ul>
+
+      <div>
+        <h3>Available Moves</h3>
+        {availableMoves.length > 0 && (
+          <ul>
+            {availableMoves.map(move => {
+              return (
+                <li key={`available-move-${move}`} style={{ listStyle: 'none'}}>
+                  <button onClick={() => alert('move piece now')}>{move}</button>
+                </li>
+              )
+            })}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }
