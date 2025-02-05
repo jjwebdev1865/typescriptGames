@@ -21,13 +21,13 @@ export interface Board {
 function App() {
   const [availableMoves, setAvailableMoves] = useState<Array<string>>([])
   const [selectedPiece, setSelectedPiece] = useState<PieceInfoFE | undefined>(undefined)
+  const [afterInitBoard, setAfterInitBoard] = useState<Board | undefined>(undefined)
   const { playerTurn, handleInitialBoardSetup, updateBoard} = useGame()
+
   let board: Board = BoardStartingLayout()
   board = handleInitialBoardSetup(board as Board)
-  // TODO: will see row H has a row full of pieces. Need to show them on the board now
-  console.log('board', board)
 
-  function getBoardRows() {
+  function getBoardRows(board: Board) {
     const boardDisplay = getBoardRowsArray(board)
     const boardHtmlDisplay = boardDisplay.map((row, index) => {
       const rowKey = row[0].key.split("")[0]
@@ -52,8 +52,10 @@ function App() {
   }
 
   const onClickMovePiece = (move: string) => {
-    const newBoard = updateBoard(selectedPiece as PieceInfoFE, board, move)
-    console.log('onClickMovePiece - newBoard', newBoard)
+    const newBoard: Board = updateBoard(selectedPiece as PieceInfoFE, board, move)
+    setAfterInitBoard(newBoard)
+    setAvailableMoves([])
+    setSelectedPiece(undefined)
   }
 
   return (
@@ -63,7 +65,7 @@ function App() {
       <h2>Player turn: {playerTurn.toUpperCase()}</h2>
 
       <ul style={{ padding: 0}}>
-        {getBoardRows()}
+        {afterInitBoard === undefined ? getBoardRows(board) : getBoardRows(afterInitBoard)}
       </ul>
 
       <div>
