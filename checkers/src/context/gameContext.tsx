@@ -76,6 +76,8 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
 
   function updateBoard(selectedPiece: PieceInfoFE, board: Board, move: string): Board {
     const [moveKey, movePosition] = move.split("")
+    // TODO: for player two, might need to do a copy of selectedPiece below or it will error
+    const [selectedKey, selectedPosition] = selectedPiece.key.split("")
     const newBoard: Board = {}
     Object.entries(board).forEach(([ key, value]) => {
       if (key === moveKey) {
@@ -90,10 +92,21 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
             newRow.push(piece)
           }
         })
-        console.log('newRow', newRow)
+        newBoard[key] = newRow
+      } else if (key === selectedKey) {
+        const newRow = [] as any[]
+        value.forEach(piece => {
+          if (piece.position === Number(selectedPosition)) {
+            newRow.push({
+              position: piece.position,
+              piece: null
+            })
+          } else {
+            newRow.push(piece)
+          }
+        })
         newBoard[key] = newRow
       }
-      // TODO: need to set selectedPiece to null for piece 
       else {
         newBoard[key] = value
       }
