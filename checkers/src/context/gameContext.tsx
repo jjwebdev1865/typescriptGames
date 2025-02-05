@@ -1,9 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { Board } from "../App";
+import { Board, PieceInfoFE } from "../App";
 
 interface GameContextType {
   playerTurn: string;
   handleInitialBoardSetup: (board: Board) => Board;
+  updateBoard: (selectedPiece: PieceInfoFE, board: Board, move: string) => Board;
 }
 
 export const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -73,7 +74,35 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     return startingBoard
   }
 
-  return <GameContext.Provider value={{ playerTurn, handleInitialBoardSetup }}>
+  function updateBoard(selectedPiece: PieceInfoFE, board: Board, move: string): Board {
+    const [moveKey, movePosition] = move.split("")
+    const newBoard: Board = {}
+    Object.entries(board).forEach(([ key, value]) => {
+      if (key === moveKey) {
+        const newRow = [] as any[]
+        value.forEach(piece => {
+          if (piece.position === Number(movePosition)) {
+            newRow.push({
+              position: piece.position,
+              piece: selectedPiece.piece
+            })
+          } else {
+            newRow.push(piece)
+          }
+        })
+        console.log('newRow', newRow)
+        newBoard[key] = newRow
+      }
+      // TODO: need to set selectedPiece to null for piece 
+      else {
+        newBoard[key] = value
+      }
+    })
+
+    return newBoard
+  }
+
+  return <GameContext.Provider value={{ playerTurn, handleInitialBoardSetup, updateBoard }}>
     {children}
   </GameContext.Provider>
 }

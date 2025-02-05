@@ -5,10 +5,11 @@ import { PieceInfoFE } from "../../App";
 interface PieceSpotProps {
   checkerPiece: PieceInfoFE,
   rowIndex: number,
-  setAvailableMoves: Dispatch<SetStateAction<string[]>>
+  setAvailableMoves: Dispatch<SetStateAction<string[]>>,
+  setSelectedPiece: React.Dispatch<React.SetStateAction<PieceInfoFE | undefined>>
 }
 
-export const PieceSpot = ({ checkerPiece, rowIndex, setAvailableMoves }: PieceSpotProps) => {
+export const PieceSpot = ({ checkerPiece, rowIndex, setAvailableMoves, setSelectedPiece }: PieceSpotProps) => {
   const { getPieceMoves, handlePieceMove} = useMoves()
   const pieceNumber = checkerPiece.key.split("")[1]
   let backgroundColor = '#F5E6D3'
@@ -31,6 +32,7 @@ export const PieceSpot = ({ checkerPiece, rowIndex, setAvailableMoves }: PieceSp
   const onClickGetPieceMoves = () => {
     const moveOptions = getPieceMoves(checkerPiece)
     setAvailableMoves(moveOptions)
+    setSelectedPiece(checkerPiece)
   }
 
   return (

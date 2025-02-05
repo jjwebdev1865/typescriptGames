@@ -20,8 +20,9 @@ export interface Board {
 
 function App() {
   const [availableMoves, setAvailableMoves] = useState<Array<string>>([])
-  const { playerTurn, handleInitialBoardSetup} = useGame()
-  let board: Board | string = BoardStartingLayout()
+  const [selectedPiece, setSelectedPiece] = useState<PieceInfoFE | undefined>(undefined)
+  const { playerTurn, handleInitialBoardSetup, updateBoard} = useGame()
+  let board: Board = BoardStartingLayout()
   board = handleInitialBoardSetup(board as Board)
   // TODO: will see row H has a row full of pieces. Need to show them on the board now
   console.log('board', board)
@@ -35,13 +36,24 @@ function App() {
         <ul style={{ padding: 0, display: 'grid', gridTemplateColumns: 'repeat(8, auto)', gridTemplateRows: 'repeat(1, 55px)'}}>
           {row.map(piece => {
             
-            return <PieceSpot key={`board-spot-${piece.key}`} checkerPiece={piece} rowIndex={index} setAvailableMoves={setAvailableMoves}/>
+            return <PieceSpot 
+              key={`board-spot-${piece.key}`} 
+              checkerPiece={piece} 
+              rowIndex={index} 
+              setAvailableMoves={setAvailableMoves}
+              setSelectedPiece={setSelectedPiece}
+            />
           })}
         </ul>
       </li>
     })
 
     return boardHtmlDisplay
+  }
+
+  const onClickMovePiece = (move: string) => {
+    const newBoard = updateBoard(selectedPiece as PieceInfoFE, board, move)
+    console.log('onClickMovePiece - newBoard', newBoard)
   }
 
   return (
@@ -55,13 +67,13 @@ function App() {
       </ul>
 
       <div>
-        <h3>Available Moves</h3>
+        <h3>Available Moves for {selectedPiece?.key}</h3>
         {availableMoves.length > 0 && (
           <ul>
             {availableMoves.map(move => {
               return (
                 <li key={`available-move-${move}`} style={{ listStyle: 'none'}}>
-                  <button onClick={() => alert('move piece now')}>{move}</button>
+                  <button onClick={() => onClickMovePiece(move)}>{move}</button>
                 </li>
               )
             })}
