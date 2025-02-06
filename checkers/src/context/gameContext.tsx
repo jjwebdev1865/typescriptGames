@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, createContext, useContext, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, createContext, useContext, useState } from "react";
 import { Board, PieceInfoFE } from "../App";
 
 interface GameContextType {
@@ -45,12 +45,12 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
       } else if (['A', 'B', 'C'].includes(key)) {
         value.forEach((piece: any, index: number) => {
           const isDivisible = index % 2 === 0
-          if (isDivisible && (key === 'A' || key === 'C')) {
+          if (!isDivisible && (key === 'A' || key === 'C')) {
             newRow.push({
               position: piece.position,
               piece: 2
             })
-          } else if (!isDivisible && key === 'B') {
+          } else if (isDivisible && key === 'B') {
             newRow.push({
               position: piece.position,
               piece: 2

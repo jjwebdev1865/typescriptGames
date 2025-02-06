@@ -1,5 +1,5 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { Board, PieceInfoFE } from "../App";
+import { createContext, useContext } from "react";
+import { PieceInfoFE } from "../App";
 import { getPlayerOneMoves, getPlayerTwoMoves } from "../utils/moveFunctions/getMoves";
 
 interface MovesContextType {

@@ -125,6 +125,5 @@ export function getPlayerTwoMoves(pieceKey: string): string[] {
       console.log('not valid')
   }
 
-  // return newMoves
-  return ["D4", "D6"]
+  return newMoves
 }
