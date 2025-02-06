@@ -19,7 +19,7 @@ export interface Board {
 }
 
 function App() {
-  const { playerTurn, handleInitialBoardSetup, updateBoard } = useGame()
+  const { playerTurn, setPlayerTurn, handleInitialBoardSetup, updateBoard } = useGame()
   let initBoard: Board = BoardStartingLayout()
   initBoard = handleInitialBoardSetup(initBoard as Board)
 
@@ -56,6 +56,11 @@ function App() {
     setBoard(newBoard)
     setAvailableMoves([])
     setSelectedPiece(undefined)
+    if (playerTurn === 'p1') {
+      setPlayerTurn('p2')
+    } else {
+      setPlayerTurn('p1')
+    }
   }
 
   return (

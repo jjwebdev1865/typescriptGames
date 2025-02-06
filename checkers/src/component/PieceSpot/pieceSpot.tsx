@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { useMoves } from "../../context/movesContext";
 import { PieceInfoFE } from "../../App";
+import { useGame } from "../../context/gameContext";
 
 interface PieceSpotProps {
   checkerPiece: PieceInfoFE,
@@ -11,6 +12,7 @@ interface PieceSpotProps {
 
 export const PieceSpot = ({ checkerPiece, rowIndex, setAvailableMoves, setSelectedPiece }: PieceSpotProps) => {
   const { getPieceMoves} = useMoves()
+  const { playerTurn } = useGame()
   const pieceNumber = checkerPiece.key.split("")[1]
   let backgroundColor = '#F5E6D3'
   let textColor = 'black'
@@ -28,11 +30,23 @@ export const PieceSpot = ({ checkerPiece, rowIndex, setAvailableMoves, setSelect
   if (checkerPiece.piece !== null && checkerPiece.piece === 1) {
     buttonColor = 'red'
   }
+  if (getDisabledStatus()) {
+    buttonColor = 'gray'
+  }
 
   const onClickGetPieceMoves = () => {
     const moveOptions = getPieceMoves(checkerPiece)
     setAvailableMoves(moveOptions)
     setSelectedPiece(checkerPiece)
+  }
+
+  function getDisabledStatus(): boolean {
+    const playerTurnKey = playerTurn.split("")[1]
+    if (checkerPiece.piece !== Number(playerTurnKey)) {
+      return true
+    } else {
+      return false
+    }
   }
 
   return (
@@ -56,6 +70,7 @@ export const PieceSpot = ({ checkerPiece, rowIndex, setAvailableMoves, setSelect
               zIndex: 2
             }}
             onClick={onClickGetPieceMoves}
+            disabled={getDisabledStatus()}
           >{checkerPiece.key}</button>
         ): (
           <>{checkerPiece.key}</>

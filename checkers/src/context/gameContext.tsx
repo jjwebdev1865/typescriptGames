@@ -1,8 +1,9 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, createContext, useContext, useEffect, useState } from "react";
 import { Board, PieceInfoFE } from "../App";
 
 interface GameContextType {
   playerTurn: string;
+  setPlayerTurn: Dispatch<SetStateAction<string>>
   handleInitialBoardSetup: (board: Board) => Board;
   updateBoard: (selectedPiece: PieceInfoFE, board: Board, move: string) => Board;
 }
@@ -15,10 +16,6 @@ interface GameProviderProps {
 
 export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
   const [playerTurn, setPlayerTurn] = useState('p1');
-
-  useEffect(() => {
-    setPlayerTurn('p1')
-  }, [])
 
   function handleInitialBoardSetup(board: Board): Board {
     const startingBoard: Board = {} as Board
@@ -115,7 +112,7 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     return newBoard
   }
 
-  return <GameContext.Provider value={{ playerTurn, handleInitialBoardSetup, updateBoard }}>
+  return <GameContext.Provider value={{ playerTurn, setPlayerTurn, handleInitialBoardSetup, updateBoard }}>
     {children}
   </GameContext.Provider>
 }
