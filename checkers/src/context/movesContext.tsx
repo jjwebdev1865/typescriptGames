@@ -1,9 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { Board, PieceInfoFE } from "../App";
-import { getPlayerOneMoves } from "../utils/moveFunctions/getPlayerOneMoves";
+import { getPlayerOneMoves, getPlayerTwoMoves } from "../utils/moveFunctions/getMoves";
 
 interface MovesContextType {
-  handlePieceMove: () => void;
   getPieceMoves: (checkerPiece: PieceInfoFE) => string[];
 }
 
@@ -15,20 +14,19 @@ interface MovesProviderProps {
 
 export const MovesProvider: React.FC<MovesProviderProps> = ({ children }) => {
 
-  function handlePieceMove(): void {
-    console.log('here handlePieceMove')
-  }
-
   function getPieceMoves(checkerPiece: PieceInfoFE): string[] {
     if (checkerPiece.piece === 1) {
       const newMoves: string[] = getPlayerOneMoves(checkerPiece.key)
+      return newMoves
+    } else if (checkerPiece.piece === 2) {
+      const newMoves: string[] = getPlayerTwoMoves(checkerPiece.key)
       return newMoves
     } else {
       return [] as string[]
     }
   }
 
-  return <MovesContext.Provider value={{ handlePieceMove, getPieceMoves }}>
+  return <MovesContext.Provider value={{ getPieceMoves }}>
     {children}
   </MovesContext.Provider>
 }

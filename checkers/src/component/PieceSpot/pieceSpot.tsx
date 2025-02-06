@@ -10,7 +10,7 @@ interface PieceSpotProps {
 }
 
 export const PieceSpot = ({ checkerPiece, rowIndex, setAvailableMoves, setSelectedPiece }: PieceSpotProps) => {
-  const { getPieceMoves, handlePieceMove} = useMoves()
+  const { getPieceMoves} = useMoves()
   const pieceNumber = checkerPiece.key.split("")[1]
   let backgroundColor = '#F5E6D3'
   let textColor = 'black'

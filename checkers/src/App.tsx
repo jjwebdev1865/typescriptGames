@@ -19,13 +19,13 @@ export interface Board {
 }
 
 function App() {
-  const [availableMoves, setAvailableMoves] = useState<Array<string>>([])
-  const [selectedPiece, setSelectedPiece] = useState<PieceInfoFE | undefined>(undefined)
-  const [afterInitBoard, setAfterInitBoard] = useState<Board | undefined>(undefined)
-  const { playerTurn, handleInitialBoardSetup, updateBoard} = useGame()
+  const { playerTurn, handleInitialBoardSetup, updateBoard } = useGame()
+  let initBoard: Board = BoardStartingLayout()
+  initBoard = handleInitialBoardSetup(initBoard as Board)
 
-  let board: Board = BoardStartingLayout()
-  board = handleInitialBoardSetup(board as Board)
+  const [ availableMoves, setAvailableMoves ] = useState<Array<string>>([])
+  const [ selectedPiece, setSelectedPiece ] = useState<PieceInfoFE | undefined>(undefined)
+  const [ board, setBoard ] = useState<Board>(initBoard)
 
   function getBoardRows(board: Board) {
     const boardDisplay = getBoardRowsArray(board)
@@ -53,7 +53,7 @@ function App() {
 
   const onClickMovePiece = (move: string) => {
     const newBoard: Board = updateBoard(selectedPiece as PieceInfoFE, board, move)
-    setAfterInitBoard(newBoard)
+    setBoard(newBoard)
     setAvailableMoves([])
     setSelectedPiece(undefined)
   }
@@ -65,7 +65,7 @@ function App() {
       <h2>Player turn: {playerTurn.toUpperCase()}</h2>
 
       <ul style={{ padding: 0}}>
-        {afterInitBoard === undefined ? getBoardRows(board) : getBoardRows(afterInitBoard)}
+        {board === undefined ? getBoardRows(initBoard) : getBoardRows(board)}
       </ul>
 
       <div>
