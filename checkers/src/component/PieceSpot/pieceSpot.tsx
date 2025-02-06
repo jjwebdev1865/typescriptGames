@@ -38,16 +38,23 @@ export const PieceSpot = ({ checkerPiece, rowIndex, setAvailableMoves, setSelect
   return (
     <li 
       key={`board-spot-${checkerPiece.key}`} 
-      style={{ 
+      style={{
         listStyle: 'none', 
         backgroundColor: backgroundColor,
         color: textColor,
-        textAlign: 'center'
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
       }}
       >
         {checkerPiece.piece !== null ? (
           <button 
-            style={{ backgroundColor: buttonColor , padding: '5px 10px', color: buttonTextColor}}
+            style={{ 
+              backgroundColor: buttonColor , 
+              padding: '5px 10px', 
+              color: buttonTextColor,
+              zIndex: 2
+            }}
             onClick={onClickGetPieceMoves}
           >{checkerPiece.key}</button>
         ): (

@@ -33,7 +33,7 @@ function App() {
       const rowKey = row[0].key.split("")[0]
 
       return <li key={`board-row-${rowKey}`} style={{ listStyle: 'none'}}>
-        <ul style={{ padding: 0, display: 'grid', gridTemplateColumns: 'repeat(8, auto)', gridTemplateRows: 'repeat(1, 55px)'}}>
+        <ul style={{ padding: 0, display: 'grid', gridTemplateColumns: 'repeat(8, minmax(0, 1fr))', gridTemplateRows: 'repeat(1, 55px)'}}>
           {row.map(piece => {
             
             return <PieceSpot 
