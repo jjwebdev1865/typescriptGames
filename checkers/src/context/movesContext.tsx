@@ -20,10 +20,8 @@ export const MovesProvider: React.FC<MovesProviderProps> = ({ children }) => {
   }
 
   function getPieceMoves(checkerPiece: PieceInfoFE): string[] {
-    console.log('here getPieceMoves')
     if (checkerPiece.piece === 1) {
-      const newMoves: string[] = getPlayerOneMoves()
-      console.log('newMoves', newMoves)
+      const newMoves: string[] = getPlayerOneMoves(checkerPiece.key)
       return newMoves
     } else {
       return [] as string[]
