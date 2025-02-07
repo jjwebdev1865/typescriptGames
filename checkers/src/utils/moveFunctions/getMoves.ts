@@ -238,10 +238,66 @@ export function getPlayerTwoMoves(pieceKey: string): string[] {
   
   switch(rowKey.toUpperCase()) {
     case 'A':
-      console.log('a')
+      switch(Number(position)) {
+        case 1:
+          newMoves = ['B2']
+          break;
+        case 2:
+          newMoves = ['B1', 'B3']
+          break;
+        case 3:
+          newMoves = ['B2', 'B4']
+          break;
+        case 4:
+          newMoves = ['B3', 'B5']
+          break;
+        case 5:
+          newMoves = ['B4', 'B6']
+          break;
+        case 6:
+          newMoves = ['B5', 'B7']
+          break;
+        case 7:
+          newMoves = ['B6', 'B8']
+          break;
+        case 8:
+          newMoves = ['B7']
+          break;
+        default:
+          console.log('no valid')
+          break
+      }
       break;
     case 'B':
-      console.log('b')
+      switch(Number(position)) {
+        case 1:
+          newMoves = ['C2']
+          break;
+        case 2:
+          newMoves = ['C1', 'C3']
+          break;
+        case 3:
+          newMoves = ['C2', 'C4']
+          break;
+        case 4:
+          newMoves = ['C3', 'C5']
+          break;
+        case 5:
+          newMoves = ['C4', 'C6']
+          break;
+        case 6:
+          newMoves = ['C5', 'C7']
+          break;
+        case 7:
+          newMoves = ['C6', 'C8']
+          break;
+        case 8:
+          newMoves = ['C7']
+          break;
+        default:
+          console.log('no valid')
+          break
+      }
       break;
     case 'C':
       switch(Number(position)) {

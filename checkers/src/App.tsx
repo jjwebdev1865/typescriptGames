@@ -3,6 +3,7 @@ import BoardStartingLayout from './utils/helperFunctions/boardStartSetup';
 import { getBoardRowsArray } from './utils/helperFunctions/getBoardRowsArray';
 import { PieceSpot } from './component/PieceSpot/pieceSpot';
 import { useGame } from './context/gameContext';
+import { getPlayerOneAttacks } from './utils/moveFunctions/getAttackMoves';
 
 export type PieceInfo = {
   position: number,
@@ -14,9 +15,12 @@ export type PieceInfoFE = {
   piece: null
 }
 
+export type MoveType = 'move' | 'attack'
 type PieceMove = {
   piece: string
-  disabled: boolean
+  disabled: boolean,
+  type: MoveType,
+  attackPieceToRemove?: string
 }
 
 export interface Board {
@@ -32,16 +36,27 @@ function App() {
   const [ selectedPiece, setSelectedPiece ] = useState<PieceInfoFE | undefined>(undefined)
   const [ board, setBoard ] = useState<Board>(initBoard)
 
-  function getDisabledMoves(move: string): PieceMove{
+  function getAvailableMoveOptions(move: string): PieceMove {
     const [avKey, avPosition] = move.split("")
     const boardRow = board[avKey]
-    let newMove: PieceMove = {piece: move, disabled: false}
+    let newMove: PieceMove = {piece: move, disabled: false, type: 'move'}
     boardRow.forEach((br: PieceInfo) => {
       if (br.position === Number(avPosition) && br.piece !== null) {
         // TODO: future add attack stuff here
-        newMove = {
-          ...newMove,
-          disabled: true
+        const playerTurnKey = playerTurn.split("")[1]
+        if (Number(playerTurnKey) !== br.piece) {
+          const attackMove = getPlayerOneAttacks(move)
+          newMove = {
+            piece: attackMove,
+            disabled: false,
+            type: 'attack',
+            attackPieceToRemove: move
+          }
+        } else {
+          newMove = {
+            ...newMove,
+            disabled: true
+          }
         }
       }
     })
@@ -72,8 +87,9 @@ function App() {
     return boardHtmlDisplay
   }
 
-  const onClickMovePiece = (move: string) => {
-    const newBoard: Board = updateBoard(selectedPiece as PieceInfoFE, board, move)
+  const onClickMovePiece = (piece: PieceMove) => {
+    const {piece: updatedPieceMove, type, attackPieceToRemove} = piece
+    const newBoard: Board = updateBoard(selectedPiece as PieceInfoFE, board, updatedPieceMove, type, attackPieceToRemove)
     setBoard(newBoard)
     setAvailableMoves([])
     setSelectedPiece(undefined)
@@ -99,10 +115,10 @@ function App() {
         {availableMoves.length > 0 && (
           <ul>
             {availableMoves.map(move => {
-              const updatedMove = getDisabledMoves(move)
+              const updatedMove = getAvailableMoveOptions(move)
               return (
                 <li key={`available-move-${move}`} style={{ listStyle: 'none'}}>
-                  <button disabled={updatedMove.disabled} onClick={() => onClickMovePiece(move)}>{move}</button>
+                  <button disabled={updatedMove.disabled} onClick={() => onClickMovePiece(updatedMove)}>{updatedMove.piece}</button>
                 </li>
               )
             })}

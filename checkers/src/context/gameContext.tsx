@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction, createContext, useContext, useState } from "react";
-import { Board, PieceInfoFE } from "../App";
+import { Board, MoveType, PieceInfoFE } from "../App";
 
 interface GameContextType {
   playerTurn: string;
   setPlayerTurn: Dispatch<SetStateAction<string>>
   handleInitialBoardSetup: (board: Board) => Board;
-  updateBoard: (selectedPiece: PieceInfoFE, board: Board, move: string) => Board;
+  updateBoard: (selectedPiece: PieceInfoFE, board: Board, move: string, type: MoveType, pieceToRemove: string | undefined) => Board;
 }
 
 export const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -71,7 +71,7 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     return startingBoard
   }
 
-  function updateBoard(selectedPiece: PieceInfoFE, board: Board, move: string): Board {
+  function updateBoard(selectedPiece: PieceInfoFE, board: Board, move: string, type: MoveType, pieceToRemove: string | undefined): Board {
     const [moveKey, movePosition] = move.split("")
     // TODO: for player two, might need to do a copy of selectedPiece below or it will error
     const [selectedKey, selectedPosition] = selectedPiece.key.split("")
@@ -108,6 +108,27 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
         newBoard[key] = value
       }
     })
+
+    // TODO: cleanup
+    if (type === 'attack' && pieceToRemove !== undefined) {
+      const [deletionKey, deletionPosition] = pieceToRemove.split("")
+      Object.entries(board).forEach(([ key, value]) => {
+        const newRow = [] as any[]
+        if (key === deletionKey) {
+          value.forEach(piece => {
+            if (Number(deletionPosition) === piece.position) {
+              newRow.push({
+                position: piece.position,
+                piece: null
+              })
+            } else {
+              newRow.push(piece)
+            }
+          })
+          newBoard[key] = newRow
+        }
+      })
+    }
 
     return newBoard
   }
