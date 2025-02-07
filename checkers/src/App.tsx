@@ -45,7 +45,8 @@ function App() {
         // TODO: future add attack stuff here
         const playerTurnKey = playerTurn.split("")[1]
         if (Number(playerTurnKey) !== br.piece) {
-          const attackMove = getPlayerOneAttacks(move)
+          console.log('selectedPiece', selectedPiece)
+          const attackMove = getPlayerOneAttacks(move, selectedPiece?.key as string)
           newMove = {
             piece: attackMove,
             disabled: false,
