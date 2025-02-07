@@ -14,6 +14,11 @@ export type PieceInfoFE = {
   piece: null
 }
 
+type PieceMove = {
+  piece: string
+  disabled: boolean
+}
+
 export interface Board {
   [key: string]: any[],
 }
@@ -26,6 +31,22 @@ function App() {
   const [ availableMoves, setAvailableMoves ] = useState<Array<string>>([])
   const [ selectedPiece, setSelectedPiece ] = useState<PieceInfoFE | undefined>(undefined)
   const [ board, setBoard ] = useState<Board>(initBoard)
+
+  function getDisabledMoves(move: string): PieceMove{
+    const [avKey, avPosition] = move.split("")
+    const boardRow = board[avKey]
+    let newMove: PieceMove = {piece: move, disabled: false}
+    boardRow.forEach((br: PieceInfo) => {
+      if (br.position === Number(avPosition) && br.piece !== null) {
+        // TODO: future add attack stuff here
+        newMove = {
+          ...newMove,
+          disabled: true
+        }
+      }
+    })
+    return newMove
+  }
 
   function getBoardRows(board: Board) {
     const boardDisplay = getBoardRowsArray(board)
@@ -78,9 +99,10 @@ function App() {
         {availableMoves.length > 0 && (
           <ul>
             {availableMoves.map(move => {
+              const updatedMove = getDisabledMoves(move)
               return (
                 <li key={`available-move-${move}`} style={{ listStyle: 'none'}}>
-                  <button onClick={() => onClickMovePiece(move)}>{move}</button>
+                  <button disabled={updatedMove.disabled} onClick={() => onClickMovePiece(move)}>{move}</button>
                 </li>
               )
             })}
