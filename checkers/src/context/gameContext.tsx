@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, createContext, useContext, useState } from "react";
-import { Board, MoveType, PieceInfoFE } from "../App";
+import { Board, MoveType, PieceInfoFE } from "../types";
+
 
 interface GameContextType {
   playerTurn: string;

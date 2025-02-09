@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { useMoves } from "../../context/movesContext";
-import { PieceInfoFE } from "../../App";
 import { useGame } from "../../context/gameContext";
+import { PieceInfoFE } from "../../types";
 
 interface PieceSpotProps {
   checkerPiece: PieceInfoFE,

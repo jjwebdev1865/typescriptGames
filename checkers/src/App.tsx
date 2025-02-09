@@ -5,28 +5,8 @@ import { PieceSpot } from './component/PieceSpot/pieceSpot';
 import { useGame } from './context/gameContext';
 import { getPlayerOneAttacks, getPlayerTwoAttacks } from './utils/moveFunctions/getAttackMoves';
 import { ChessPiece } from './component';
+import { Board, PieceInfo, PieceInfoFE, PieceMove } from './types';
 
-export type PieceInfo = {
-  position: number,
-  piece: null
-}
-
-export type PieceInfoFE = {
-  key: string
-  piece: null
-}
-
-export type MoveType = 'move' | 'attack'
-export type PieceMove = {
-  piece: string
-  disabled: boolean,
-  type: MoveType,
-  attackPieceToRemove?: string
-}
-
-export interface Board {
-  [key: string]: any[],
-}
 
 function App() {
   const { playerTurn, setPlayerTurn, handleInitialBoardSetup, updateBoard } = useGame()
@@ -110,16 +90,27 @@ function App() {
         {board === undefined ? getBoardRows(initBoard) : getBoardRows(board)}
       </ul>
 
-      <div>
-        <h3>Available Moves for {selectedPiece?.key}</h3>
-        {availableMoves.length > 0 && (
-          <ul>
-            {availableMoves.map(move => {
-              const updatedMove = getAvailableMoveOptions(move)
-              return <ChessPiece key={`available-move-piece-${move}`} updatedMove={updatedMove} move={move} onClickMovePiece={onClickMovePiece} />
-            })}
-          </ul>
-        )}
+      <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 25%'}}>
+        <div>
+          <h3>Available Moves for {selectedPiece?.key}</h3>
+          {availableMoves.length > 0 && (
+            <ul>
+              {availableMoves.map(move => {
+                const updatedMove = getAvailableMoveOptions(move)
+                return <ChessPiece key={`available-move-piece-${move}`} updatedMove={updatedMove} move={move} onClickMovePiece={onClickMovePiece} />
+              })}
+            </ul>
+          )}
+        </div>
+        <div>
+          <h3>Piece count</h3>
+          <div>
+            <h4>Player One</h4>
+          </div>
+          <div>
+            <h4>Player Two</h4>
+          </div>
+        </div>
       </div>
     </div>
   );

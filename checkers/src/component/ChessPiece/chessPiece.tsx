@@ -1,4 +1,4 @@
-import { PieceMove } from "../../App"
+import { PieceMove } from "../../types"
 
 interface ChessPieceProps {
   updatedMove: PieceMove
