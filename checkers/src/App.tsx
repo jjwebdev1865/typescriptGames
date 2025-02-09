@@ -3,7 +3,7 @@ import BoardStartingLayout from './utils/helperFunctions/boardStartSetup';
 import { getBoardRowsArray } from './utils/helperFunctions/getBoardRowsArray';
 import { PieceSpot } from './component/PieceSpot/pieceSpot';
 import { useGame } from './context/gameContext';
-import { getPlayerOneAttacks } from './utils/moveFunctions/getAttackMoves';
+import { getPlayerOneAttacks, getPlayerTwoAttacks } from './utils/moveFunctions/getAttackMoves';
 
 export type PieceInfo = {
   position: number,
@@ -45,8 +45,7 @@ function App() {
         // TODO: future add attack stuff here
         const playerTurnKey = playerTurn.split("")[1]
         if (Number(playerTurnKey) !== br.piece) {
-          console.log('selectedPiece', selectedPiece)
-          const attackMove = getPlayerOneAttacks(move, selectedPiece?.key as string)
+          const attackMove = playerTurn === 'p1' ?  getPlayerOneAttacks(move, selectedPiece?.key as string) : getPlayerTwoAttacks(move, selectedPiece?.key as string)
           newMove = {
             piece: attackMove,
             disabled: false,
