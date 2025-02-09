@@ -4,6 +4,7 @@ import { getBoardRowsArray } from './utils/helperFunctions/getBoardRowsArray';
 import { PieceSpot } from './component/PieceSpot/pieceSpot';
 import { useGame } from './context/gameContext';
 import { getPlayerOneAttacks, getPlayerTwoAttacks } from './utils/moveFunctions/getAttackMoves';
+import { ChessPiece } from './component';
 
 export type PieceInfo = {
   position: number,
@@ -16,7 +17,7 @@ export type PieceInfoFE = {
 }
 
 export type MoveType = 'move' | 'attack'
-type PieceMove = {
+export type PieceMove = {
   piece: string
   disabled: boolean,
   type: MoveType,
@@ -42,7 +43,6 @@ function App() {
     let newMove: PieceMove = {piece: move, disabled: false, type: 'move'}
     boardRow.forEach((br: PieceInfo) => {
       if (br.position === Number(avPosition) && br.piece !== null) {
-        // TODO: future add attack stuff here
         const playerTurnKey = playerTurn.split("")[1]
         if (Number(playerTurnKey) !== br.piece) {
           const attackMove = playerTurn === 'p1' ?  getPlayerOneAttacks(move, selectedPiece?.key as string) : getPlayerTwoAttacks(move, selectedPiece?.key as string)
@@ -116,11 +116,7 @@ function App() {
           <ul>
             {availableMoves.map(move => {
               const updatedMove = getAvailableMoveOptions(move)
-              return (
-                <li key={`available-move-${move}`} style={{ listStyle: 'none'}}>
-                  <button disabled={updatedMove.disabled} onClick={() => onClickMovePiece(updatedMove)}>{updatedMove.piece}</button>
-                </li>
-              )
+              return <ChessPiece key={`available-move-piece-${move}`} updatedMove={updatedMove} move={move} onClickMovePiece={onClickMovePiece} />
             })}
           </ul>
         )}
