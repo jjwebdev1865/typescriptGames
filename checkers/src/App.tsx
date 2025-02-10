@@ -6,6 +6,7 @@ import { useGame } from './context/gameContext';
 import { getPlayerOneAttacks, getPlayerTwoAttacks } from './utils/moveFunctions/getAttackMoves';
 import { ChessPiece } from './component';
 import { Board, PieceInfo, PieceInfoFE, PieceMove } from './types';
+import { PlayerActionsContainer, StyledBoardRow, StyledBoardRowContainer } from './App.styles';
 
 
 function App() {
@@ -48,8 +49,8 @@ function App() {
     const boardHtmlDisplay = boardDisplay.map((row, index) => {
       const rowKey = row[0].key.split("")[0]
 
-      return <li key={`board-row-${rowKey}`} style={{ listStyle: 'none'}}>
-        <ul style={{ padding: 0, display: 'grid', gridTemplateColumns: 'repeat(8, minmax(0, 1fr))', gridTemplateRows: 'repeat(1, 55px)'}}>
+      return <StyledBoardRowContainer key={`board-row-${rowKey}`}>
+        <StyledBoardRow>
           {row.map(piece => {
             
             return <PieceSpot 
@@ -60,8 +61,8 @@ function App() {
               setSelectedPiece={setSelectedPiece}
             />
           })}
-        </ul>
-      </li>
+        </StyledBoardRow>
+      </StyledBoardRowContainer>
     })
 
     return boardHtmlDisplay
@@ -89,7 +90,7 @@ function App() {
         {board === undefined ? getBoardRows(initBoard) : getBoardRows(board)}
       </ul>
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 25%'}}>
+      <PlayerActionsContainer>
         <div>
           <h3>Available Moves for {selectedPiece?.key}</h3>
           {availableMoves.length > 0 && (
@@ -110,7 +111,7 @@ function App() {
             <p><strong>Player Twu:</strong> {playerTwoPieceCount}</p>
           </div>
         </div>
-      </div>
+      </PlayerActionsContainer>
     </div>
   );
 }
