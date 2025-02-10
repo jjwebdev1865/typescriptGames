@@ -17,3 +17,8 @@ export const StyledBoardRow = styled.ul`
   grid-template-columns: repeat(8, minmax(0, 1fr));
   grid-template-rows: repeat(1, 55px);
 `
+
+export const StyledAvailableMovesList = styled.ul`
+  display: flex;
+  gap: 10px
+`

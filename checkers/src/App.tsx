@@ -4,15 +4,15 @@ import { getBoardRowsArray } from './utils/helperFunctions/getBoardRowsArray';
 import { PieceSpot } from './component/PieceSpot/pieceSpot';
 import { useGame } from './context/gameContext';
 import { getPlayerOneAttacks, getPlayerTwoAttacks } from './utils/moveFunctions/getAttackMoves';
-import { ChessPiece } from './component';
+import { ChessPieceMove } from './component';
 import { Board, PieceInfo, PieceInfoFE, PieceMove } from './types';
-import { PlayerActionsContainer, StyledBoardRow, StyledBoardRowContainer } from './App.styles';
+import { PlayerActionsContainer, StyledAvailableMovesList, StyledBoardRow, StyledBoardRowContainer } from './App.styles';
 
 
 function App() {
   const { playerTurn, setPlayerTurn, handleInitialBoardSetup, updateBoard, playerOnePieceCount, playerTwoPieceCount } = useGame()
   let initBoard: Board = BoardStartingLayout()
-  initBoard = handleInitialBoardSetup(initBoard as Board)
+  initBoard = handleInitialBoardSetup(initBoard)
 
   const [ availableMoves, setAvailableMoves ] = useState<Array<string>>([])
   const [ selectedPiece, setSelectedPiece ] = useState<PieceInfoFE | undefined>(undefined)
@@ -94,12 +94,12 @@ function App() {
         <div>
           <h3>Available Moves for {selectedPiece?.key}</h3>
           {availableMoves.length > 0 && (
-            <ul>
+            <StyledAvailableMovesList>
               {availableMoves.map(move => {
                 const updatedMove = getAvailableMoveOptions(move)
-                return <ChessPiece key={`available-move-piece-${move}`} updatedMove={updatedMove} move={move} onClickMovePiece={onClickMovePiece} />
+                return <ChessPieceMove key={`available-move-piece-${move}`} updatedMove={updatedMove} move={move} onClickMovePiece={onClickMovePiece} />
               })}
-            </ul>
+            </StyledAvailableMovesList>
           )}
         </div>
         <div>

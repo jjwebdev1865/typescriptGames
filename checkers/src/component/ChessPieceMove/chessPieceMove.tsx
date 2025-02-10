@@ -1,16 +1,17 @@
 import { PieceMove } from "../../types"
+import { ChessPieceMoveItem } from "./chessPiece.styles"
 
-interface ChessPieceProps {
+interface ChessPieceMoveProps {
   updatedMove: PieceMove
   move: string
   onClickMovePiece: (piece: PieceMove) => void
 }
 
-export const ChessPiece = ({ updatedMove, move, onClickMovePiece }: ChessPieceProps) => {
+export const ChessPieceMove = ({ updatedMove, move, onClickMovePiece }: ChessPieceMoveProps) => {
   const { disabled, piece } = updatedMove
   return (
-    <li key={`available-move-${move}`} style={{ listStyle: 'none'}}>
+    <ChessPieceMoveItem>
       <button disabled={disabled} onClick={() => onClickMovePiece(updatedMove)}>{piece}</button>
-    </li>
+    </ChessPieceMoveItem>
   )
 }

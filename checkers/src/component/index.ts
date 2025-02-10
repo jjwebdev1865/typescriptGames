@@ -1,1 +1,1 @@
-export * from './ChessPiece/chessPiece'
+export * from './ChessPieceMove/chessPieceMove'
