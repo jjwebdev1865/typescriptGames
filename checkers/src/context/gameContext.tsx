@@ -1,12 +1,14 @@
 import { Dispatch, SetStateAction, createContext, useContext, useState } from "react";
-import { Board, MoveType, PieceInfoFE } from "../types";
+import { Board, MoveType, PieceInfoFE, PieceMove } from "../types";
 
 
 interface GameContextType {
   playerTurn: string;
   setPlayerTurn: Dispatch<SetStateAction<string>>
   handleInitialBoardSetup: (board: Board) => Board;
-  updateBoard: (selectedPiece: PieceInfoFE, board: Board, move: string, type: MoveType, pieceToRemove: string | undefined) => Board;
+  updateBoard: (selectedPiece: PieceInfoFE, board: Board, updatedPiece: PieceMove) => Board;
+  playerOnePieceCount: number
+  playerTwoPieceCount: number
 }
 
 export const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -17,6 +19,8 @@ interface GameProviderProps {
 
 export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
   const [playerTurn, setPlayerTurn] = useState('p1');
+  const [playerOnePieceCount, setPlayerOnePieceCount] = useState(12)
+  const [playerTwoPieceCount, setPlayerTwoPieceCount] = useState(12)
 
   function handleInitialBoardSetup(board: Board): Board {
     const startingBoard: Board = {} as Board
@@ -72,9 +76,9 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     return startingBoard
   }
 
-  function updateBoard(selectedPiece: PieceInfoFE, board: Board, move: string, type: MoveType, pieceToRemove: string | undefined): Board {
-    const [moveKey, movePosition] = move.split("")
-    // TODO: for player two, might need to do a copy of selectedPiece below or it will error
+  function updateBoard(selectedPiece: PieceInfoFE, board: Board, updatedPiece: PieceMove): Board {
+    const { piece, type, attackPieceToRemove } = updatedPiece
+    const [moveKey, movePosition] = piece.split("")
     const [selectedKey, selectedPosition] = selectedPiece.key.split("")
     const newBoard: Board = {}
     Object.entries(board).forEach(([ key, value]) => {
@@ -111,8 +115,8 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     })
 
     // TODO: cleanup
-    if (type === 'attack' && pieceToRemove !== undefined) {
-      const [deletionKey, deletionPosition] = pieceToRemove.split("")
+    if (type === 'attack' && attackPieceToRemove !== undefined) {
+      const [deletionKey, deletionPosition] = attackPieceToRemove.split("")
       Object.entries(board).forEach(([ key, value]) => {
         const newRow = [] as any[]
         if (key === deletionKey) {
@@ -129,12 +133,17 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
           newBoard[key] = newRow
         }
       })
+      if (selectedPiece.piece === 1) {
+        setPlayerTwoPieceCount(playerTwoPieceCount - 1)
+      } else {
+        setPlayerOnePieceCount(playerOnePieceCount - 1)
+      }
     }
 
     return newBoard
   }
 
-  return <GameContext.Provider value={{ playerTurn, setPlayerTurn, handleInitialBoardSetup, updateBoard }}>
+  return <GameContext.Provider value={{ playerTurn, setPlayerTurn, handleInitialBoardSetup, updateBoard, playerOnePieceCount, playerTwoPieceCount }}>
     {children}
   </GameContext.Provider>
 }

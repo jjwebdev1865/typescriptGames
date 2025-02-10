@@ -9,7 +9,7 @@ import { Board, PieceInfo, PieceInfoFE, PieceMove } from './types';
 
 
 function App() {
-  const { playerTurn, setPlayerTurn, handleInitialBoardSetup, updateBoard } = useGame()
+  const { playerTurn, setPlayerTurn, handleInitialBoardSetup, updateBoard, playerOnePieceCount, playerTwoPieceCount } = useGame()
   let initBoard: Board = BoardStartingLayout()
   initBoard = handleInitialBoardSetup(initBoard as Board)
 
@@ -68,8 +68,7 @@ function App() {
   }
 
   const onClickMovePiece = (piece: PieceMove) => {
-    const {piece: updatedPieceMove, type, attackPieceToRemove} = piece
-    const newBoard: Board = updateBoard(selectedPiece as PieceInfoFE, board, updatedPieceMove, type, attackPieceToRemove)
+    const newBoard: Board = updateBoard(selectedPiece as PieceInfoFE, board, piece)
     setBoard(newBoard)
     setAvailableMoves([])
     setSelectedPiece(undefined)
@@ -105,10 +104,10 @@ function App() {
         <div>
           <h3>Piece count</h3>
           <div>
-            <h4>Player One</h4>
+            <p><strong>Player One:</strong> {playerOnePieceCount}</p>
           </div>
           <div>
-            <h4>Player Two</h4>
+            <p><strong>Player Twu:</strong> {playerTwoPieceCount}</p>
           </div>
         </div>
       </div>
