@@ -1,11 +1,11 @@
 export type PieceInfo = {
     position: number,
-    piece: null
+    piece: number | null
   }
   
   export type PieceInfoFE = {
     key: string
-    piece: null
+    piece: null | number
   }
   
   export type MoveType = 'move' | 'attack'

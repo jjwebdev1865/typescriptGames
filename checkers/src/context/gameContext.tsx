@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, createContext, useContext, useState } from "react";
-import { Board, MoveType, PieceInfoFE, PieceMove } from "../types";
+import { Board, MoveType, PieceInfo, PieceInfoFE, PieceMove } from "../types";
 
 
 interface GameContextType {
@@ -25,9 +25,9 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
   function handleInitialBoardSetup(board: Board): Board {
     const startingBoard: Board = {} as Board
     Object.entries(board).forEach(([ key, value]) => {
-      const newRow = [] as any[]
+      const newRow = [] as PieceInfo[]
       if (['F', 'G', 'H'].includes(key)) {
-        value.forEach((piece: any, index: number) => {
+        value.forEach((piece: PieceInfo, index: number) => {
           const isDivisible = index % 2 === 0
           if (isDivisible && (key === 'H' || key === 'F')) {
             newRow.push({
@@ -48,7 +48,7 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
         })
         startingBoard[key] = newRow
       } else if (['A', 'B', 'C'].includes(key)) {
-        value.forEach((piece: any, index: number) => {
+        value.forEach((piece: PieceInfo, index: number) => {
           const isDivisible = index % 2 === 0
           if (!isDivisible && (key === 'A' || key === 'C')) {
             newRow.push({
@@ -76,37 +76,33 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     return startingBoard
   }
 
+  function getNewRow(rowPieces: PieceInfo[], movePosition: number, selectedPiece: number | null): PieceInfo[] {
+    const newRow = [] as PieceInfo[]
+    rowPieces.forEach(rowPiece => {
+      if (rowPiece.position === Number(movePosition)) {
+        newRow.push({
+          position: rowPiece.position,
+          piece: selectedPiece
+        })
+      } else {
+        newRow.push(rowPiece)
+      }
+    })
+
+    return newRow
+  }
+
   function updateBoard(selectedPiece: PieceInfoFE, board: Board, updatedPiece: PieceMove): Board {
-    const { piece, type, attackPieceToRemove } = updatedPiece
-    const [moveKey, movePosition] = piece.split("")
+    const { piece: updatedPieceInfo, type, attackPieceToRemove } = updatedPiece
+    const [moveKey, movePosition] = updatedPieceInfo.split("")
     const [selectedKey, selectedPosition] = selectedPiece.key.split("")
     const newBoard: Board = {}
     Object.entries(board).forEach(([ key, value]) => {
       if (key === moveKey) {
-        const newRow = [] as any[]
-        value.forEach(piece => {
-          if (piece.position === Number(movePosition)) {
-            newRow.push({
-              position: piece.position,
-              piece: selectedPiece.piece
-            })
-          } else {
-            newRow.push(piece)
-          }
-        })
+        const newRow = getNewRow(value, Number(movePosition), selectedPiece.piece)
         newBoard[key] = newRow
       } else if (key === selectedKey) {
-        const newRow = [] as any[]
-        value.forEach(piece => {
-          if (piece.position === Number(selectedPosition)) {
-            newRow.push({
-              position: piece.position,
-              piece: null
-            })
-          } else {
-            newRow.push(piece)
-          }
-        })
+        const newRow = getNewRow(value, Number(selectedPosition), null)
         newBoard[key] = newRow
       }
       else {
@@ -114,22 +110,13 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
       }
     })
 
-    // TODO: cleanup
+    // todo: clean up
     if (type === 'attack' && attackPieceToRemove !== undefined) {
       const [deletionKey, deletionPosition] = attackPieceToRemove.split("")
       Object.entries(board).forEach(([ key, value]) => {
-        const newRow = [] as any[]
+        let newRow = [] as PieceInfo[]
         if (key === deletionKey) {
-          value.forEach(piece => {
-            if (Number(deletionPosition) === piece.position) {
-              newRow.push({
-                position: piece.position,
-                piece: null
-              })
-            } else {
-              newRow.push(piece)
-            }
-          })
+          newRow = getNewRow(value, Number(deletionPosition), null)
           newBoard[key] = newRow
         }
       })
