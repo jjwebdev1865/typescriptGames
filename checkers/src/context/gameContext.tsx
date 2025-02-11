@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, createContext, useContext, useState } from "react";
-import { Board, MoveType, PieceInfo, PieceInfoFE, PieceMove } from "../types";
+import { Board, PieceInfo, PieceInfoFE, PieceMove } from "../types";
 
 
 interface GameContextType {

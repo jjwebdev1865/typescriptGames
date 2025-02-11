@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import BoardStartingLayout from './utils/helperFunctions/boardStartSetup';
 import { getBoardRowsArray } from './utils/helperFunctions/getBoardRowsArray';
-import { PieceSpot } from './component/PieceSpot/pieceSpot';
 import { useGame } from './context/gameContext';
 import { getPlayerOneAttacks, getPlayerTwoAttacks } from './utils/moveFunctions/getAttackMoves';
-import { ChessPieceMove } from './component';
+import { ChessPieceMove, PieceSpot } from './component';
 import { Board, PieceInfo, PieceInfoFE, PieceMove } from './types';
 import { PlayerActionsContainer, StyledAvailableMovesList, StyledBoardRow, StyledBoardRowContainer } from './App.styles';
 

@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction } from "react";
 import { useMoves } from "../../context/movesContext";
 import { useGame } from "../../context/gameContext";
 import { PieceInfoFE } from "../../types";
+import { StyledChessPiece, StyledPieceSpot } from "./pieceSpot.styles";
 
 interface PieceSpotProps {
   checkerPiece: PieceInfoFE,
@@ -14,8 +15,8 @@ export const PieceSpot = ({ checkerPiece, rowIndex, setAvailableMoves, setSelect
   const { getPieceMoves} = useMoves()
   const { playerTurn } = useGame()
   const pieceNumber = checkerPiece.key.split("")[1]
-  let backgroundColor = '#F5E6D3'
-  let textColor = 'black'
+  let backgroundColor = undefined
+  let textColor = undefined
 
   if (rowIndex % 2 === 0 && Number(pieceNumber)  % 2 === 0) {
     backgroundColor = '#3D2B1F'
@@ -25,11 +26,7 @@ export const PieceSpot = ({ checkerPiece, rowIndex, setAvailableMoves, setSelect
     textColor = '#FFFFFF'
   }
   
-  const buttonTextColor = '#FFFFFF'
-  let buttonColor = 'black'
-  if (checkerPiece.piece !== null && checkerPiece.piece === 1) {
-    buttonColor = 'red'
-  }
+  let buttonColor = (checkerPiece.piece !== null && checkerPiece.piece === 1 )? 'red' : undefined
   if (getDisabledStatus()) {
     buttonColor = 'gray'
   }
@@ -50,32 +47,20 @@ export const PieceSpot = ({ checkerPiece, rowIndex, setAvailableMoves, setSelect
   }
 
   return (
-    <li 
-      key={`board-spot-${checkerPiece.key}`} 
-      style={{
-        listStyle: 'none', 
-        backgroundColor: backgroundColor,
-        color: textColor,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
+    <StyledPieceSpot
+      $tilecolor={backgroundColor}
+      $textcolor={textColor}
       >
         {checkerPiece.piece !== null ? (
-          <button 
-            style={{ 
-              backgroundColor: buttonColor , 
-              padding: '5px 10px', 
-              color: buttonTextColor,
-              zIndex: 2
-            }}
+          <StyledChessPiece 
+            $piececolor={buttonColor}
             onClick={onClickGetPieceMoves}
             disabled={getDisabledStatus()}
-          >{checkerPiece.key}</button>
+          >{checkerPiece.key}</StyledChessPiece>
         ): (
           <>{checkerPiece.key}</>
         )}
         
-    </li>
+    </StyledPieceSpot>
   )
 }
