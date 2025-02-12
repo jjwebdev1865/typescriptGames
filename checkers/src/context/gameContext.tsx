@@ -107,8 +107,9 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     Object.entries(board).forEach(([ key, value]) => {
       if (key === moveKey) {
         const newRow = getNewRow(value, Number(movePosition), selectedPiece.piece)
-        const isKinged = playerTurn === 'p1' && moveKey === 'A'
-        if (isKinged) {
+        const isPlayerOneKinged = playerTurn === 'p1' && moveKey === 'A'
+        const isPlayerTwoKinged = playerTurn === 'p2' && moveKey === 'H'
+        if (isPlayerOneKinged || isPlayerTwoKinged) {
           const kingedRow: PieceInfo[] = []
           newRow.forEach(rowPiece => {
             if (rowPiece.position === Number(movePosition)) {

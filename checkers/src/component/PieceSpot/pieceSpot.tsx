@@ -12,7 +12,7 @@ interface PieceSpotProps {
 }
 
 export const PieceSpot = ({ checkerPiece, rowIndex, setAvailableMoves, setSelectedPiece }: PieceSpotProps) => {
-  const { getPieceMoves} = useMoves()
+  const { getPieceMoves } = useMoves()
   const { playerTurn } = useGame()
   const pieceNumber = checkerPiece.key.split("")[1]
   let backgroundColor = undefined
