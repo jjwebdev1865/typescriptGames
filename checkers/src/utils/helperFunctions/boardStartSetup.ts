@@ -9,7 +9,8 @@ export default function BoardStartingLayout() {
     for (let j = 1; j <= 8; j++) {
       const piece: PieceInfo = {
         position: j,
-        piece: null
+        piece: null,
+        isKing: false
       }
       rowObj.push(piece)
     }

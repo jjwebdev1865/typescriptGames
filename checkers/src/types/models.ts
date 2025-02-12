@@ -1,6 +1,7 @@
 export type PieceInfo = {
     position: number,
-    piece: number | null
+    piece: number | null,
+    isKing: boolean
   }
   
   export type PieceInfoFE = {
@@ -14,6 +15,7 @@ export type PieceInfo = {
     disabled: boolean,
     type: MoveType,
     attackPieceToRemove?: string
+    isKing: boolean
   }
   
   export interface Board {

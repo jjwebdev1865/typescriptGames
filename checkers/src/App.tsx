@@ -20,7 +20,7 @@ function App() {
   function getAvailableMoveOptions(move: string): PieceMove {
     const [avKey, avPosition] = move.split("")
     const boardRow = board[avKey]
-    let newMove: PieceMove = {piece: move, disabled: false, type: 'move'}
+    let newMove: PieceMove = {piece: move, disabled: false, type: 'move', isKing: false}
     boardRow.forEach((br: PieceInfo) => {
       if (br.position === Number(avPosition) && br.piece !== null) {
         const playerTurnKey = playerTurn.split("")[1]
@@ -30,7 +30,8 @@ function App() {
             piece: attackMove,
             disabled: false,
             type: 'attack',
-            attackPieceToRemove: move
+            attackPieceToRemove: move,
+            isKing: false
           }
         } else {
           newMove = {
@@ -68,7 +69,7 @@ function App() {
   }
 
   const onClickMovePiece = (piece: PieceMove) => {
-    const newBoard: Board = updateBoard(selectedPiece as PieceInfoFE, board, piece)
+    const newBoard: Board = updateBoard(selectedPiece as PieceInfoFE, board, piece, playerTurn)
     setBoard(newBoard)
     setAvailableMoves([])
     setSelectedPiece(undefined)
@@ -107,7 +108,7 @@ function App() {
             <p><strong>Player One:</strong> {playerOnePieceCount}</p>
           </div>
           <div>
-            <p><strong>Player Twu:</strong> {playerTwoPieceCount}</p>
+            <p><strong>Player Two:</strong> {playerTwoPieceCount}</p>
           </div>
         </div>
       </PlayerActionsContainer>

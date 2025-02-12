@@ -6,7 +6,7 @@ interface GameContextType {
   playerTurn: string;
   setPlayerTurn: Dispatch<SetStateAction<string>>
   handleInitialBoardSetup: (board: Board) => Board;
-  updateBoard: (selectedPiece: PieceInfoFE, board: Board, updatedPiece: PieceMove) => Board;
+  updateBoard: (selectedPiece: PieceInfoFE, board: Board, updatedPiece: PieceMove, playerTurn: string) => Board;
   playerOnePieceCount: number
   playerTwoPieceCount: number
 }
@@ -32,17 +32,20 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
           if (isDivisible && (key === 'H' || key === 'F')) {
             newRow.push({
               position: piece.position,
-              piece: 1
+              piece: 1,
+              isKing: false
             })
           } else if (!isDivisible && key === 'G') {
             newRow.push({
               position: piece.position,
-              piece: 1
+              piece: 1,
+              isKing: false
             })
           } else {
             newRow.push({
               position: piece.position,
-              piece: null
+              piece: null,
+              isKing: false
             })
           }
         })
@@ -53,17 +56,20 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
           if (!isDivisible && (key === 'A' || key === 'C')) {
             newRow.push({
               position: piece.position,
-              piece: 2
+              piece: 2,
+              isKing: false
             })
           } else if (isDivisible && key === 'B') {
             newRow.push({
               position: piece.position,
-              piece: 2
+              piece: 2,
+              isKing: false
             })
           } else {
             newRow.push({
               position: piece.position,
-              piece: null
+              piece: null,
+              isKing: false
             })
           }
         })
@@ -82,7 +88,8 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
       if (rowPiece.position === Number(movePosition)) {
         newRow.push({
           position: rowPiece.position,
-          piece: selectedPiece
+          piece: selectedPiece,
+          isKing: false
         })
       } else {
         newRow.push(rowPiece)
@@ -92,7 +99,7 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     return newRow
   }
 
-  function updateBoard(selectedPiece: PieceInfoFE, board: Board, updatedPiece: PieceMove): Board {
+  function updateBoard(selectedPiece: PieceInfoFE, board: Board, updatedPiece: PieceMove, playerTurn: string): Board {
     const { piece: updatedPieceInfo, type, attackPieceToRemove } = updatedPiece
     const [moveKey, movePosition] = updatedPieceInfo.split("")
     const [selectedKey, selectedPosition] = selectedPiece.key.split("")
@@ -100,7 +107,24 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     Object.entries(board).forEach(([ key, value]) => {
       if (key === moveKey) {
         const newRow = getNewRow(value, Number(movePosition), selectedPiece.piece)
-        newBoard[key] = newRow
+        const isKinged = playerTurn === 'p1' && moveKey === 'A'
+        if (isKinged) {
+          const kingedRow: PieceInfo[] = []
+          newRow.forEach(rowPiece => {
+            if (rowPiece.position === Number(movePosition)) {
+              kingedRow.push({
+                position: rowPiece.position,
+                piece: rowPiece.piece,
+                isKing: true
+              })
+            } else {
+              kingedRow.push(rowPiece)
+            }
+          })
+          newBoard[key] = kingedRow
+        } else {
+          newBoard[key] = newRow
+        }
       } else if (key === selectedKey) {
         const newRow = getNewRow(value, Number(selectedPosition), null)
         newBoard[key] = newRow
