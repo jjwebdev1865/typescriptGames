@@ -7,6 +7,7 @@ export type PieceInfo = {
   export type PieceInfoFE = {
     key: string
     piece: null | number
+    isKing: boolean
   }
   
   export type MoveType = 'move' | 'attack'

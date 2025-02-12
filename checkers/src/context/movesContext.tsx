@@ -4,6 +4,7 @@ import { PieceInfoFE } from "../types";
 
 interface MovesContextType {
   getPieceMoves: (checkerPiece: PieceInfoFE) => string[];
+  getKingMoves: (checkerPiece: PieceInfoFE) => string[];
 }
 
 export const MovesContext = createContext<MovesContextType | undefined>(undefined);
@@ -26,7 +27,14 @@ export const MovesProvider: React.FC<MovesProviderProps> = ({ children }) => {
     }
   }
 
-  return <MovesContext.Provider value={{ getPieceMoves }}>
+  function getKingMoves(checkerPiece: PieceInfoFE) {
+    const newMoves = getPieceMoves(checkerPiece)
+    const fullScaleMoves = getPieceMoves({...checkerPiece, piece: checkerPiece.piece === 1 ? 2 : 1})
+    const combinedList = newMoves.concat(fullScaleMoves)
+    return combinedList
+  }
+
+  return <MovesContext.Provider value={{ getPieceMoves, getKingMoves }}>
     {children}
   </MovesContext.Provider>
 }

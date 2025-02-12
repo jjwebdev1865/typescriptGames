@@ -3,11 +3,10 @@ import { ChessPieceMoveItem } from "./chessPiece.styles"
 
 interface ChessPieceMoveProps {
   updatedMove: PieceMove
-  move: string
   onClickMovePiece: (piece: PieceMove) => void
 }
 
-export const ChessPieceMove = ({ updatedMove, move, onClickMovePiece }: ChessPieceMoveProps) => {
+export const ChessPieceMove = ({ updatedMove,  onClickMovePiece }: ChessPieceMoveProps) => {
   const { disabled, piece } = updatedMove
   return (
     <ChessPieceMoveItem>

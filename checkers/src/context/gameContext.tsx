@@ -82,14 +82,14 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     return startingBoard
   }
 
-  function getNewRow(rowPieces: PieceInfo[], movePosition: number, selectedPiece: number | null): PieceInfo[] {
+  function getNewRow(rowPieces: PieceInfo[], movePosition: number, selectedPiece: number | null, isKing: boolean): PieceInfo[] {
     const newRow = [] as PieceInfo[]
     rowPieces.forEach(rowPiece => {
       if (rowPiece.position === Number(movePosition)) {
         newRow.push({
           position: rowPiece.position,
           piece: selectedPiece,
-          isKing: false
+          isKing
         })
       } else {
         newRow.push(rowPiece)
@@ -106,7 +106,7 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     const newBoard: Board = {}
     Object.entries(board).forEach(([ key, value]) => {
       if (key === moveKey) {
-        const newRow = getNewRow(value, Number(movePosition), selectedPiece.piece)
+        const newRow = getNewRow(value, Number(movePosition), selectedPiece.piece, selectedPiece.isKing)
         const isPlayerOneKinged = playerTurn === 'p1' && moveKey === 'A'
         const isPlayerTwoKinged = playerTurn === 'p2' && moveKey === 'H'
         if (isPlayerOneKinged || isPlayerTwoKinged) {
@@ -127,7 +127,7 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
           newBoard[key] = newRow
         }
       } else if (key === selectedKey) {
-        const newRow = getNewRow(value, Number(selectedPosition), null)
+        const newRow = getNewRow(value, Number(selectedPosition), null, selectedPiece.isKing)
         newBoard[key] = newRow
       }
       else {
@@ -141,7 +141,7 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
       Object.entries(board).forEach(([ key, value]) => {
         let newRow = [] as PieceInfo[]
         if (key === deletionKey) {
-          newRow = getNewRow(value, Number(deletionPosition), null)
+          newRow = getNewRow(value, Number(deletionPosition), null, selectedPiece.isKing)
           newBoard[key] = newRow
         }
       })

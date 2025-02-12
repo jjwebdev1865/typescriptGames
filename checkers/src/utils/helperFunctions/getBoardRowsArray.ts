@@ -8,7 +8,8 @@ export function getBoardRowsArray(board: Object) {
         const positionKey = `${key}${value[i].position}`
         const positionObject: PieceInfoFE = {
           key: positionKey,
-          piece: value[i].piece
+          piece: value[i].piece,
+          isKing: value[i].isKing,
         }
         rowDetails.push(positionObject)
       }

@@ -20,15 +20,20 @@ function App() {
   function getAvailableMoveOptions(move: string): PieceMove {
     const [avKey, avPosition] = move.split("")
     const boardRow = board[avKey]
-    let newMove: PieceMove = {piece: move, disabled: false, type: 'move', isKing: false}
+    let newMove: PieceMove = {piece: move, disabled: false, type: 'move', isKing: (selectedPiece as PieceInfoFE).isKing}
     boardRow.forEach((br: PieceInfo) => {
       if (br.position === Number(avPosition) && br.piece !== null) {
         const playerTurnKey = playerTurn.split("")[1]
-        if (Number(playerTurnKey) !== br.piece) {
-          const attackMove = playerTurn === 'p1' ?  getPlayerOneAttacks(move, selectedPiece?.key as string) : getPlayerTwoAttacks(move, selectedPiece?.key as string)
+        if ((selectedPiece as PieceInfoFE).isKing) {
           newMove = {
+            ...newMove,
+            isKing: true
+          }
+        } else if (Number(playerTurnKey) !== br.piece) {
+          const attackMove = playerTurn === 'p1' ? getPlayerOneAttacks(move, selectedPiece?.key as string) : getPlayerTwoAttacks(move, selectedPiece?.key as string)
+          newMove = {
+            ...newMove,
             piece: attackMove,
-            disabled: false,
             type: 'attack',
             attackPieceToRemove: move,
             isKing: false
@@ -52,7 +57,6 @@ function App() {
       return <StyledBoardRowContainer key={`board-row-${rowKey}`}>
         <StyledBoardRow>
           {row.map(piece => {
-            
             return <PieceSpot 
               key={`board-spot-${piece.key}`} 
               checkerPiece={piece} 
@@ -97,7 +101,7 @@ function App() {
             <StyledAvailableMovesList>
               {availableMoves.map(move => {
                 const updatedMove = getAvailableMoveOptions(move)
-                return <ChessPieceMove key={`available-move-piece-${move}`} updatedMove={updatedMove} move={move} onClickMovePiece={onClickMovePiece} />
+                return <ChessPieceMove key={`available-move-piece-${move}`} updatedMove={updatedMove} onClickMovePiece={onClickMovePiece} />
               })}
             </StyledAvailableMovesList>
           )}
