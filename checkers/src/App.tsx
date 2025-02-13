@@ -7,7 +7,6 @@ import { ChessPieceMove, PieceSpot } from './component';
 import { Board, PieceInfo, PieceInfoFE, PieceMove } from './types';
 import { PlayerActionsContainer, StyledAvailableMovesList, StyledBoardRow, StyledBoardRowContainer } from './App.styles';
 
-
 function App() {
   const { playerTurn, setPlayerTurn, handleInitialBoardSetup, updateBoard, playerOnePieceCount, playerTwoPieceCount } = useGame()
   let initBoard: Board = BoardStartingLayout()
@@ -25,24 +24,25 @@ function App() {
       if (br.position === Number(avPosition) && br.piece !== null) {
         const playerTurnKey = playerTurn.split("")[1]
         if ((selectedPiece as PieceInfoFE).isKing) {
-          newMove = {
-            ...newMove,
-            isKing: true
-          }
+          newMove.isKing = true
         } else if (Number(playerTurnKey) !== br.piece) {
           const attackMove = playerTurn === 'p1' ? getPlayerOneAttacks(move, selectedPiece?.key as string) : getPlayerTwoAttacks(move, selectedPiece?.key as string)
-          newMove = {
-            ...newMove,
-            piece: attackMove,
-            type: 'attack',
-            attackPieceToRemove: move,
-            isKing: false
+          if (attackMove !== '') {
+            const [attackMoveKey, attackMovePosition] = attackMove.split("")
+            const attackMoveSpot = board[attackMoveKey].find(checker => checker.position === Number(attackMovePosition))
+            const isAttackDisabled =  attackMoveSpot.piece !== null
+            newMove = {
+              piece: attackMove,
+              type: 'attack',
+              attackPieceToRemove: move,
+              isKing: false,
+              disabled: isAttackDisabled
+            }
+          } else {
+            newMove.disabled = true
           }
         } else {
-          newMove = {
-            ...newMove,
-            disabled: true
-          }
+          newMove.disabled = true
         }
       }
     })
