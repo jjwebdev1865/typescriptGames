@@ -6,7 +6,7 @@ export function getPlayerOneAttacks(pieceKey: string, originalPositionKey: strin
 
   switch(rowKey.toUpperCase()) {
     case 'A':
-      alert('NOTE: CANT ATTACK WHEN A PIECE IS IN H')
+      console.log('NOTE: CANT ATTACK WHEN A PIECE IS IN H')
       break;
     case 'B':
       switch(Number(position)) {
@@ -177,7 +177,7 @@ export function getPlayerOneAttacks(pieceKey: string, originalPositionKey: strin
       }
       break
     case 'H':
-      alert('TODO:NOT SURE THIS SCENARIO')
+      console.log('NOTE: No moves happen here')
       break
   }
 
@@ -190,7 +190,7 @@ export function getPlayerTwoAttacks(pieceKey: string, originalPositionKey: strin
 
   switch(rowKey.toUpperCase()) {
     case 'A':
-      alert('TODO:NOT SURE THIS SCENARIO')
+      console.log('NOTE: No moves happen here')
       break;
     case 'B':
       switch(Number(position)) {
@@ -232,6 +232,8 @@ export function getPlayerTwoAttacks(pieceKey: string, originalPositionKey: strin
           newMoves = originalPositionKey === 'B2' ? 'D4' : 'D2'
           break;
         case 4:
+          console.log('HERE HERE')
+          console.log('originalPositionKey', originalPositionKey)
           newMoves = originalPositionKey === 'B3' ? 'D5' : 'D3'
           break;
         case 5:

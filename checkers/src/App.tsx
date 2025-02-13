@@ -15,6 +15,31 @@ function App() {
   const [ availableMoves, setAvailableMoves ] = useState<Array<string>>([])
   const [ selectedPiece, setSelectedPiece ] = useState<PieceInfoFE | undefined>(undefined)
   const [ board, setBoard ] = useState<Board>(initBoard)
+  
+    
+  function getAttackMove(move: string): PieceMove | null {
+    const optionOne = getPlayerOneAttacks(move, selectedPiece?.key as string)
+    const optionTwo = getPlayerTwoAttacks(move, selectedPiece?.key as string)
+    if (optionOne === '' && optionTwo === '') {
+      return null
+    }
+    const correctOption = selectedPiece?.key.startsWith(optionOne.split("")[0]) ? optionTwo : optionOne
+    const newMove = getAttackStatus(correctOption, move)
+    return newMove
+  }
+
+  function getAttackStatus(attackMove: string, move: string): PieceMove {
+    const [attackMoveKey, attackMovePosition] = attackMove.split("")
+    const attackMoveSpot = board[attackMoveKey].find(checker => checker.position === Number(attackMovePosition))
+    const isAttackDisabled =  attackMoveSpot.piece !== null
+    return {
+      piece: attackMove,
+      type: 'attack',
+      attackPieceToRemove: move,
+      isKing: false,
+      disabled: isAttackDisabled
+    }
+  }
 
   function getAvailableMoveOptions(move: string): PieceMove {
     const [avKey, avPosition] = move.split("")
@@ -24,20 +49,19 @@ function App() {
       if (br.position === Number(avPosition) && br.piece !== null) {
         const playerTurnKey = playerTurn.split("")[1]
         if ((selectedPiece as PieceInfoFE).isKing) {
+          if (Number(playerTurnKey) !== br.piece) {
+            const attack = getAttackMove(move)
+            if (attack !== null) {
+              newMove = attack
+            } else {
+              newMove.disabled = true
+            }
+          }
           newMove.isKing = true
         } else if (Number(playerTurnKey) !== br.piece) {
           const attackMove = playerTurn === 'p1' ? getPlayerOneAttacks(move, selectedPiece?.key as string) : getPlayerTwoAttacks(move, selectedPiece?.key as string)
           if (attackMove !== '') {
-            const [attackMoveKey, attackMovePosition] = attackMove.split("")
-            const attackMoveSpot = board[attackMoveKey].find(checker => checker.position === Number(attackMovePosition))
-            const isAttackDisabled =  attackMoveSpot.piece !== null
-            newMove = {
-              piece: attackMove,
-              type: 'attack',
-              attackPieceToRemove: move,
-              isKing: false,
-              disabled: isAttackDisabled
-            }
+            newMove = getAttackStatus(attackMove, move)
           } else {
             newMove.disabled = true
           }

@@ -6,7 +6,6 @@ export function getPlayerOneMoves(pieceKey: string): string[] {
   
   switch(rowKey.toUpperCase()) {
     case 'A':
-      alert('TODO: top row for player one. need to set up king status')
       break;
     case 'B':
       switch(Number(position)) {
@@ -226,7 +225,7 @@ export function getPlayerOneMoves(pieceKey: string): string[] {
       }
       break;
     default:
-      console.log('not valid')
+      alert('NOT VALID')
   }
 
   return newMoves
@@ -455,7 +454,6 @@ export function getPlayerTwoMoves(pieceKey: string): string[] {
       }
       break;
     case 'H':
-      alert('TODO: top row for player one. need to set up king status')
       break;
     default:
       alert('NOT VALID')
