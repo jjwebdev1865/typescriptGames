@@ -6,6 +6,7 @@ import { getPlayerOneAttacks, getPlayerTwoAttacks } from './utils/moveFunctions/
 import { ChessPieceMove, PieceSpot } from './component';
 import { Board, PieceInfo, PieceInfoFE, PieceMove } from './types';
 import { PlayerActionsContainer, StyledAvailableMovesList, StyledBoardRow, StyledBoardRowContainer } from './App.styles';
+import { useMoves } from './context/movesContext';
 
 function App() {
   const { playerTurn, setPlayerTurn, handleInitialBoardSetup, updateBoard, playerOnePieceCount, playerTwoPieceCount } = useGame()
@@ -15,6 +16,8 @@ function App() {
   const [ availableMoves, setAvailableMoves ] = useState<Array<string>>([])
   const [ selectedPiece, setSelectedPiece ] = useState<PieceInfoFE | undefined>(undefined)
   const [ board, setBoard ] = useState<Board>(initBoard)
+  const [ showEndTurnButton, setShowEndTurnButton ] = useState(false)
+  const { getPieceMoves } = useMoves()
   
     
   function getAttackMove(move: string): PieceMove | null {
@@ -96,15 +99,35 @@ function App() {
     return boardHtmlDisplay
   }
 
+  const changePlayerTurn = (playerTurn: string) => playerTurn === 'p1' ? setPlayerTurn('p2') : setPlayerTurn('p1')
+
+  const handleEndTurn = () => {
+    changePlayerTurn(playerTurn)
+    setShowEndTurnButton(false)
+  }
+
   const onClickMovePiece = (piece: PieceMove) => {
     const newBoard: Board = updateBoard(selectedPiece as PieceInfoFE, board, piece, playerTurn)
     setBoard(newBoard)
     setAvailableMoves([])
-    setSelectedPiece(undefined)
-    if (playerTurn === 'p1') {
-      setPlayerTurn('p2')
+    if (piece.type === 'attack') {
+      const [pieceKey, piecePosition] = piece.piece.split("")
+      const newPiece = newBoard[pieceKey].find(item => item.position === Number(piecePosition))
+      
+      const frontEndPiece: PieceInfoFE = {
+        key: piece.piece,
+        piece: newPiece.piece,
+        isKing: newPiece.isKing,
+      }
+      setSelectedPiece(frontEndPiece)
+      const moveOptions = getPieceMoves(frontEndPiece)
+      setAvailableMoves(moveOptions)
+      setShowEndTurnButton(true)
+      // TODO: update to disable pieces if follow up move isnt available. cannot move at this point
+      // TODO: if this gets to the spot where a piece is kinged, this breaks
     } else {
-      setPlayerTurn('p1')
+      setSelectedPiece(undefined)
+      changePlayerTurn(playerTurn)
     }
   }
 
@@ -127,6 +150,7 @@ function App() {
                 const updatedMove = getAvailableMoveOptions(move)
                 return <ChessPieceMove key={`available-move-piece-${move}`} updatedMove={updatedMove} onClickMovePiece={onClickMovePiece} />
               })}
+              {showEndTurnButton && <button onClick={handleEndTurn}>End Turn</button>}
             </StyledAvailableMovesList>
           )}
         </div>

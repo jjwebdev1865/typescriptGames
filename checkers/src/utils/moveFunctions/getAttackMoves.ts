@@ -232,8 +232,6 @@ export function getPlayerTwoAttacks(pieceKey: string, originalPositionKey: strin
           newMoves = originalPositionKey === 'B2' ? 'D4' : 'D2'
           break;
         case 4:
-          console.log('HERE HERE')
-          console.log('originalPositionKey', originalPositionKey)
           newMoves = originalPositionKey === 'B3' ? 'D5' : 'D3'
           break;
         case 5:
