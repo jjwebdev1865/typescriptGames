@@ -3,8 +3,8 @@ import BoardStartingLayout from './utils/helperFunctions/boardStartSetup';
 import { getBoardRowsArray } from './utils/helperFunctions/getBoardRowsArray';
 import { useGame } from './context/gameContext';
 import { getPlayerOneAttacks, getPlayerTwoAttacks } from './utils/moveFunctions/getAttackMoves';
-import { ChessPieceMove, PieceSpot } from './component';
-import { Board, PieceInfo, PieceInfoFE, PieceMove } from './types';
+import { ChessPieceMove, Navbar, PieceSpot } from './component';
+import { Board, GameType, PieceInfo, PieceInfoFE, PieceMove } from './types';
 import { PlayerActionsContainer, StyledAvailableMovesList, StyledBoardRow, StyledBoardRowContainer } from './App.styles';
 import { useMoves } from './context/movesContext';
 
@@ -17,6 +17,7 @@ function App() {
   const [ selectedPiece, setSelectedPiece ] = useState<PieceInfoFE | undefined>(undefined)
   const [ board, setBoard ] = useState<Board>(initBoard)
   const [ showEndTurnButton, setShowEndTurnButton ] = useState(false)
+  const [gameType, setGameType] = useState<GameType>(2)
   const { getPieceMoves } = useMoves()
   
     
@@ -133,9 +134,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Checkers</h1>
-
-      <h2>Player turn: {playerTurn.toUpperCase()}</h2>
+      <Navbar playerTurn={playerTurn} gameType={gameType} setGameType={setGameType} />
 
       <ul style={{ padding: 0}}>
         {board === undefined ? getBoardRows(initBoard) : getBoardRows(board)}

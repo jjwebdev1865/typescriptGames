@@ -1,10 +1,10 @@
 import { Dispatch, SetStateAction, createContext, useContext, useState } from "react";
-import { Board, PieceInfo, PieceInfoFE, PieceMove } from "../types";
+import { Board, PieceInfo, PieceInfoFE, PieceMove, PlayerTurn } from "../types";
 
 
 interface GameContextType {
-  playerTurn: string;
-  setPlayerTurn: Dispatch<SetStateAction<string>>
+  playerTurn: PlayerTurn;
+  setPlayerTurn: Dispatch<SetStateAction<PlayerTurn>>
   handleInitialBoardSetup: (board: Board) => Board;
   updateBoard: (selectedPiece: PieceInfoFE, board: Board, updatedPiece: PieceMove, playerTurn: string) => Board;
   playerOnePieceCount: number
@@ -18,7 +18,7 @@ interface GameProviderProps {
 }
 
 export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
-  const [playerTurn, setPlayerTurn] = useState('p1');
+  const [playerTurn, setPlayerTurn] = useState<PlayerTurn>('p1');
   const [playerOnePieceCount, setPlayerOnePieceCount] = useState(12)
   const [playerTwoPieceCount, setPlayerTwoPieceCount] = useState(12)
 

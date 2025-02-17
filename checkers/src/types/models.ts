@@ -1,3 +1,9 @@
+  // One = one manual player and AI
+  // Two = two manual players
+  export type GameType = 1 | 2
+  export type MoveType = 'move' | 'attack'
+  export type PlayerTurn = 'p1' | 'p2'
+
 export type PieceInfo = {
     position: number,
     piece: number | null,
@@ -10,7 +16,6 @@ export type PieceInfo = {
     isKing: boolean
   }
   
-  export type MoveType = 'move' | 'attack'
   export type PieceMove = {
     piece: string
     disabled: boolean,
@@ -22,3 +27,4 @@ export type PieceInfo = {
   export interface Board {
     [key: string]: any[],
   }
+  
