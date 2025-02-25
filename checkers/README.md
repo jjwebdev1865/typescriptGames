@@ -23,6 +23,10 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 Using styled components to provide styling. 
 This is a best practice I found when working for a client at Slalom. 
 
+### Jest testing library 
+- utilizing this for component testing
+- in this project, ill have a separate 'tests' directory, with a component and pages test breakdown
+
 ### Context
 Using the concept of context to apply changes at different components without prop drilling.
 
