@@ -43,7 +43,7 @@ export const MovesProvider: React.FC<MovesProviderProps> = ({ children }) => {
 export const useMoves = (): MovesContextType => {
   const context = useContext(MovesContext);
   if (!context) {
-    throw new Error('useCounter must be used within a CounterProvider');
+    throw new Error('useCounter must be used within a MovesProvider');
   }
   return context;
 };

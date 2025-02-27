@@ -18,7 +18,7 @@ export const PieceSpot = ({ checkerPiece, rowIndex, setAvailableMoves, setSelect
   let backgroundColor = undefined
   let textColor = undefined
 
-  if (rowIndex % 2 === 0 && Number(pieceNumber)  % 2 === 0) {
+  if (rowIndex % 2 === 0 && Number(pieceNumber) % 2 === 0) {
     backgroundColor = '#3D2B1F'
     textColor = '#FFFFFF'
   } else if (rowIndex % 2 !== 0 && Number(pieceNumber)  % 2 !== 0) {
@@ -53,6 +53,7 @@ export const PieceSpot = ({ checkerPiece, rowIndex, setAvailableMoves, setSelect
 
   return (
     <StyledPieceSpot
+      data-testid={`spot-${checkerPiece.key}`}
       $tilecolor={backgroundColor}
       $textcolor={textColor}
       >

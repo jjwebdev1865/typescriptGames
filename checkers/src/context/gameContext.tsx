@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction, createContext, useContext, useState } from "react";
 import { Board, PieceInfo, PieceInfoFE, PieceMove, PlayerTurn } from "../types";
 
-
 interface GameContextType {
   playerTurn: PlayerTurn;
   setPlayerTurn: Dispatch<SetStateAction<PlayerTurn>>
@@ -164,7 +163,7 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
 export const useGame = (): GameContextType => {
   const context = useContext(GameContext);
   if (!context) {
-    throw new Error('useCounter must be used within a CounterProvider');
+    throw new Error('useCounter must be used within a GameProvider');
   }
   return context;
 };
