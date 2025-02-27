@@ -3,7 +3,7 @@ import BoardStartingLayout from './utils/helperFunctions/boardStartSetup';
 import { getBoardRowsArray } from './utils/helperFunctions/getBoardRowsArray';
 import { useGame } from './context/gameContext';
 import { getPlayerOneAttacks, getPlayerTwoAttacks } from './utils/moveFunctions/getAttackMoves';
-import { ChessPieceMove, Navbar, PieceSpot } from './component';
+import { CheckersPieceMove, Navbar, PieceSpot } from './component';
 import { Board, GameType, PieceInfo, PieceInfoFE, PieceMove } from './types';
 import { PlayerActionsContainer, StyledAvailableMovesList, StyledBoardRow, StyledBoardRowContainer } from './App.styles';
 import { useMoves } from './context/movesContext';
@@ -147,7 +147,7 @@ function App() {
             <StyledAvailableMovesList>
               {availableMoves.map(move => {
                 const updatedMove = getAvailableMoveOptions(move)
-                return <ChessPieceMove key={`available-move-piece-${move}`} updatedMove={updatedMove} onClickMovePiece={onClickMovePiece} />
+                return <CheckersPieceMove key={`available-move-piece-${move}`} updatedMove={updatedMove} onClickMovePiece={onClickMovePiece} />
               })}
               {showEndTurnButton && <button onClick={handleEndTurn}>End Turn</button>}
             </StyledAvailableMovesList>
