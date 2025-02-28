@@ -55,20 +55,12 @@ function App() {
         if ((selectedPiece as PieceInfoFE).isKing) {
           if (Number(playerTurnKey) !== br.piece) {
             const attack = getAttackMove(move)
-            if (attack !== null) {
-              newMove = attack
-            } else {
-              newMove.disabled = true
-            }
+            attack !== null ? newMove = attack : newMove.disabled = true
           }
           newMove.isKing = true
         } else if (Number(playerTurnKey) !== br.piece) {
           const attackMove = playerTurn === 'p1' ? getPlayerOneAttacks(move, selectedPiece?.key as string) : getPlayerTwoAttacks(move, selectedPiece?.key as string)
-          if (attackMove !== '') {
-            newMove = getAttackStatus(attackMove, move)
-          } else {
-            newMove.disabled = true
-          }
+          attackMove !== '' ? newMove = getAttackStatus(attackMove, move) : newMove.disabled = true
         } else {
           newMove.disabled = true
         }
@@ -103,6 +95,7 @@ function App() {
   const changePlayerTurn = (playerTurn: string) => playerTurn === 'p1' ? setPlayerTurn('p2') : setPlayerTurn('p1')
 
   const handleEndTurn = () => {
+    setAvailableMoves([])
     changePlayerTurn(playerTurn)
     setShowEndTurnButton(false)
   }
