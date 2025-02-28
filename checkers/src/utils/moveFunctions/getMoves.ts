@@ -6,6 +6,7 @@ export function getPlayerOneMoves(pieceKey: string): string[] {
   
   switch(rowKey.toUpperCase()) {
     case 'A':
+      // TODO: i think i need to do a case here
       break;
     case 'B':
       switch(Number(position)) {

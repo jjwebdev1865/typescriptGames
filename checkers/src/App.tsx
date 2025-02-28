@@ -19,6 +19,7 @@ function App() {
   const [ showEndTurnButton, setShowEndTurnButton ] = useState(false)
   const [gameType, setGameType] = useState<GameType>(2)
   const { getPieceMoves } = useMoves()
+  const [ isPreviousMoveAttack, setIsPreviousMoveAttack ] = useState(false)
   
     
   function getAttackMove(move: string): PieceMove | null {
@@ -98,12 +99,16 @@ function App() {
     setAvailableMoves([])
     changePlayerTurn(playerTurn)
     setShowEndTurnButton(false)
+    setIsPreviousMoveAttack(false)
   }
 
   const onClickMovePiece = (piece: PieceMove) => {
     const newBoard: Board = updateBoard(selectedPiece as PieceInfoFE, board, piece, playerTurn)
     setBoard(newBoard)
     setAvailableMoves([])
+    if (piece.attackPieceToRemove) {
+      setIsPreviousMoveAttack(true)
+    }
     if (piece.type === 'attack') {
       const [pieceKey, piecePosition] = piece.piece.split("")
       const newPiece = newBoard[pieceKey].find(item => item.position === Number(piecePosition))
@@ -140,6 +145,10 @@ function App() {
             <StyledAvailableMovesList>
               {availableMoves.map(move => {
                 const updatedMove = getAvailableMoveOptions(move)
+                if (isPreviousMoveAttack && (updatedMove.disabled || updatedMove.type === 'move')) {
+                  // TODO: somehow need to trigger a auto player turn change
+                  updatedMove.disabled = true
+                }
                 return <CheckersPieceMove key={`available-move-piece-${move}`} updatedMove={updatedMove} onClickMovePiece={onClickMovePiece} />
               })}
               {showEndTurnButton && <button onClick={handleEndTurn}>End Turn</button>}
