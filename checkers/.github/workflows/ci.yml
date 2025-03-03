@@ -3,9 +3,9 @@
 name: CI/CD Pipeline
 
 on:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
   pull_request:
     branches:
       - main
@@ -15,16 +15,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - run: npm install
+      - run: npm test
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '20'
+      # BELOW IS DIFFERENT SOURCE
+      # - name: Checkout repository
+      #   uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: npm install
+      # - name: Setup Node.js
+      #   uses: actions/setup-node@v2
+      #   with:
+      #     node-version: '20'
+
+      # - name: Install dependencies
+      #   run: npm install
 
       # - name: Run Lint
       #   run: npm run lint
