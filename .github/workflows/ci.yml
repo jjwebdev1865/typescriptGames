@@ -29,3 +29,26 @@ jobs:
         run: |
           cd checkers
           npm run test
+  cypress-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20  # Use the Node.js version compatible with your project
+
+      - name: Install dependencies
+        run: |
+          cd checkers
+          npm install
+      
+      - name: Start application
+        run: |
+          cd checkers
+          npm start &
+        env:
+          NODE_ENV: test  # Set environment variables if needed
