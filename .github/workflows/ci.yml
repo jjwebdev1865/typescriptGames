@@ -54,6 +54,8 @@ jobs:
           NODE_ENV: test  # Set environment variables if needed
       
       - name: Run Cypress tests
-        run: npx cypress run
+        run: |
+          cd checkers
+          npx cypress run
         env:
           CYPRESS_BASE_URL: http://localhost:3000  # Point Cypress to the local server
