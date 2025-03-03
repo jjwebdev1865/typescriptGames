@@ -4,7 +4,7 @@ name: CI/CD Pipeline
 
 on:
   pull_request:
-    branches: [ main ] # or your main branch name
+    branches: [ master ] # or your main branch name
 
 jobs:
   test:
