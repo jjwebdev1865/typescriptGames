@@ -1,13 +1,14 @@
 # NOTE: reference doc
 # https://santhosh-adiga-u.medium.com/setting-up-a-complete-ci-cd-pipeline-for-react-using-github-actions-9a07613ceded
-name: CI/CD Pipeline
+name: Build and Deploy Checkers
 
 on:
-  pull_request:
-    branches: [ master ] # or your main branch name
+  push:
+    branches:
+      - master  # or any other branch you want to trigger this workflow
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,10 +18,17 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20 # or your preferred Node.js version
+          node-version: '20'  # or the version required by your app
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          cd checkers
+          npm install
 
-      - name: Run unit tests
-        run: npm run test # or your test script command
+      - name: Build the app
+        run: |
+          cd checkers
+          npm run build
+
+      # Add deployment steps here, if applicable
+      # For example, deploying to GitHub Pages or any other hosting service
