@@ -151,7 +151,7 @@ function App() {
                 }
                 return <CheckersPieceMove key={`available-move-piece-${move}`} updatedMove={updatedMove} onClickMovePiece={onClickMovePiece} />
               })}
-              {showEndTurnButton && <button onClick={handleEndTurn}>End Turn</button>}
+              {showEndTurnButton && <button data-testid="available-moves-end-turn-button" onClick={handleEndTurn}>End Turn</button>}
             </StyledAvailableMovesList>
           )}
         </div>
