@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BoardStartingLayout from './utils/helperFunctions/boardStartSetup';
 import { getBoardRowsArray } from './utils/helperFunctions/getBoardRowsArray';
 import { useGame } from './context/gameContext';
@@ -20,6 +20,13 @@ function App() {
   const [gameType, setGameType] = useState<GameType>(2)
   const { getPieceMoves } = useMoves()
   const [ isPreviousMoveAttack, setIsPreviousMoveAttack ] = useState(false)
+  const [showMoves, setShowMoves] = useState(true)
+
+  useEffect(() => {
+    if (playerOnePieceCount === 0 || playerTwoPieceCount === 0) {
+      setShowMoves(false)
+    }
+  }, [playerOnePieceCount, playerTwoPieceCount])
   
     
   function getAttackMove(move: string): PieceMove | null {
@@ -122,49 +129,61 @@ function App() {
       const moveOptions = getPieceMoves(frontEndPiece)
       setAvailableMoves(moveOptions)
       setShowEndTurnButton(true)
-      // TODO: update to disable pieces if follow up move isnt available. cannot move at this point
-      // TODO: if this gets to the spot where a piece is kinged, this breaks
     } else {
       setSelectedPiece(undefined)
       changePlayerTurn(playerTurn)
     }
   }
 
-  return (
-    <div className="App">
-      <Navbar playerTurn={playerTurn} gameType={gameType} setGameType={setGameType} />
+  // TODO: unit test this when context tests are figured out
+  const getBoardConfig = () => {
+    if (playerOnePieceCount === 0 || playerTwoPieceCount === 0) {
+      return (
+        <strong>Player has won the game. Restart game to play again!</strong>
+      )
+    }
 
+    return (
       <ul style={{ padding: 0}}>
         {board === undefined ? getBoardRows(initBoard) : getBoardRows(board)}
       </ul>
+    )
+  }
 
-      <PlayerActionsContainer>
-        <div>
-          <h3>Available Moves for {selectedPiece?.key}</h3>
-          {availableMoves.length > 0 && (
-            <StyledAvailableMovesList>
-              {availableMoves.map(move => {
-                const updatedMove = getAvailableMoveOptions(move)
-                if (isPreviousMoveAttack && (updatedMove.disabled || updatedMove.type === 'move')) {
-                  // TODO: somehow need to trigger a auto player turn change
-                  updatedMove.disabled = true
-                }
-                return <CheckersPieceMove key={`available-move-piece-${move}`} updatedMove={updatedMove} onClickMovePiece={onClickMovePiece} />
-              })}
-              {showEndTurnButton && <button data-testid="available-moves-end-turn-button" onClick={handleEndTurn}>End Turn</button>}
-            </StyledAvailableMovesList>
-          )}
-        </div>
-        <div>
-          <h3>Piece count</h3>
+  return (
+    <div className="App">
+      <Navbar playerTurn={playerTurn} gameType={gameType} setGameType={setGameType} />
+      {getBoardConfig()}
+
+      {showMoves && (
+        <PlayerActionsContainer>
           <div>
-            <p><strong>Player One:</strong> {playerOnePieceCount}</p>
+            <h3>Available Moves for {selectedPiece?.key}</h3>
+            {availableMoves.length > 0 && (
+              <StyledAvailableMovesList>
+                {availableMoves.map(move => {
+                  const updatedMove = getAvailableMoveOptions(move)
+                  if (isPreviousMoveAttack && (updatedMove.disabled || updatedMove.type === 'move')) {
+                    // TODO: somehow need to trigger a auto player turn change
+                    updatedMove.disabled = true
+                  }
+                  return <CheckersPieceMove key={`available-move-piece-${move}`} updatedMove={updatedMove} onClickMovePiece={onClickMovePiece} />
+                })}
+                {showEndTurnButton && <button data-testid="available-moves-end-turn-button" onClick={handleEndTurn}>End Turn</button>}
+              </StyledAvailableMovesList>
+            )}
           </div>
           <div>
-            <p><strong>Player Two:</strong> {playerTwoPieceCount}</p>
+            <h3>Piece count</h3>
+            <div>
+              <p><strong>Player One:</strong> {playerOnePieceCount}</p>
+            </div>
+            <div>
+              <p><strong>Player Two:</strong> {playerTwoPieceCount}</p>
+            </div>
           </div>
-        </div>
-      </PlayerActionsContainer>
+        </PlayerActionsContainer>
+      )}
     </div>
   );
 }
