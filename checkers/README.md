@@ -25,7 +25,13 @@ This is a best practice I found when working for a client at Slalom.
 
 ### Jest testing library 
 - utilizing this for component testing
-- in this project, ill have a separate 'tests' directory, with a component and pages test breakdown
+- in this project, each component is tested individually for now. can be found near the associated files
+
+### Cypress Testing
+- this is for front end automated regression testing.
+- the tests will be simple for the part of having the knowledge in here
+- When working with Cyress, a reference guide can be found at:
+    * https://example.cypress.io
 
 ### Context
 Using the concept of context to apply changes at different components without prop drilling.
