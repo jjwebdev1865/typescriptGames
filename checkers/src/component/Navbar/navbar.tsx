@@ -16,6 +16,7 @@ export const Navbar = ({ playerTurn, gameType, setGameType }: NavbarProps) => {
     <NavbarContainer>
       <div>
         <h1>Checkers</h1>
+        <p>By Jim Jiracek</p>
         <h2>Player turn: {playerTurn.toUpperCase()}</h2>
       </div>
 
