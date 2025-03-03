@@ -3,73 +3,24 @@
 name: CI/CD Pipeline
 
 on:
-  # push:
-  #   branches:
-  #     - main
   pull_request:
-    branches:
-      - main
+    branches: [ main ] # or your main branch name
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - run: npm install
-      - run: npm test
-      # - name: Checkout repository
-      #   uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      # - name: Setup Node.js
-      #   uses: actions/setup-node@v2
-      #   with:
-      #     node-version: '20'
-
-      # - name: Install dependencies
-      #   run: npm install
-
-      # - name: Run Lint
-      #   run: npm run lint
-
-      # - name: Run Type Checks
-      #   run: npm run type-check
-
-  unit_tests:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: 20 # or your preferred Node.js version
 
       - name: Install dependencies
         run: npm install
 
-      - name: Run Unit Tests
-        run: npm test -- --coverage
-
-# TODO: get this working after unit tests
-  # e2e_tests:
-  #   runs-on: ubuntu-latest
-  #   needs: integration_tests
-
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v2
-
-  #     - name: Setup Node.js
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: '20'
-
-  #     - name: Install dependencies
-  #       run: npm install
-
-  #     - name: Run Cypress E2E Tests
-  #       run: npx cypress run
+      - name: Run unit tests
+        run: npm run test # or your test script command
