@@ -27,6 +27,7 @@ export default [
       // General rules
       "quotes": ["error", "single"],  // Enforce single quotes
       "no-trailing-spaces": "error", // Disallow trailing whitespace at the end of lines.
+      "eol-last": ["error", "always"], //Enforce at least one newline at the end of files.
     },
   },
 ];
