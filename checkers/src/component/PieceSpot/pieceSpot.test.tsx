@@ -26,10 +26,10 @@ describe('Piece Spot', () => {
       <GameProvider>
         <MovesProvider>
           <PieceSpot
-            checkerPiece={piece} 
-            rowIndex={index} 
-            setAvailableMoves={setAvailableMovesMock} 
-            setSelectedPiece={setSelectedPieceMock} 
+            checkerPiece={piece}
+            rowIndex={index}
+            setAvailableMoves={setAvailableMovesMock}
+            setSelectedPiece={setSelectedPieceMock}
           />
         </MovesProvider>
       </GameProvider>
@@ -53,7 +53,7 @@ describe('Piece Spot', () => {
     const spotElement = screen.getByTestId('spot-G4')
     expect(spotElement).toBeVisible();
   });
-  
+
   it('renders a move when button is clicked - regular piece', () => {
     renderComponent(checkerPiece , 5)
 

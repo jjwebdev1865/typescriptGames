@@ -26,6 +26,7 @@ export default [
       "@typescript-eslint/explicit-function-return-type": "off",
       // General rules
       "quotes": ["error", "single"],  // Enforce single quotes
+      "no-trailing-spaces": "error", // Disallow trailing whitespace at the end of lines.
     },
   },
 ];

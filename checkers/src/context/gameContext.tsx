@@ -75,7 +75,7 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
         startingBoard[key] = newRow
       } else {
         startingBoard[key] = value
-      }        
+      }
     })
 
     return startingBoard

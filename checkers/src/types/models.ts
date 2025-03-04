@@ -9,13 +9,13 @@ export type PieceInfo = {
     piece: number | null,
     isKing: boolean
   }
-  
+
   export type PieceInfoFE = {
     key: string
     piece: null | number
     isKing: boolean
   }
-  
+
   export type PieceMove = {
     piece: string
     disabled: boolean,
@@ -23,8 +23,7 @@ export type PieceInfo = {
     attackPieceToRemove?: string
     isKing: boolean
   }
-  
+
   export interface Board {
     [key: string]: any[],
   }
-  

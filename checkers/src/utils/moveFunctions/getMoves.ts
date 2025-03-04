@@ -3,7 +3,7 @@
 export function getPlayerOneMoves(pieceKey: string): string[] {
   const [rowKey, position] = pieceKey.split('')
   let newMoves: string[] = []
-  
+
   switch(rowKey.toUpperCase()) {
     case 'A':
       // TODO: i think i need to do a case here
@@ -235,7 +235,7 @@ export function getPlayerOneMoves(pieceKey: string): string[] {
 export function getPlayerTwoMoves(pieceKey: string): string[] {
   const [rowKey, position] = pieceKey.split('')
   let newMoves: string[] = []
-  
+
   switch(rowKey.toUpperCase()) {
     case 'A':
       switch(Number(position)) {

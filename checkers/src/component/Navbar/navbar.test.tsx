@@ -45,10 +45,10 @@ describe('Navbar componeont', () => {
       render(
         <Navbar playerTurn='p1' />
       );
-  
+
       const buttonElement1 = screen.getByRole('button', { name: /1 Player/i });
       const buttonElement2 = screen.getByRole('button', { name: /2 Player/i });
-  
+
       expect(buttonElement1).toBeVisible();
       expect(buttonElement2).toBeVisible();
     });
