@@ -1,4 +1,4 @@
-import { PieceInfoFE } from "../../types"
+import { PieceInfoFE } from '../../types'
 
 export function getBoardRowsArray(board: Object) {
     const boardDisplay: PieceInfoFE[][] = []

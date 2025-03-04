@@ -40,7 +40,7 @@ describe('Navbar componeont', () => {
     expect(textElement).toBeVisible();
   });
 
-  describe("Navbar Buttons", () => {
+  describe('Navbar Buttons', () => {
     it('Renders game option buttons correctly', async () => {
       render(
         <Navbar playerTurn='p1' />
@@ -61,7 +61,7 @@ describe('Navbar componeont', () => {
       const textElement = screen.getByText('Game Type: 2 MANUAL PLAYERS');
       expect(textElement).toBeVisible();
 
-      const buttonElement2 = screen.getByRole('button', { name: "1 Player" });
+      const buttonElement2 = screen.getByRole('button', { name: '1 Player' });
       fireEvent.click(buttonElement2);
       rerender(<Navbar playerTurn='p1' gameType={1} setGameType={setGameTypeMock}/>)
 
@@ -77,7 +77,7 @@ describe('Navbar componeont', () => {
       const textElement = screen.getByText('Game Type: 1 PLAYER AGAINST AI');
       expect(textElement).toBeVisible();
 
-      const buttonElement2 = screen.getByRole('button', { name: "2 Player" });
+      const buttonElement2 = screen.getByRole('button', { name: '2 Player' });
       fireEvent.click(buttonElement2);
       rerender(<Navbar playerTurn='p1' gameType={2} setGameType={setGameTypeMock}/>)
 

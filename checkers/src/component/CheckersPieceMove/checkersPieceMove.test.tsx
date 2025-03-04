@@ -9,10 +9,10 @@ import { PieceMove } from '../../types';
 
 describe('Checkers Piece Move', () => {
   const move: PieceMove = {
-    piece: "E4",
+    piece: 'E4',
     disabled: false,
     isKing: false,
-    type: "move"
+    type: 'move'
   }
 
   beforeEach(() => {
@@ -33,7 +33,7 @@ describe('Checkers Piece Move', () => {
       <CheckersPieceMove updatedMove={move} onClickMovePiece={jest.fn()}/>
     );
 
-    const buttonElement = screen.getByRole('button', { name: "E4" });
+    const buttonElement = screen.getByRole('button', { name: 'E4' });
     expect(buttonElement).toBeVisible();
   })
 
@@ -43,7 +43,7 @@ describe('Checkers Piece Move', () => {
       <CheckersPieceMove updatedMove={move} onClickMovePiece={handleClick}/>
     );
 
-    const buttonElement = screen.getByRole('button', { name: "E4" });
+    const buttonElement = screen.getByRole('button', { name: 'E4' });
     fireEvent.click(buttonElement);
     expect(handleClick).toHaveBeenCalledTimes(1);
   })
@@ -58,7 +58,7 @@ describe('Checkers Piece Move', () => {
       <CheckersPieceMove updatedMove={disabledPiece} onClickMovePiece={jest.fn()}/>
     );
 
-    const buttonElement = screen.getByRole('button', { name: "C2" });
+    const buttonElement = screen.getByRole('button', { name: 'C2' });
     expect(buttonElement).toBeDisabled();
   })
 })

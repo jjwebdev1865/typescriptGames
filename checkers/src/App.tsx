@@ -35,13 +35,13 @@ function App() {
     if (optionOne === '' && optionTwo === '') {
       return null
     }
-    const correctOption = selectedPiece?.key.startsWith(optionOne.split("")[0]) ? optionTwo : optionOne
+    const correctOption = selectedPiece?.key.startsWith(optionOne.split('')[0]) ? optionTwo : optionOne
     const newMove = getAttackStatus(correctOption, move)
     return newMove
   }
 
   function getAttackStatus(attackMove: string, move: string): PieceMove {
-    const [attackMoveKey, attackMovePosition] = attackMove.split("")
+    const [attackMoveKey, attackMovePosition] = attackMove.split('')
     const attackMoveSpot = board[attackMoveKey].find(checker => checker.position === Number(attackMovePosition))
     const isAttackDisabled =  attackMoveSpot.piece !== null
     return {
@@ -54,12 +54,12 @@ function App() {
   }
 
   function getAvailableMoveOptions(move: string): PieceMove {
-    const [avKey, avPosition] = move.split("")
+    const [avKey, avPosition] = move.split('')
     const boardRow = board[avKey]
     let newMove: PieceMove = {piece: move, disabled: false, type: 'move', isKing: (selectedPiece as PieceInfoFE).isKing}
     boardRow.forEach((br: PieceInfo) => {
       if (br.position === Number(avPosition) && br.piece !== null) {
-        const playerTurnKey = playerTurn.split("")[1]
+        const playerTurnKey = playerTurn.split('')[1]
         if ((selectedPiece as PieceInfoFE).isKing) {
           if (Number(playerTurnKey) !== br.piece) {
             const attack = getAttackMove(move)
@@ -80,7 +80,7 @@ function App() {
   function getBoardRows(board: Board) {
     const boardDisplay = getBoardRowsArray(board)
     const boardHtmlDisplay = boardDisplay.map((row, index) => {
-      const rowKey = row[0].key.split("")[0]
+      const rowKey = row[0].key.split('')[0]
 
       return <StyledBoardRowContainer key={`board-row-${rowKey}`}>
         <StyledBoardRow>
@@ -117,7 +117,7 @@ function App() {
       setIsPreviousMoveAttack(true)
     }
     if (piece.type === 'attack') {
-      const [pieceKey, piecePosition] = piece.piece.split("")
+      const [pieceKey, piecePosition] = piece.piece.split('')
       const newPiece = newBoard[pieceKey].find(item => item.position === Number(piecePosition))
       
       const frontEndPiece: PieceInfoFE = {
