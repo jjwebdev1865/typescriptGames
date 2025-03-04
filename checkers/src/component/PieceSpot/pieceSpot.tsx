@@ -25,7 +25,7 @@ export const PieceSpot = ({ checkerPiece, rowIndex, setAvailableMoves, setSelect
     backgroundColor = '#3D2B1F'
     textColor = '#FFFFFF'
   }
-  
+
   let buttonColor = (checkerPiece.piece !== null && checkerPiece.piece === 1 )? 'red' : undefined
   if (getDisabledStatus()) {
     buttonColor = 'gray'
@@ -56,17 +56,16 @@ export const PieceSpot = ({ checkerPiece, rowIndex, setAvailableMoves, setSelect
       data-testid={`spot-${checkerPiece.key}`}
       $tilecolor={backgroundColor}
       $textcolor={textColor}
-      >
-        {checkerPiece.piece !== null ? (
-          <StyledChessPiece 
-            $piececolor={buttonColor}
-            onClick={onClickGetPieceMoves}
-            disabled={getDisabledStatus()}
-          >{checkerPiece.key}</StyledChessPiece>
-        ): (
-          <>{checkerPiece.key}</>
-        )}
-        
+    >
+      {checkerPiece.piece !== null ? (
+        <StyledChessPiece
+          $piececolor={buttonColor}
+          onClick={onClickGetPieceMoves}
+          disabled={getDisabledStatus()}
+        >{checkerPiece.key}</StyledChessPiece>
+      ): (
+        <>{checkerPiece.key}</>
+      )}
     </StyledPieceSpot>
   )
 }

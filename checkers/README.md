@@ -24,7 +24,6 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
     * add cypress testing
 
 ## Development Notes
-
 ### Styled Components
 Using styled components to provide styling. 
 This is a best practice I found when working for a client at Slalom. 
@@ -38,6 +37,14 @@ This is a best practice I found when working for a client at Slalom.
 - the tests will be simple for the part of having the knowledge in here
 - When working with Cyress, a reference guide can be found at:
     * https://example.cypress.io
+
+### Eslint
+- setup in the eslint.config.mjs
+- goal is simple ways to confirm standards
+- TODO: add to pipeline check
+- 2 scripts
+    * lint
+    * lint:fix
 
 ### Context
 Using the concept of context to apply changes at different components without prop drilling.

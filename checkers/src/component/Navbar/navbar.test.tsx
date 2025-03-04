@@ -8,7 +8,7 @@ import '@testing-library/jest-dom';
 // Setup using: https://maous.medium.com/setup-testing-environment-for-react-typescript-with-jest-1f5eb453aa2
 describe('Navbar componeont', () => {
   beforeEach(() => {
-      jest.clearAllMocks()
+    jest.clearAllMocks()
   });
 
   it('Renders H1 correctly', async () => {
@@ -45,10 +45,10 @@ describe('Navbar componeont', () => {
       render(
         <Navbar playerTurn='p1' />
       );
-  
+
       const buttonElement1 = screen.getByRole('button', { name: /1 Player/i });
       const buttonElement2 = screen.getByRole('button', { name: /2 Player/i });
-  
+
       expect(buttonElement1).toBeVisible();
       expect(buttonElement2).toBeVisible();
     });
