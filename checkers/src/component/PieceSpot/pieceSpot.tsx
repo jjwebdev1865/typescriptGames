@@ -56,17 +56,16 @@ export const PieceSpot = ({ checkerPiece, rowIndex, setAvailableMoves, setSelect
       data-testid={`spot-${checkerPiece.key}`}
       $tilecolor={backgroundColor}
       $textcolor={textColor}
-      >
-        {checkerPiece.piece !== null ? (
-          <StyledChessPiece
-            $piececolor={buttonColor}
-            onClick={onClickGetPieceMoves}
-            disabled={getDisabledStatus()}
-          >{checkerPiece.key}</StyledChessPiece>
-        ): (
-          <>{checkerPiece.key}</>
-        )}
-
+    >
+      {checkerPiece.piece !== null ? (
+        <StyledChessPiece
+          $piececolor={buttonColor}
+          onClick={onClickGetPieceMoves}
+          disabled={getDisabledStatus()}
+        >{checkerPiece.key}</StyledChessPiece>
+      ): (
+        <>{checkerPiece.key}</>
+      )}
     </StyledPieceSpot>
   )
 }

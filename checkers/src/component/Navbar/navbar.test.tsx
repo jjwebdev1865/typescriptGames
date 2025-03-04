@@ -8,7 +8,7 @@ import '@testing-library/jest-dom';
 // Setup using: https://maous.medium.com/setup-testing-environment-for-react-typescript-with-jest-1f5eb453aa2
 describe('Navbar componeont', () => {
   beforeEach(() => {
-      jest.clearAllMocks()
+    jest.clearAllMocks()
   });
 
   it('Renders H1 correctly', async () => {
