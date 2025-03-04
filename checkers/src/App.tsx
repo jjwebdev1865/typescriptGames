@@ -27,8 +27,8 @@ function App() {
       setShowMoves(false)
     }
   }, [playerOnePieceCount, playerTwoPieceCount])
-  
-    
+
+
   function getAttackMove(move: string): PieceMove | null {
     const optionOne = getPlayerOneAttacks(move, selectedPiece?.key as string)
     const optionTwo = getPlayerTwoAttacks(move, selectedPiece?.key as string)
@@ -85,10 +85,10 @@ function App() {
       return <StyledBoardRowContainer key={`board-row-${rowKey}`}>
         <StyledBoardRow>
           {row.map(piece => {
-            return <PieceSpot 
-              key={`board-spot-${piece.key}`} 
-              checkerPiece={piece} 
-              rowIndex={index} 
+            return <PieceSpot
+              key={`board-spot-${piece.key}`}
+              checkerPiece={piece}
+              rowIndex={index}
               setAvailableMoves={setAvailableMoves}
               setSelectedPiece={setSelectedPiece}
             />
@@ -119,7 +119,7 @@ function App() {
     if (piece.type === 'attack') {
       const [pieceKey, piecePosition] = piece.piece.split('')
       const newPiece = newBoard[pieceKey].find(item => item.position === Number(piecePosition))
-      
+
       const frontEndPiece: PieceInfoFE = {
         key: piece.piece,
         piece: newPiece.piece,
