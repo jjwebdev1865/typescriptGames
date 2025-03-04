@@ -1,5 +1,5 @@
-import { PieceMove } from "../../types"
-import { ChessPieceMoveItem } from "./checkersPieceMove.styles"
+import { PieceMove } from '../../types'
+import { ChessPieceMoveItem } from './checkersPieceMove.styles'
 
 interface ChessPieceMoveProps {
   updatedMove: PieceMove

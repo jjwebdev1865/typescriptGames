@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction, createContext, useContext, useState } from "react";
-import { Board, PieceInfo, PieceInfoFE, PieceMove, PlayerTurn } from "../types";
+import { Dispatch, SetStateAction, createContext, useContext, useState } from 'react';
+import { Board, PieceInfo, PieceInfoFE, PieceMove, PlayerTurn } from '../types';
 
 interface GameContextType {
   playerTurn: PlayerTurn;
@@ -100,8 +100,8 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
 
   function updateBoard(selectedPiece: PieceInfoFE, board: Board, updatedPiece: PieceMove, playerTurn: string): Board {
     const { piece: updatedPieceInfo, type, attackPieceToRemove } = updatedPiece
-    const [moveKey, movePosition] = updatedPieceInfo.split("")
-    const [selectedKey, selectedPosition] = selectedPiece.key.split("")
+    const [moveKey, movePosition] = updatedPieceInfo.split('')
+    const [selectedKey, selectedPosition] = selectedPiece.key.split('')
     const newBoard: Board = {}
     Object.entries(board).forEach(([ key, value]) => {
       if (key === moveKey) {
@@ -136,7 +136,7 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
 
     // todo: clean up
     if (type === 'attack' && attackPieceToRemove !== undefined) {
-      const [deletionKey, deletionPosition] = attackPieceToRemove.split("")
+      const [deletionKey, deletionPosition] = attackPieceToRemove.split('')
       Object.entries(board).forEach(([ key, value]) => {
         let newRow = [] as PieceInfo[]
         if (key === deletionKey) {

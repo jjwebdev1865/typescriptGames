@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 
 export const StyledPieceSpot = styled.li<{ $tilecolor?: string; $textcolor?: string }>`

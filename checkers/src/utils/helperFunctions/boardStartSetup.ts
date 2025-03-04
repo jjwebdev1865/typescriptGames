@@ -1,4 +1,4 @@
-import { PieceInfo } from "../../types"
+import { PieceInfo } from '../../types'
 
 const rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
 

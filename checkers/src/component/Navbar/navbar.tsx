@@ -1,6 +1,6 @@
-import { Dispatch, SetStateAction } from "react"
-import { GameType, PlayerTurn } from "../../types"
-import { NavbarContainer } from "./navbar.styles"
+import { Dispatch, SetStateAction } from 'react'
+import { GameType, PlayerTurn } from '../../types'
+import { NavbarContainer } from './navbar.styles'
 
 
 interface NavbarProps {
