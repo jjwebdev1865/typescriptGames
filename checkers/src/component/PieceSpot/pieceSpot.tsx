@@ -1,8 +1,8 @@
-import React, { Dispatch, SetStateAction } from "react";
-import { useMoves } from "../../context/movesContext";
-import { useGame } from "../../context/gameContext";
-import { PieceInfoFE } from "../../types";
-import { StyledChessPiece, StyledPieceSpot } from "./pieceSpot.styles";
+import React, { Dispatch, SetStateAction } from 'react';
+import { useMoves } from '../../context/movesContext';
+import { useGame } from '../../context/gameContext';
+import { PieceInfoFE } from '../../types';
+import { StyledChessPiece, StyledPieceSpot } from './pieceSpot.styles';
 
 interface PieceSpotProps {
   checkerPiece: PieceInfoFE,
@@ -14,7 +14,7 @@ interface PieceSpotProps {
 export const PieceSpot = ({ checkerPiece, rowIndex, setAvailableMoves, setSelectedPiece }: PieceSpotProps) => {
   const { getPieceMoves, getKingMoves } = useMoves()
   const { playerTurn } = useGame()
-  const pieceNumber = checkerPiece.key.split("")[1]
+  const pieceNumber = checkerPiece.key.split('')[1]
   let backgroundColor = undefined
   let textColor = undefined
 
@@ -43,7 +43,7 @@ export const PieceSpot = ({ checkerPiece, rowIndex, setAvailableMoves, setSelect
   }
 
   function getDisabledStatus(): boolean {
-    const playerTurnKey = playerTurn.split("")[1]
+    const playerTurnKey = playerTurn.split('')[1]
     if (checkerPiece.piece !== Number(playerTurnKey)) {
       return true
     } else {

@@ -57,7 +57,7 @@ describe('Piece Spot', () => {
   it('renders a move when button is clicked - regular piece', () => {
     renderComponent(checkerPiece , 5)
 
-    const buttonElement = screen.getByRole('button', { name: "F3" });
+    const buttonElement = screen.getByRole('button', { name: 'F3' });
     expect(buttonElement).toBeVisible();
 
     fireEvent.click(buttonElement);
@@ -72,7 +72,7 @@ describe('Piece Spot', () => {
     }
     renderComponent(kingPiece , 5)
 
-    const buttonElement = screen.getByRole('button', { name: "F3" });
+    const buttonElement = screen.getByRole('button', { name: 'F3' });
     expect(buttonElement).toBeVisible();
 
     fireEvent.click(buttonElement);

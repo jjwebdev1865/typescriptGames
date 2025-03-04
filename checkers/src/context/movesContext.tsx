@@ -1,6 +1,6 @@
-import { createContext, useContext } from "react";
-import { getPlayerOneMoves, getPlayerTwoMoves } from "../utils/moveFunctions/getMoves";
-import { PieceInfoFE } from "../types";
+import { createContext, useContext } from 'react';
+import { getPlayerOneMoves, getPlayerTwoMoves } from '../utils/moveFunctions/getMoves';
+import { PieceInfoFE } from '../types';
 
 interface MovesContextType {
   getPieceMoves: (checkerPiece: PieceInfoFE) => string[];
