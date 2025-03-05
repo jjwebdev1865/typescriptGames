@@ -1,31 +1,15 @@
-import React, { ReactNode, useCallback, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { useBoard } from './context/boardContext';
-import { BoardSpot } from './components/BoardSpot/BoardSpot';
 
 function App() {
   const [boardGame, setBoardGame] = useState<ReactNode | null>(null)
-  const { playerTurn } = useBoard()
+  const { playerTurn, initBoard } = useBoard()
 
-
-  const buildInitBoardRows = useCallback(() => {
-    const rows = ['A', 'B', 'C']
-    const temp: ReactNode = (
-      <div>
-        {rows.map((row) => {
-          const index = 1
-          return (
-            <ul key={`board-row-${row}`} style={{ listStyle: 'none', display: 'flex', margin: 0 }}>
-              <BoardSpot row={row} index={index} />
-              <BoardSpot row={row} index={index + 1} />
-              <BoardSpot row={row} index={index + 2} />
-            </ul>
-          )
-        })}
-      </div>
-    )
-    setBoardGame(temp)
-    return temp
-  }, []) 
+  useEffect(() => {
+    if (boardGame === null) {
+      setBoardGame(initBoard)
+    }
+  }, [boardGame, initBoard])
 
   return (
     <div className="App" style={{ textAlign: 'center'}}>
@@ -35,7 +19,8 @@ function App() {
 
       <div style={{display: 'grid', gridTemplateColumns: "repeat(3, 1fr)"}}>
 
-        {boardGame === null ? buildInitBoardRows() : boardGame}
+        {/* {boardGame === null ? buildInitBoardRows() : boardGame} */}
+        {boardGame}
         <p>2nd game</p>
         <p>3rd game</p>
       </div>
