@@ -1,13 +1,15 @@
+import { StyledBoardSpot } from "./BoardSpot.styles"
+
 interface BoardSpotProps {
   row: string
   index: number
 }
 
 export const BoardSpot = ({ row, index }: BoardSpotProps) => {
-
+  const spotTitle = `${row}-${index}`
   return (
-    <li style={{ padding: '25px', border: '1px solid black'}}>
-      {row}-buildSpot-{index}
-    </li>
+    <StyledBoardSpot>
+      <button onClick={() => alert(`${spotTitle} clicked!`)}>{spotTitle}</button>
+    </StyledBoardSpot>
   )
 }
