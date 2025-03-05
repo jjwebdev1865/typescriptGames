@@ -1,11 +1,13 @@
 import { Dispatch, JSX, SetStateAction, createContext, useContext, useState } from 'react';
-import { PlayerOptions } from '../models';
+import { BoardInfo, PlayerOptions } from '../models';
 import { BoardSpot } from '../components/BoardSpot/BoardSpot';
 
 interface BoardContextType {
   playerTurn: PlayerOptions
   setPlayerTurn: Dispatch<SetStateAction<"P1" | "P2">>
   initBoard: () => JSX.Element
+  availableMoves: string[]
+  gamePieces: BoardInfo
 }
 
 export const BoardContext = createContext<BoardContextType | undefined>(undefined);
@@ -15,11 +17,38 @@ interface BoardProviderProps {
 }
 
 export const BoardProvider: React.FC<BoardProviderProps> = ({children}) => {
+  const rows = ['A', 'B', 'C']
   const [playerTurn, setPlayerTurn] = useState<PlayerOptions>('P1')
+  const [availableMoves, setAvailableMoves] = useState<string[]>(initMoves())
+  const [gamePieces, setGamePieces] = useState<BoardInfo>(boardInfo())
+
+  function initMoves(): string[] {
+    const moves: string[] = []
+    rows.forEach(row => {
+      moves.push(`${row}1`)
+      moves.push(`${row}2`)
+      moves.push(`${row}3`)
+    })
+
+    return moves
+  }
+
+  function boardInfo(): BoardInfo {
+    const test: BoardInfo = {
+      "A1": {isOpen: true},
+      "A2": {isOpen: true},
+      "A3": {isOpen: true},
+      "B1": {isOpen: true},
+      "B2": {isOpen: true},
+      "B3": {isOpen: true},
+      "C1": {isOpen: true},
+      "C2": {isOpen: true},
+      "C3": {isOpen: true}
+    }
+    return test
+  }
 
   function initBoard() {
-    const rows = ['A', 'B', 'C']
-
     return (
       <div>
         {rows.map((row) => {
@@ -36,7 +65,7 @@ export const BoardProvider: React.FC<BoardProviderProps> = ({children}) => {
     )
   }
   
-  return <BoardContext.Provider value={{ playerTurn, setPlayerTurn, initBoard }}>
+  return <BoardContext.Provider value={{ playerTurn, setPlayerTurn, initBoard, availableMoves, gamePieces }}>
      {children}
   </BoardContext.Provider>
 }
