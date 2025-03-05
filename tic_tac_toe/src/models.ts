@@ -1,0 +1,1 @@
+export type PlayerOptions = 'P1' | 'P2'
