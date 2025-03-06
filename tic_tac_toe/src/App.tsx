@@ -1,15 +1,26 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import { useBoard } from './context/boardContext';
+import { usePlayer } from './context/playerContext';
 
 function App() {
-  const [boardGame, setBoardGame] = useState<ReactNode | null>(null)
-  const { playerTurn, setPlayerTurn, initBoard, availableMoves, gamePieces, boardInfo, setGamePieces, setAvailableMoves } = useBoard()
+  const { initBoard, availableMoves, gamePieces, boardInfo, setGamePieces, setAvailableMoves } = useBoard()
+  const { playerTurn, setPlayerTurn, determinePlayerWin } = usePlayer()
+  const [boardGame, setBoardGame] = useState<ReactNode | null>(initBoard)
 
+  // TODO: end game useEffect
   useEffect(() => {
-    if (boardGame === null) {
-      setBoardGame(initBoard)
+    if (availableMoves.length === 0) {
+      determinePlayerWin(gamePieces)
+      const gameOverBoard = (
+        <div>
+          {boardGame}
+          <strong>Game Over</strong>
+        </div>
+      )
+      setBoardGame(gameOverBoard)
     }
-  }, [boardGame, initBoard])
+    // eslint-disable-next-line 
+  }, [availableMoves])
 
   function handlePieceMove(move: string) {
     const newBoard = boardInfo(move, gamePieces)

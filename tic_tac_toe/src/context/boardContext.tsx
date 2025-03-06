@@ -1,10 +1,9 @@
 import { Dispatch, JSX, SetStateAction, createContext, useContext, useState } from 'react';
-import { BoardInfo, PlayerOptions } from '../models';
+import { BoardInfo } from '../models';
 import { BoardSpot } from '../components/BoardSpot/BoardSpot';
+import { usePlayer } from './playerContext';
 
 interface BoardContextType {
-  playerTurn: PlayerOptions
-  setPlayerTurn: Dispatch<SetStateAction<"P1" | "P2">>
   initBoard: () => JSX.Element
   availableMoves: string[]
   gamePieces: BoardInfo
@@ -21,7 +20,7 @@ interface BoardProviderProps {
 
 export const BoardProvider: React.FC<BoardProviderProps> = ({children}) => {
   const rows = ['A', 'B', 'C']
-  const [playerTurn, setPlayerTurn] = useState<PlayerOptions>('P1')
+  const { playerTurn } = usePlayer()  
   const [availableMoves, setAvailableMoves] = useState<string[]>(initMoves())
   const [gamePieces, setGamePieces] = useState<BoardInfo>(boardInfo())
 
@@ -79,7 +78,14 @@ export const BoardProvider: React.FC<BoardProviderProps> = ({children}) => {
     )
   }
   
-  return <BoardContext.Provider value={{ playerTurn, setPlayerTurn, initBoard, availableMoves, gamePieces, boardInfo, setGamePieces, setAvailableMoves }}>
+  return <BoardContext.Provider value={{ 
+    initBoard, 
+    availableMoves, 
+    gamePieces, 
+    boardInfo, 
+    setGamePieces, 
+    setAvailableMoves 
+  }}>
      {children}
   </BoardContext.Provider>
 }
