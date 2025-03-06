@@ -1,3 +1,4 @@
+import { useBoard } from "../../context/boardContext"
 import { StyledBoardSpot } from "./BoardSpot.styles"
 
 interface BoardSpotProps {
@@ -6,9 +7,18 @@ interface BoardSpotProps {
 }
 
 export const BoardSpot = ({ row, index }: BoardSpotProps) => {
-  const spotTitle = `${row}-${index}`
+  const { gamePieces } = useBoard()
+  const spotTitle = `${row}${index}`
+
+  let checkPlayerStatus = null
+  Object.entries(gamePieces).forEach(([ key, value ]) => {
+    if (key === spotTitle && value.player !== null) {
+      checkPlayerStatus = value.player
+    }
+  })
+  
   return (
-    <StyledBoardSpot>
+    <StyledBoardSpot $player={checkPlayerStatus}>
       {spotTitle}
     </StyledBoardSpot>
   )
