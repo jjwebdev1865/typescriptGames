@@ -10,6 +10,7 @@ interface BoardContextType {
   gamePieces: BoardInfo
   boardInfo: (move?: string, existingBoard?: BoardInfo) => BoardInfo
   setGamePieces: Dispatch<SetStateAction<BoardInfo>>
+  setAvailableMoves: Dispatch<SetStateAction<string[]>>
 }
 
 export const BoardContext = createContext<BoardContextType | undefined>(undefined);
@@ -78,7 +79,7 @@ export const BoardProvider: React.FC<BoardProviderProps> = ({children}) => {
     )
   }
   
-  return <BoardContext.Provider value={{ playerTurn, setPlayerTurn, initBoard, availableMoves, gamePieces, boardInfo, setGamePieces }}>
+  return <BoardContext.Provider value={{ playerTurn, setPlayerTurn, initBoard, availableMoves, gamePieces, boardInfo, setGamePieces, setAvailableMoves }}>
      {children}
   </BoardContext.Provider>
 }
