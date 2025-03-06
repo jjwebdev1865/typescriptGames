@@ -1,9 +1,10 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import { useBoard } from './context/boardContext';
+import { SpotInfo } from './models';
 
 function App() {
   const [boardGame, setBoardGame] = useState<ReactNode | null>(null)
-  const { playerTurn, initBoard, availableMoves, gamePieces } = useBoard()
+  const { playerTurn, initBoard, availableMoves, gamePieces, boardInfo, setGamePieces } = useBoard()
 
   useEffect(() => {
     if (boardGame === null) {
@@ -11,15 +12,22 @@ function App() {
     }
   }, [boardGame, initBoard])
 
-  function boardStatus(move: string) {
-    let status = true
+  function boardStatus(move: string): SpotInfo {
+    let status = {} as SpotInfo
     Object.entries(gamePieces).forEach(([ key, value]) => {
       if (key === move) {
-        status = value.isOpen ? true : false
+        status = value
       }
     })
     return status
   }
+
+  function handlePieceMove(move: string) {
+    const newBoard = boardInfo(move, gamePieces)
+    setGamePieces(newBoard)
+  }
+
+  console.log('gamePieces', gamePieces)
 
   return (
     <div className="App" style={{ textAlign: 'center'}}>
@@ -47,10 +55,10 @@ function App() {
         <h3>Available Moves</h3>
         <ul style={{ listStyle: 'none', display: 'flex', justifyContent: 'center'}}>
           {availableMoves.map(move => {
-            const isSpotAvailable = boardStatus(move)
+            const moveSpotStatus = boardStatus(move)
             return (
               <li key={`available-move-${move}`}>
-                <button disabled={!isSpotAvailable} onClick={() => alert(`${move} clicked!`)}>{move}</button>
+                <button disabled={!moveSpotStatus.isOpen} onClick={() => handlePieceMove(move)}>{move}</button>
               </li>
             )
           })}

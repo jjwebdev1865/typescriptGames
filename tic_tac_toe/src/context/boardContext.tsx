@@ -8,6 +8,8 @@ interface BoardContextType {
   initBoard: () => JSX.Element
   availableMoves: string[]
   gamePieces: BoardInfo
+  boardInfo: (move?: string, existingBoard?: BoardInfo) => BoardInfo
+  setGamePieces: Dispatch<SetStateAction<BoardInfo>>
 }
 
 export const BoardContext = createContext<BoardContextType | undefined>(undefined);
@@ -33,19 +35,30 @@ export const BoardProvider: React.FC<BoardProviderProps> = ({children}) => {
     return moves
   }
 
-  function boardInfo(): BoardInfo {
-    const test: BoardInfo = {
-      "A1": {isOpen: true},
-      "A2": {isOpen: true},
-      "A3": {isOpen: true},
-      "B1": {isOpen: true},
-      "B2": {isOpen: true},
-      "B3": {isOpen: true},
-      "C1": {isOpen: true},
-      "C2": {isOpen: true},
-      "C3": {isOpen: true}
+  function boardInfo(move?: string, existingBoard?: BoardInfo): BoardInfo {
+    if (move === undefined) {
+      return {
+        "A1": {isOpen: true, player: null},
+        "A2": {isOpen: true, player: null},
+        "A3": {isOpen: true, player: null},
+        "B1": {isOpen: true, player: null},
+        "B2": {isOpen: true, player: null},
+        "B3": {isOpen: true, player: null},
+        "C1": {isOpen: true, player: null},
+        "C2": {isOpen: true, player: null},
+        "C3": {isOpen: true, player: null}
+      } as BoardInfo
     }
-    return test
+
+    let updatedBoard: BoardInfo = {}
+    Object.entries(existingBoard as BoardInfo).forEach(([ key, value]) => {
+      if (key !== move) {
+        updatedBoard[key] = value
+      } else {
+        updatedBoard[key] = { isOpen: false, player: playerTurn}
+      }
+    })
+    return updatedBoard
   }
 
   function initBoard() {
@@ -65,7 +78,7 @@ export const BoardProvider: React.FC<BoardProviderProps> = ({children}) => {
     )
   }
   
-  return <BoardContext.Provider value={{ playerTurn, setPlayerTurn, initBoard, availableMoves, gamePieces }}>
+  return <BoardContext.Provider value={{ playerTurn, setPlayerTurn, initBoard, availableMoves, gamePieces, boardInfo, setGamePieces }}>
      {children}
   </BoardContext.Provider>
 }
