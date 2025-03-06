@@ -7,16 +7,15 @@ function App() {
   const { initBoard, availableMoves, gamePieces, boardInfo, setGamePieces, setAvailableMoves } = useBoard()
   const { playerTurn, setPlayerTurn, determinePlayerWin } = usePlayer()
   const { gameCount, setGameCount } = useGameContext()
-  const [boardGame, setBoardGame] = useState<ReactNode | null>(initBoard)
+  const [ boardGame, setBoardGame ] = useState<ReactNode | null>(initBoard)
   const [ isGameOver, setIsGameOver ] = useState(false)
+  const [ gameWinner, setGameWinner ] = useState<string | null>("")
 
   useEffect(() => {
     if (isGameOver) {
-      determinePlayerWin(gamePieces)
       const gameOverBoard = (
         <div>
           {boardGame}
-          <strong>Game Over</strong>
         </div>
       )
       setBoardGame(gameOverBoard)
@@ -24,6 +23,16 @@ function App() {
     }
     // eslint-disable-next-line 
   }, [isGameOver])
+
+  useEffect(() => {
+    const check = determinePlayerWin(gamePieces)
+    if (check !== null) {
+      setAvailableMoves([])
+      setGameWinner(check)
+      setIsGameOver(true)
+    }
+    // eslint-disable-next-line 
+  }, [availableMoves.length])
 
   function handlePieceMove(move: string) {
     const newBoard = boardInfo(move, gamePieces)
@@ -47,7 +56,7 @@ function App() {
       <div style={{display: 'grid', gridTemplateColumns: "repeat(3, 1fr)"}}>
 
         <div>
-          <h4>1st Game</h4>
+          <h4>1st Game: Won by {gameWinner}</h4>
           {boardGame}
         </div>
         
