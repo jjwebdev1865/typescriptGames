@@ -8,3 +8,7 @@ export type SpotInfo = {
 export type BoardInfo = {
     [key: string]: SpotInfo
 }
+
+export type GameCount = {
+    [key: number]: PlayerOptions | null
+}
