@@ -1,15 +1,17 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import { useBoard } from './context/boardContext';
 import { usePlayer } from './context/playerContext';
+import { useGameContext } from './context/gameContext';
 
 function App() {
   const { initBoard, availableMoves, gamePieces, boardInfo, setGamePieces, setAvailableMoves } = useBoard()
   const { playerTurn, setPlayerTurn, determinePlayerWin } = usePlayer()
+  const { gameCount, setGameCount } = useGameContext()
   const [boardGame, setBoardGame] = useState<ReactNode | null>(initBoard)
+  const [ isGameOver, setIsGameOver ] = useState(false)
 
-  // TODO: end game useEffect
   useEffect(() => {
-    if (availableMoves.length === 0) {
+    if (isGameOver) {
       determinePlayerWin(gamePieces)
       const gameOverBoard = (
         <div>
@@ -18,16 +20,22 @@ function App() {
         </div>
       )
       setBoardGame(gameOverBoard)
+      setGameCount(gameCount + 1)
     }
     // eslint-disable-next-line 
-  }, [availableMoves])
+  }, [isGameOver])
 
   function handlePieceMove(move: string) {
     const newBoard = boardInfo(move, gamePieces)
     setGamePieces(newBoard)
     const newAvailableMoves = availableMoves.filter(avm => avm !== move)
     setAvailableMoves(newAvailableMoves)
-    playerTurn === 'P1' ? setPlayerTurn('P2') : setPlayerTurn('P1')
+    if (newAvailableMoves.length === 0) {
+      setPlayerTurn(null)
+      setIsGameOver(true)
+    } else {
+      playerTurn === 'P1' ? setPlayerTurn('P2') : setPlayerTurn('P1')
+    }
   }
 
 
@@ -54,7 +62,7 @@ function App() {
 
       <div style={{ textAlign: 'center'}}>
         <h2>Player Turn: {playerTurn}</h2>
-        <h3>Available Moves</h3>
+        <h3>Available Moves for Game: {gameCount}</h3>
         <ul style={{ listStyle: 'none', display: 'flex', justifyContent: 'center'}}>
           {availableMoves.map(move => {
             return (

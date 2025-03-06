@@ -2,8 +2,8 @@ import { Dispatch, SetStateAction, createContext, useContext, useState } from 'r
 import { BoardInfo, PlayerOptions, SpotInfo } from '../models';
 
 interface PlayerContextType {
-  playerTurn: PlayerOptions
-  setPlayerTurn: Dispatch<SetStateAction<"P1" | "P2">>
+  playerTurn: PlayerOptions | null
+  setPlayerTurn: Dispatch<SetStateAction<PlayerOptions | null>>
   determinePlayerWin: (gamePieces: BoardInfo) => void
 }
 
@@ -14,7 +14,7 @@ interface PlayerProviderProps {
 }
 
 export const PlayerProvider: React.FC<PlayerProviderProps> = ({children}) => {
-  const [playerTurn, setPlayerTurn] = useState<PlayerOptions>('P1')
+  const [playerTurn, setPlayerTurn] = useState<PlayerOptions | null>('P1')
 
   function pieceCombination(value: SpotInfo, secondSpot: SpotInfo, thirdSpot: SpotInfo): boolean {
     if (secondSpot.player === value.player && thirdSpot.player === value.player) {
@@ -105,7 +105,7 @@ export const PlayerProvider: React.FC<PlayerProviderProps> = ({children}) => {
 export const usePlayer = (): PlayerContextType => {
   const context = useContext(PlayerContext);
   if (!context) {
-    throw new Error('useCounter must be used within a MovesProvider');
+    throw new Error('usePlayer must be used within a PlayerProvider');
   }
   return context;
 };
