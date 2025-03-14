@@ -5,16 +5,25 @@ import { useGameContext } from './context/gameContext';
 import { BoardInfo } from './models';
 
 function App() {
-  const { initBoard, availableMoves, gamePieces, boardInfo, setGamePieces, setAvailableMoves, initMoves } = useBoard()
+  const { 
+    initBoard, 
+    availableMoves, 
+    gamePieces, 
+    boardInfo, 
+    setGamePieces, 
+    setAvailableMoves, 
+    initMoves, 
+    secondGameAvMoves, 
+    setSecondGameAvMoves ,
+    secondGamePieces,
+    setSecondGamePieces
+  } = useBoard()
   const { playerTurn, setPlayerTurn, determinePlayerWin } = usePlayer()
   const { gameCount, setGameCount } = useGameContext()
   const [ boardGame, setBoardGame ] = useState<ReactNode | null>(initBoard(["A", "B", "C"]))
   const [ secondBoardGame, setSecondBoardGame ] = useState<ReactNode | null>(null)
   const [ isGameOver, setIsGameOver ] = useState(false)
   const [ gameWinner, setGameWinner ] = useState<string | null>("")
-  // TODO: clean up av moves to work for all games dynamically
-  const [secondGameAvMoves, setSecondGameAvMoves] = useState<string[] | null>(null)
-  const [secondGamePieces, setSecondGamePieces] = useState<BoardInfo | null>(null)
 
   useEffect(() => {
     if (isGameOver) {
