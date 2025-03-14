@@ -7,7 +7,8 @@ function App() {
   const { initBoard, availableMoves, gamePieces, boardInfo, setGamePieces, setAvailableMoves } = useBoard()
   const { playerTurn, setPlayerTurn, determinePlayerWin } = usePlayer()
   const { gameCount, setGameCount } = useGameContext()
-  const [ boardGame, setBoardGame ] = useState<ReactNode | null>(initBoard)
+  const [ boardGame, setBoardGame ] = useState<ReactNode | null>(initBoard(["A", "B", "C"]))
+  const [ secondBoardGame, setSecondBoardGame ] = useState<ReactNode | null>(null)
   const [ isGameOver, setIsGameOver ] = useState(false)
   const [ gameWinner, setGameWinner ] = useState<string | null>("")
 
@@ -20,6 +21,7 @@ function App() {
       )
       setBoardGame(gameOverBoard)
       setGameCount(gameCount + 1)
+      setSecondBoardGame(initBoard(["D", "E", "F"]))
     }
     // eslint-disable-next-line 
   }, [isGameOver])
@@ -52,6 +54,7 @@ function App() {
     <div className="App" style={{ textAlign: 'center'}}>
       <h1>Tic Tac Toe</h1>
       <h2>This is a best of 3 game</h2>
+      <h3>Current game count: {gameCount}</h3>
 
       <div style={{display: 'grid', gridTemplateColumns: "repeat(3, 1fr)"}}>
 
@@ -62,6 +65,7 @@ function App() {
         
         <div>
           <h4>2nd Game</h4>
+          {gameCount === 2 && secondBoardGame}
         </div>
 
         <div>

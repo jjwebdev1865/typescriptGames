@@ -4,7 +4,7 @@ import { BoardSpot } from '../components/BoardSpot/BoardSpot';
 import { usePlayer } from './playerContext';
 
 interface BoardContextType {
-  initBoard: () => JSX.Element
+  initBoard: (row: string[]) => JSX.Element
   availableMoves: string[]
   gamePieces: BoardInfo
   boardInfo: (move?: string, existingBoard?: BoardInfo) => BoardInfo
@@ -19,12 +19,12 @@ interface BoardProviderProps {
 }
 
 export const BoardProvider: React.FC<BoardProviderProps> = ({children}) => {
-  const rows = ['A', 'B', 'C']
   const { playerTurn } = usePlayer()  
   const [availableMoves, setAvailableMoves] = useState<string[]>(initMoves())
   const [gamePieces, setGamePieces] = useState<BoardInfo>(boardInfo())
 
   function initMoves(): string[] {
+    const rows = ['A', 'B', 'C']
     const moves: string[] = []
     rows.forEach(row => {
       moves.push(`${row}1`)
@@ -61,7 +61,7 @@ export const BoardProvider: React.FC<BoardProviderProps> = ({children}) => {
     return updatedBoard
   }
 
-  function initBoard() {
+  function initBoard(rows: string[]) {
     return (
       <div>
         {rows.map((row) => {
