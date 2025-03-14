@@ -7,7 +7,7 @@ interface BoardSpotProps {
 }
 
 export const BoardSpot = ({ row, index }: BoardSpotProps) => {
-  const { gamePieces } = useBoard()
+  const { gamePieces, secondGamePieces } = useBoard()
   const spotTitle = `${row}${index}`
 
   let checkPlayerStatus = null
@@ -16,6 +16,14 @@ export const BoardSpot = ({ row, index }: BoardSpotProps) => {
       checkPlayerStatus = value.player
     }
   })
+
+  if (secondGamePieces !== null) {
+    Object.entries(secondGamePieces).forEach(([ key, value ]) => {
+      if (key === spotTitle && value.player !== null) {
+        checkPlayerStatus = value.player
+      }
+    })
+  }
   
   return (
     <StyledBoardSpot $player={checkPlayerStatus}>

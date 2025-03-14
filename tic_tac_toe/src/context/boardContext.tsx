@@ -11,6 +11,11 @@ interface BoardContextType {
   setGamePieces: Dispatch<SetStateAction<BoardInfo>>
   setAvailableMoves: Dispatch<SetStateAction<string[]>>
   initMoves: (updatedRows?: string[]) => string[]
+  // TODO: this is temp 
+  secondGameAvMoves: string[] | null
+  setSecondGameAvMoves: Dispatch<SetStateAction<string[] | null>>
+  secondGamePieces: BoardInfo | null
+  setSecondGamePieces: Dispatch<SetStateAction<BoardInfo | null>>
 }
 
 export const BoardContext = createContext<BoardContextType | undefined>(undefined);
@@ -23,6 +28,9 @@ export const BoardProvider: React.FC<BoardProviderProps> = ({children}) => {
   const { playerTurn } = usePlayer()  
   const [availableMoves, setAvailableMoves] = useState<string[]>(initMoves())
   const [gamePieces, setGamePieces] = useState<BoardInfo>(boardInfo())
+  // TODO: make more dynamic
+  const [secondGameAvMoves, setSecondGameAvMoves] = useState<string[] | null>(null)
+  const [secondGamePieces, setSecondGamePieces] = useState<BoardInfo | null>(null)
 
   function initMoves(updatedRows?: string[]): string[] {
     let rows = updatedRows !== undefined ? updatedRows : ['A', 'B', 'C']
@@ -100,7 +108,11 @@ export const BoardProvider: React.FC<BoardProviderProps> = ({children}) => {
     boardInfo, 
     setGamePieces, 
     setAvailableMoves,
-    initMoves
+    initMoves,
+    secondGameAvMoves,
+    setSecondGameAvMoves,
+    secondGamePieces,
+    setSecondGamePieces
   }}>
      {children}
   </BoardContext.Provider>
