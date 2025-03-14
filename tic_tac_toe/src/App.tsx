@@ -2,15 +2,19 @@ import React, { ReactNode, useEffect, useState } from 'react';
 import { useBoard } from './context/boardContext';
 import { usePlayer } from './context/playerContext';
 import { useGameContext } from './context/gameContext';
+import { BoardInfo } from './models';
 
 function App() {
-  const { initBoard, availableMoves, gamePieces, boardInfo, setGamePieces, setAvailableMoves } = useBoard()
+  const { initBoard, availableMoves, gamePieces, boardInfo, setGamePieces, setAvailableMoves, initMoves } = useBoard()
   const { playerTurn, setPlayerTurn, determinePlayerWin } = usePlayer()
   const { gameCount, setGameCount } = useGameContext()
   const [ boardGame, setBoardGame ] = useState<ReactNode | null>(initBoard(["A", "B", "C"]))
   const [ secondBoardGame, setSecondBoardGame ] = useState<ReactNode | null>(null)
   const [ isGameOver, setIsGameOver ] = useState(false)
   const [ gameWinner, setGameWinner ] = useState<string | null>("")
+  // TODO: clean up av moves to work for all games dynamically
+  const [secondGameAvMoves, setSecondGameAvMoves] = useState<string[] | null>(null)
+  const [secondGamePieces, setSecondGamePieces] = useState<BoardInfo | null>(null)
 
   useEffect(() => {
     if (isGameOver) {
@@ -21,10 +25,19 @@ function App() {
       )
       setBoardGame(gameOverBoard)
       setGameCount(gameCount + 1)
-      setSecondBoardGame(initBoard(["D", "E", "F"]))
     }
     // eslint-disable-next-line 
   }, [isGameOver])
+
+  useEffect(() => {
+    if (gameCount === 2) {
+      setSecondBoardGame(initBoard(["D", "E", "F"]))
+      setSecondGameAvMoves(initMoves(["D", "E", "F"]))
+      setSecondGamePieces(boardInfo(undefined, undefined, 2))
+      setPlayerTurn("P1") // TODO: update this so that its the loser of the previous game
+    }
+    // eslint-disable-next-line 
+  }, [gameCount])
 
   useEffect(() => {
     const check = determinePlayerWin(gamePieces)
@@ -36,12 +49,8 @@ function App() {
     // eslint-disable-next-line 
   }, [availableMoves.length])
 
-  function handlePieceMove(move: string) {
-    const newBoard = boardInfo(move, gamePieces)
-    setGamePieces(newBoard)
-    const newAvailableMoves = availableMoves.filter(avm => avm !== move)
-    setAvailableMoves(newAvailableMoves)
-    if (newAvailableMoves.length === 0) {
+  function handlePlayerTurn(moves: string[]) {
+    if (moves.length === 0) {
       setPlayerTurn(null)
       setIsGameOver(true)
     } else {
@@ -49,6 +58,22 @@ function App() {
     }
   }
 
+  function handlePieceMove(move: string) {
+    const newBoard = boardInfo(move, gamePieces)
+    setGamePieces(newBoard)
+    const newAvailableMoves = availableMoves.filter(avm => avm !== move)
+    setAvailableMoves(newAvailableMoves)
+    handlePlayerTurn(newAvailableMoves)
+
+    // TODO: Make this more dynamic. current goal is to get working
+    if (gameCount === 2) {
+      const secondNewBoard = boardInfo(move, secondGamePieces as BoardInfo)
+      setSecondGamePieces(secondNewBoard)
+      const secondAvMoves = (secondGameAvMoves as string[]).filter(avm => avm !== move)
+      setSecondGameAvMoves(secondAvMoves)
+      handlePlayerTurn(secondAvMoves)
+    }
+  }
 
   return (
     <div className="App" style={{ textAlign: 'center'}}>
@@ -78,6 +103,14 @@ function App() {
         <h3>Available Moves for Game: {gameCount}</h3>
         <ul style={{ listStyle: 'none', display: 'flex', justifyContent: 'center'}}>
           {availableMoves.map(move => {
+            return (
+              <li key={`available-move-${move}`}>
+                <button onClick={() => handlePieceMove(move)}>{move}</button>
+              </li>
+            )
+          })}
+          {/* TODO: Clean up to work dynamically with available moves */}
+          {secondGameAvMoves !== null && secondGameAvMoves.map(move => {
             return (
               <li key={`available-move-${move}`}>
                 <button onClick={() => handlePieceMove(move)}>{move}</button>

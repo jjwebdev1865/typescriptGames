@@ -7,9 +7,10 @@ interface BoardContextType {
   initBoard: (row: string[]) => JSX.Element
   availableMoves: string[]
   gamePieces: BoardInfo
-  boardInfo: (move?: string, existingBoard?: BoardInfo) => BoardInfo
+  boardInfo: (move?: string, existingBoard?: BoardInfo, gameCount?: number) => BoardInfo
   setGamePieces: Dispatch<SetStateAction<BoardInfo>>
   setAvailableMoves: Dispatch<SetStateAction<string[]>>
+  initMoves: (updatedRows?: string[]) => string[]
 }
 
 export const BoardContext = createContext<BoardContextType | undefined>(undefined);
@@ -23,8 +24,8 @@ export const BoardProvider: React.FC<BoardProviderProps> = ({children}) => {
   const [availableMoves, setAvailableMoves] = useState<string[]>(initMoves())
   const [gamePieces, setGamePieces] = useState<BoardInfo>(boardInfo())
 
-  function initMoves(): string[] {
-    const rows = ['A', 'B', 'C']
+  function initMoves(updatedRows?: string[]): string[] {
+    let rows = updatedRows !== undefined ? updatedRows : ['A', 'B', 'C']
     const moves: string[] = []
     rows.forEach(row => {
       moves.push(`${row}1`)
@@ -35,8 +36,8 @@ export const BoardProvider: React.FC<BoardProviderProps> = ({children}) => {
     return moves
   }
 
-  function boardInfo(move?: string, existingBoard?: BoardInfo): BoardInfo {
-    if (move === undefined) {
+  function boardInfo(move?: string, existingBoard?: BoardInfo, gameCount = 1): BoardInfo {
+    if (move === undefined && gameCount === 1) {
       return {
         "A1": {isOpen: true, player: null},
         "A2": {isOpen: true, player: null},
@@ -47,6 +48,20 @@ export const BoardProvider: React.FC<BoardProviderProps> = ({children}) => {
         "C1": {isOpen: true, player: null},
         "C2": {isOpen: true, player: null},
         "C3": {isOpen: true, player: null}
+      } as BoardInfo
+    }
+
+    if (move === undefined && gameCount === 2) {
+      return {
+        "D1": {isOpen: true, player: null},
+        "D2": {isOpen: true, player: null},
+        "D3": {isOpen: true, player: null},
+        "E1": {isOpen: true, player: null},
+        "E2": {isOpen: true, player: null},
+        "E3": {isOpen: true, player: null},
+        "F1": {isOpen: true, player: null},
+        "F2": {isOpen: true, player: null},
+        "F3": {isOpen: true, player: null}
       } as BoardInfo
     }
 
@@ -84,7 +99,8 @@ export const BoardProvider: React.FC<BoardProviderProps> = ({children}) => {
     gamePieces, 
     boardInfo, 
     setGamePieces, 
-    setAvailableMoves 
+    setAvailableMoves,
+    initMoves
   }}>
      {children}
   </BoardContext.Provider>
