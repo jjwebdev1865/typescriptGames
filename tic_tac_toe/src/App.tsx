@@ -18,32 +18,39 @@ function App() {
     secondGamePieces,
     setSecondGamePieces
   } = useBoard()
-  const { playerTurn, setPlayerTurn, determinePlayerWin } = usePlayer()
+  const { playerTurn, setPlayerTurn, determinePlayerWin, determineGameTwoPlayerWin } = usePlayer()
   const { gameCount, setGameCount } = useGameContext()
-  const [ boardGame, setBoardGame ] = useState<ReactNode | null>(initBoard(["A", "B", "C"]))
+  // TODO: make more dynamic
+    const boardGame = (initBoard(["A", "B", "C"]))
   const [ secondBoardGame, setSecondBoardGame ] = useState<ReactNode | null>(null)
   const [ isGameOver, setIsGameOver ] = useState(false)
+  const [ isGameTwoOver, setIsGameTwoOver ] = useState(false)
   const [ gameWinner, setGameWinner ] = useState<string | null>("")
+  const [ gameTwoWinner, setGameTwoWinner ] = useState<string | null>("")
 
   useEffect(() => {
     if (isGameOver) {
-      const gameOverBoard = (
-        <div>
-          {boardGame}
-        </div>
-      )
-      setBoardGame(gameOverBoard)
       setGameCount(gameCount + 1)
     }
     // eslint-disable-next-line 
   }, [isGameOver])
 
   useEffect(() => {
+    if (isGameTwoOver) {
+      setGameCount(gameCount + 1)
+    }
+    // eslint-disable-next-line 
+  }, [isGameTwoOver])
+
+  useEffect(() => {
     if (gameCount === 2) {
+      console.log("gameCount === 2")
       setSecondBoardGame(initBoard(["D", "E", "F"]))
       setSecondGameAvMoves(initMoves(["D", "E", "F"]))
       setSecondGamePieces(boardInfo(undefined, undefined, 2))
       setPlayerTurn("P1") // TODO: update this so that its the loser of the previous game
+    } else if ( gameCount === 3) {
+      console.log("gameCount === 3")
     }
     // eslint-disable-next-line 
   }, [gameCount])
@@ -57,6 +64,19 @@ function App() {
     }
     // eslint-disable-next-line 
   }, [availableMoves.length])
+
+  useEffect(() => {
+    if (secondGameAvMoves?.length === 0 && secondGamePieces !== null) {
+      console.log('NO MOVES LEFT')
+      const check = determineGameTwoPlayerWin(secondGamePieces)
+      if (check !== null) {
+        setSecondGameAvMoves([])
+        setGameTwoWinner(check)
+        setIsGameTwoOver(true)
+      }
+    }
+    // eslint-disable-next-line 
+  }, [secondGameAvMoves?.length])
 
   function handlePlayerTurn(moves: string[]) {
     if (moves.length === 0) {
@@ -98,12 +118,13 @@ function App() {
         </div>
         
         <div>
-          <h4>2nd Game</h4>
-          {gameCount === 2 && secondBoardGame}
+          <h4>2nd Game: Won by {gameTwoWinner}</h4>
+          {secondBoardGame}
         </div>
 
         <div>
           <h4>3rd Game</h4>
+          {gameCount === 3 && <p>hello third game</p>}
         </div>
       </div>
 
