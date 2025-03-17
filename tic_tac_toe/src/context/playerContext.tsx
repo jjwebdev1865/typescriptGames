@@ -6,6 +6,7 @@ interface PlayerContextType {
   setPlayerTurn: Dispatch<SetStateAction<PlayerOptions | null>>
   determinePlayerWin: (gamePieces: BoardInfo) => PlayerOptions | null
   determineGameTwoPlayerWin: (gamePieces: BoardInfo) => PlayerOptions | null
+  determineGameThreePlayerWin: (gamePieces: BoardInfo) => PlayerOptions | null
 }
 
 export const PlayerContext = createContext<PlayerContextType | undefined>(undefined);
@@ -210,8 +211,101 @@ export const PlayerProvider: React.FC<PlayerProviderProps> = ({children}) => {
 
     return playerWin
   }
+
+  function determineGameThreePlayerWin(gamePieces: BoardInfo) {
+    let playerWin: PlayerOptions | null = null
+    Object.entries(gamePieces).forEach(([ key, value ]) => {
+      if (key === 'G1') {
+        if (gamePieces['G2'].player === value.player && gamePieces['G2'].player === value.player) {
+          playerWin = pieceCombination(value, gamePieces['G2'], gamePieces['G3']) ? value.player : null
+          return playerWin
+        } else if (gamePieces['H2'].player === value.player && gamePieces['I3'].player === value.player) {
+          playerWin = pieceCombination(value, gamePieces['H2'], gamePieces['I3']) ? value.player : null
+          return playerWin
+        } else if (gamePieces['H1'].player === value.player && gamePieces['I1'].player === value.player) {
+          playerWin = pieceCombination(value, gamePieces['H1'], gamePieces['I1']) ? value.player : null
+          return playerWin
+        }
+      } else if (key === 'G2') {
+        if (gamePieces['G1'].player === value.player && gamePieces['G3'].player === value.player) {
+          playerWin = pieceCombination(value, gamePieces['G1'], gamePieces['G3']) ? value.player : null
+          return playerWin
+        } else if (gamePieces['H2'].player === value.player && gamePieces['I2'].player === value.player) {
+          playerWin = pieceCombination(value, gamePieces['H2'], gamePieces['I2']) ? value.player : null
+          return playerWin
+        }
+      } else if (key === 'G3') {
+        if (gamePieces['G2'].player === value.player && gamePieces['G1'].player === value.player) {
+          playerWin = pieceCombination(value, gamePieces['G2'], gamePieces['G1']) ? value.player : null
+          return playerWin
+        } else if (gamePieces['H2'].player === value.player && gamePieces['I1'].player === value.player) {
+          playerWin = pieceCombination(value, gamePieces['H2'], gamePieces['I1']) ? value.player : null
+          return playerWin
+        } else if (gamePieces['H2'].player === value.player && gamePieces['I3'].player === value.player) {
+          playerWin = pieceCombination(value, gamePieces['H3'], gamePieces['I3']) ? value.player : null
+          return playerWin
+        }
+      } else if (key === 'H1') {
+        if (gamePieces['H2'].player === value.player && gamePieces['H3'].player === value.player) {
+          playerWin = pieceCombination(value, gamePieces['H2'], gamePieces['H3']) ? value.player : null
+          return playerWin
+        } else if (gamePieces['G1'].player === value.player && gamePieces['I1'].player === value.player) {
+          playerWin = pieceCombination(value, gamePieces['G1'], gamePieces['I1']) ? value.player : null
+          return playerWin
+        }
+      } else if (key === 'H2') {
+        if (gamePieces['G2'].player === value.player && gamePieces['I2'].player === value.player) {
+          playerWin = pieceCombination(value, gamePieces['G2'], gamePieces['I2']) ? value.player : null
+          return playerWin
+        } else if (gamePieces['H1'].player === value.player && gamePieces['H3'].player === value.player) {
+          playerWin = pieceCombination(value, gamePieces['H1'], gamePieces['H3']) ? value.player : null
+          return playerWin
+        }
+      } else if (key === 'H3') {
+        if (gamePieces['G3'].player === value.player && gamePieces['I3'].player === value.player) {
+          playerWin = pieceCombination(value, gamePieces['G3'], gamePieces['I3']) ? value.player : null
+          return playerWin
+        } else if (gamePieces['H2'].player === value.player && gamePieces['H1'].player === value.player) {
+          playerWin = pieceCombination(value, gamePieces['H2'], gamePieces['H1']) ? value.player : null
+          return playerWin
+        }
+      } else if (key === 'I1') {
+        if (gamePieces['I2'].player === value.player && gamePieces['I3'].player === value.player) {
+          playerWin = pieceCombination(value, gamePieces['I2'], gamePieces['I3']) ? value.player : null
+          return playerWin
+        } else if (gamePieces['H1'].player === value.player && gamePieces['G1'].player === value.player) {
+          playerWin = pieceCombination(value, gamePieces['H1'], gamePieces['G1']) ? value.player : null
+          return playerWin
+        } else if (gamePieces['H2'].player === value.player && gamePieces['G3'].player === value.player) {
+          playerWin = pieceCombination(value, gamePieces['H2'], gamePieces['G3']) ? value.player : null
+          return playerWin
+        }
+      } else if (key === 'I2') {
+        if (gamePieces['I1'].player === value.player && gamePieces['I3'].player === value.player) {
+          playerWin = pieceCombination(value, gamePieces['I1'], gamePieces['I3']) ? value.player : null
+          return playerWin
+        } else if (gamePieces['H2'].player === value.player && gamePieces['G2'].player === value.player) {
+          playerWin = pieceCombination(value, gamePieces['H2'], gamePieces['G2']) ? value.player : null
+          return playerWin
+        }
+      } else if (key === 'I3') {
+        if (gamePieces['I2'].player === value.player && gamePieces['I1'].player === value.player) {
+          playerWin = pieceCombination(value, gamePieces['I2'], gamePieces['I1']) ? value.player : null
+          return playerWin
+        } else if (gamePieces['H2'].player === value.player && gamePieces['G1'].player === value.player) {
+          playerWin = pieceCombination(value, gamePieces['H2'], gamePieces['G1']) ? value.player : null
+          return playerWin
+        } else if (gamePieces['H3'].player === value.player && gamePieces['G3'].player === value.player) {
+          playerWin = pieceCombination(value, gamePieces['H3'], gamePieces['G3']) ? value.player : null
+          return playerWin
+        }
+      }
+    })
+
+    return playerWin
+  }
   
-  return <PlayerContext.Provider value={{ playerTurn, setPlayerTurn, determinePlayerWin, determineGameTwoPlayerWin }}>
+  return <PlayerContext.Provider value={{ playerTurn, setPlayerTurn, determinePlayerWin, determineGameTwoPlayerWin, determineGameThreePlayerWin }}>
      {children}
   </PlayerContext.Provider>
 }

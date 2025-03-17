@@ -16,6 +16,10 @@ interface BoardContextType {
   setSecondGameAvMoves: Dispatch<SetStateAction<string[] | null>>
   secondGamePieces: BoardInfo | null
   setSecondGamePieces: Dispatch<SetStateAction<BoardInfo | null>>
+  thirdGameAvMoves: string[] | null
+  setThirdGameAvMoves: Dispatch<SetStateAction<string[] | null>>
+  thirdGamePieces: BoardInfo | null
+  setThirdGamePieces: Dispatch<SetStateAction<BoardInfo | null>>
 }
 
 export const BoardContext = createContext<BoardContextType | undefined>(undefined);
@@ -31,6 +35,9 @@ export const BoardProvider: React.FC<BoardProviderProps> = ({children}) => {
   // TODO: make more dynamic
   const [secondGameAvMoves, setSecondGameAvMoves] = useState<string[] | null>(null)
   const [secondGamePieces, setSecondGamePieces] = useState<BoardInfo | null>(null)
+    // TODO: make more dynamic
+  const [thirdGameAvMoves, setThirdGameAvMoves] = useState<string[] | null>(null)
+  const [thirdGamePieces, setThirdGamePieces] = useState<BoardInfo | null>(null)
 
   function initMoves(updatedRows?: string[]): string[] {
     let rows = updatedRows !== undefined ? updatedRows : ['A', 'B', 'C']
@@ -73,6 +80,20 @@ export const BoardProvider: React.FC<BoardProviderProps> = ({children}) => {
       } as BoardInfo
     }
 
+    if (move === undefined && gameCount === 3) {
+      return {
+        "G1": {isOpen: true, player: null},
+        "G2": {isOpen: true, player: null},
+        "G3": {isOpen: true, player: null},
+        "H1": {isOpen: true, player: null},
+        "H2": {isOpen: true, player: null},
+        "H3": {isOpen: true, player: null},
+        "I1": {isOpen: true, player: null},
+        "I2": {isOpen: true, player: null},
+        "I3": {isOpen: true, player: null}
+      } as BoardInfo
+    }
+
     let updatedBoard: BoardInfo = {}
     Object.entries(existingBoard as BoardInfo).forEach(([ key, value]) => {
       if (key !== move) {
@@ -112,7 +133,11 @@ export const BoardProvider: React.FC<BoardProviderProps> = ({children}) => {
     secondGameAvMoves,
     setSecondGameAvMoves,
     secondGamePieces,
-    setSecondGamePieces
+    setSecondGamePieces,
+    thirdGameAvMoves, 
+    setThirdGameAvMoves,
+    thirdGamePieces, 
+    setThirdGamePieces
   }}>
      {children}
   </BoardContext.Provider>

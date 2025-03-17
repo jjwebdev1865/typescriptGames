@@ -7,7 +7,7 @@ interface BoardSpotProps {
 }
 
 export const BoardSpot = ({ row, index }: BoardSpotProps) => {
-  const { gamePieces, secondGamePieces } = useBoard()
+  const { gamePieces, secondGamePieces, thirdGamePieces } = useBoard()
   const spotTitle = `${row}${index}`
 
   let checkPlayerStatus = null
@@ -19,6 +19,14 @@ export const BoardSpot = ({ row, index }: BoardSpotProps) => {
 
   if (secondGamePieces !== null) {
     Object.entries(secondGamePieces).forEach(([ key, value ]) => {
+      if (key === spotTitle && value.player !== null) {
+        checkPlayerStatus = value.player
+      }
+    })
+  }
+
+  if (thirdGamePieces !== null) {
+    Object.entries(thirdGamePieces).forEach(([ key, value ]) => {
       if (key === spotTitle && value.player !== null) {
         checkPlayerStatus = value.player
       }

@@ -4,6 +4,10 @@ import { usePlayer } from './context/playerContext';
 import { useGameContext } from './context/gameContext';
 import { BoardInfo } from './models';
 
+const gameOneRows = ["A", "B", "C"]
+const gameTwoRows = ["D", "E", "F"]
+const gameThreeRows = ["G", "H", "I"]
+
 function App() {
   const { 
     initBoard, 
@@ -16,40 +20,47 @@ function App() {
     secondGameAvMoves, 
     setSecondGameAvMoves ,
     secondGamePieces,
-    setSecondGamePieces
+    setSecondGamePieces,
+    thirdGameAvMoves,
+    setThirdGameAvMoves,
+    thirdGamePieces,
+    setThirdGamePieces
   } = useBoard()
-  const { playerTurn, setPlayerTurn, determinePlayerWin, determineGameTwoPlayerWin } = usePlayer()
+  const { playerTurn, setPlayerTurn, determinePlayerWin, determineGameTwoPlayerWin, determineGameThreePlayerWin } = usePlayer()
   const { gameCount, setGameCount } = useGameContext()
   // TODO: make more dynamic
-    const boardGame = (initBoard(["A", "B", "C"]))
+  const boardGame = (initBoard(gameOneRows))
   const [ secondBoardGame, setSecondBoardGame ] = useState<ReactNode | null>(null)
+  const [ thirdBoardGame, setThirdBoardGame ] = useState<ReactNode | null>(null)
   const [ isGameOver, setIsGameOver ] = useState(false)
   const [ isGameTwoOver, setIsGameTwoOver ] = useState(false)
+  const [ isGameThreeOver, setIsGameThreeOver ] = useState(false)
   const [ gameWinner, setGameWinner ] = useState<string | null>("")
   const [ gameTwoWinner, setGameTwoWinner ] = useState<string | null>("")
+  const [ gameThreeWinner, setGameThreeWinner ] = useState<string | null>("")
 
   useEffect(() => {
-    if (isGameOver) {
+    if (isGameOver && isGameTwoOver && isGameThreeOver) {
+      alert('Conclusion of this game!!')
+    } else if (isGameOver && isGameTwoOver) {
+      setGameCount(gameCount + 1)
+    } else if (isGameOver) {
       setGameCount(gameCount + 1)
     }
     // eslint-disable-next-line 
-  }, [isGameOver])
-
-  useEffect(() => {
-    if (isGameTwoOver) {
-      setGameCount(gameCount + 1)
-    }
-    // eslint-disable-next-line 
-  }, [isGameTwoOver])
+  }, [isGameOver, isGameTwoOver, isGameThreeOver])
 
   useEffect(() => {
     if (gameCount === 2) {
-      setSecondBoardGame(initBoard(["D", "E", "F"]))
-      setSecondGameAvMoves(initMoves(["D", "E", "F"]))
+      setSecondBoardGame(initBoard(gameTwoRows))
+      setSecondGameAvMoves(initMoves(gameTwoRows))
       setSecondGamePieces(boardInfo(undefined, undefined, 2))
       setPlayerTurn("P1") // TODO: update this so that its the loser of the previous game
     } else if ( gameCount === 3) {
-      console.log("gameCount === 3")
+      setThirdBoardGame(initBoard(gameThreeRows))
+      setThirdGameAvMoves(initMoves(gameThreeRows))
+      setThirdGamePieces(boardInfo(undefined, undefined, 3))
+      setPlayerTurn("P1") // TODO: update this so that its the loser of the previous game
     }
     // eslint-disable-next-line 
   }, [gameCount])
@@ -76,6 +87,18 @@ function App() {
     // eslint-disable-next-line 
   }, [secondGameAvMoves?.length])
 
+  useEffect(() => {
+    if ((isGameOver && isGameTwoOver && !isGameThreeOver && thirdGamePieces !== null) || (thirdGamePieces !== null && thirdGameAvMoves?.length === 0)) {
+      const check = determineGameThreePlayerWin(thirdGamePieces)
+      if (check !== null) {
+        setThirdGameAvMoves([])
+        setGameThreeWinner(check)
+        setIsGameThreeOver(true)
+      }
+    }
+    // eslint-disable-next-line 
+  }, [thirdGameAvMoves?.length])
+
   function handlePlayerTurn(moves: string[]) {
     if (moves.length === 0 && gameCount === 1) {
       setPlayerTurn(null)
@@ -83,6 +106,9 @@ function App() {
     } else if (gameCount === 2 && moves.length === 0) {
       setPlayerTurn(null)
       setIsGameTwoOver(true)
+    } else if (gameCount === 3 && moves.length === 0) {
+      setPlayerTurn(null)
+      setIsGameThreeOver(true)
     } else {
       playerTurn === 'P1' ? setPlayerTurn('P2') : setPlayerTurn('P1')
     }
@@ -104,6 +130,14 @@ function App() {
     handlePlayerTurn(secondAvMoves)
   }
 
+  function handleGameThreePieceMove(move:string) {
+    const thirdNewBoard = boardInfo(move, thirdGamePieces as BoardInfo)
+    setThirdGamePieces(thirdNewBoard)
+    const thirdAvMoves = (thirdGameAvMoves as string[]).filter(avm => avm !== move)
+    setThirdGameAvMoves(thirdAvMoves)
+    handlePlayerTurn(thirdAvMoves)
+  }
+
   return (
     <div className="App" style={{ textAlign: 'center'}}>
       <h1>Tic Tac Toe</h1>
@@ -111,7 +145,6 @@ function App() {
       <h3>Current game count: {gameCount}</h3>
 
       <div style={{display: 'grid', gridTemplateColumns: "repeat(3, 1fr)"}}>
-
         <div>
           <h4>1st Game: Won by {gameWinner}</h4>
           {boardGame}
@@ -123,8 +156,8 @@ function App() {
         </div>
 
         <div>
-          <h4>3rd Game</h4>
-          {gameCount === 3 && <p>hello third game</p>}
+          <h4>3rd Game: Won by {gameThreeWinner}</h4>
+          {thirdBoardGame}
         </div>
       </div>
 
@@ -143,9 +176,15 @@ function App() {
           {secondGameAvMoves !== null && secondGameAvMoves.map(move => {
             return (
               <li key={`available-move-${move}`}>
-                {/* <button onClick={() => handlePieceMove(move)}>{move}</button> */}
-                <button onClick={() => handleGameTwoPieceMove(move)}>{move}</button>
-                
+                <button onClick={() => handleGameTwoPieceMove(move)}>{move}</button>                
+              </li>
+            )
+          })}
+
+          {thirdGameAvMoves !== null && thirdGameAvMoves.map(move => {
+            return (
+              <li key={`available-move-${move}`}>
+                <button onClick={() => handleGameThreePieceMove(move)}>{move}</button>
               </li>
             )
           })}
