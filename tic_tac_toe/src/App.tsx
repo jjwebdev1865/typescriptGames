@@ -44,7 +44,6 @@ function App() {
 
   useEffect(() => {
     if (gameCount === 2) {
-      console.log("gameCount === 2")
       setSecondBoardGame(initBoard(["D", "E", "F"]))
       setSecondGameAvMoves(initMoves(["D", "E", "F"]))
       setSecondGamePieces(boardInfo(undefined, undefined, 2))
@@ -66,8 +65,7 @@ function App() {
   }, [availableMoves.length])
 
   useEffect(() => {
-    if (secondGameAvMoves?.length === 0 && secondGamePieces !== null) {
-      console.log('NO MOVES LEFT')
+    if ((isGameOver && !isGameTwoOver && secondGamePieces !== null) || (secondGamePieces !== null && secondGameAvMoves?.length === 0)) {
       const check = determineGameTwoPlayerWin(secondGamePieces)
       if (check !== null) {
         setSecondGameAvMoves([])
@@ -79,9 +77,12 @@ function App() {
   }, [secondGameAvMoves?.length])
 
   function handlePlayerTurn(moves: string[]) {
-    if (moves.length === 0) {
+    if (moves.length === 0 && gameCount === 1) {
       setPlayerTurn(null)
       setIsGameOver(true)
+    } else if (gameCount === 2 && moves.length === 0) {
+      setPlayerTurn(null)
+      setIsGameTwoOver(true)
     } else {
       playerTurn === 'P1' ? setPlayerTurn('P2') : setPlayerTurn('P1')
     }
@@ -93,15 +94,14 @@ function App() {
     const newAvailableMoves = availableMoves.filter(avm => avm !== move)
     setAvailableMoves(newAvailableMoves)
     handlePlayerTurn(newAvailableMoves)
+  }
 
-    // TODO: Make this more dynamic. current goal is to get working
-    if (gameCount === 2) {
-      const secondNewBoard = boardInfo(move, secondGamePieces as BoardInfo)
-      setSecondGamePieces(secondNewBoard)
-      const secondAvMoves = (secondGameAvMoves as string[]).filter(avm => avm !== move)
-      setSecondGameAvMoves(secondAvMoves)
-      handlePlayerTurn(secondAvMoves)
-    }
+  function handleGameTwoPieceMove(move: string) {
+    const secondNewBoard = boardInfo(move, secondGamePieces as BoardInfo)
+    setSecondGamePieces(secondNewBoard)
+    const secondAvMoves = (secondGameAvMoves as string[]).filter(avm => avm !== move)
+    setSecondGameAvMoves(secondAvMoves)
+    handlePlayerTurn(secondAvMoves)
   }
 
   return (
@@ -143,7 +143,9 @@ function App() {
           {secondGameAvMoves !== null && secondGameAvMoves.map(move => {
             return (
               <li key={`available-move-${move}`}>
-                <button onClick={() => handlePieceMove(move)}>{move}</button>
+                {/* <button onClick={() => handlePieceMove(move)}>{move}</button> */}
+                <button onClick={() => handleGameTwoPieceMove(move)}>{move}</button>
+                
               </li>
             )
           })}
