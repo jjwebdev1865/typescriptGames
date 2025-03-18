@@ -34,7 +34,7 @@ export const BoardSpot = ({ row, index }: BoardSpotProps) => {
   }
   
   return (
-    <StyledBoardSpot $player={checkPlayerStatus}>
+    <StyledBoardSpot data-testid={`board-spot-${spotTitle}`} $player={checkPlayerStatus}>
       {spotTitle}
     </StyledBoardSpot>
   )
