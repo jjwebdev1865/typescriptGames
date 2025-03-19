@@ -9,13 +9,13 @@ describe('GameBoard', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
-  
+
   it('Renders the GameBoard component', () => {
     render(
       <GameBoard gameWinner='P1' boardGame={MyComponentMock} gameString='2nd'  />
     );
 
-    const gameBoardContainer = screen.getByTestId('1st-board-game-container')
+    const gameBoardContainer = screen.getByTestId('2nd-board-game-container')
     expect(gameBoardContainer).toBeVisible()
   })
 })
