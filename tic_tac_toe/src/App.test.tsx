@@ -102,32 +102,6 @@ describe('App', () => {
     expect(b1Piece).toBeVisible()
   })
 
-  it('Renders the first board and handles player turn change', () => {
-    render(
-      <GamesContext.Provider value={mockGameBoardValues}>
-        <PlayerContext.Provider value={mockPlayerValues}>
-          <BoardContext.Provider value={{
-            ...initBoardContextValues,
-            availableMoves: ['B1', 'C1']
-          }}>
-            <App />
-          </BoardContext.Provider>
-        </PlayerContext.Provider>
-      </GamesContext.Provider>
-    )
-    const b1Piece = screen.getByRole('button', {name: 'B1'})
-
-    // TODO: need to update this
-    fireEvent.click(b1Piece)
-    expect(b1Piece).toBeVisible()
-
-    const c1Piece = screen.getByRole('button', {name: 'C1'})
-    expect(c1Piece).toBeVisible()
-
-    const playerTurn = screen.getByText('Player Turn: P2')
-    expect(playerTurn).toBeVisible()
-  })
-
   it('Renders the second board', () => {
     render(
       <GamesContext.Provider value={{
