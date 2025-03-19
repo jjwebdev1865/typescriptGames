@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { BoardSpot } from './BoardSpot';
 import { BoardContext } from '../../context/boardContext';
@@ -61,10 +61,6 @@ const initBoardContextValues = {
 
 
 describe('Boardspot', () => {
-  it('sum', () => {
-    expect(2+2).toEqual(4)
-  })
-
   beforeEach(() => {
     jest.clearAllMocks()
   })
