@@ -30,14 +30,12 @@ function App(): JSX.Element {
     setThirdGamePieces
   } = useBoard()
   const { playerTurn, setPlayerTurn, determinePlayerWin, determineGameTwoPlayerWin, determineGameThreePlayerWin } = usePlayer()
-  const { gameCount, setGameCount } = useGameContext()
+  const { gameCount, setGameCount, isGameOver, setIsGameOver, isGameTwoOver, setIsGameTwoOver, isGameThreeOver, setIsGameThreeOver } = useGameContext()
   // TODO: make more dynamic
   const boardGame = initBoard(gameOneRows)
   const [ secondBoardGame, setSecondBoardGame ] = useState<JSX.Element | null>(null)
   const [ thirdBoardGame, setThirdBoardGame ] = useState<JSX.Element | null>(null)
-  const [ isGameOver, setIsGameOver ] = useState(false)
-  const [ isGameTwoOver, setIsGameTwoOver ] = useState(false)
-  const [ isGameThreeOver, setIsGameThreeOver ] = useState(false)
+  // const [ isGameOver, setIsGameOver ] = useState(false)
   const [ gameWinner, setGameWinner ] = useState<string | null>('')
   const [ gameTwoWinner, setGameTwoWinner ] = useState<string | null>('')
   const [ gameThreeWinner, setGameThreeWinner ] = useState<string | null>('')
