@@ -1,8 +1,11 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { JSX, useEffect, useState } from 'react';
 import { useBoard } from './context/boardContext';
 import { usePlayer } from './context/playerContext';
 import { useGameContext } from './context/gameContext';
 import { BoardInfo } from './models';
+import { AvailableMove } from './components/AvailableMove/AvailableMove';
+import { GameBoard } from './components/GameBoard/GameBoard';
+import { StyledAvailableMovesContainer, StyledGameBoardsContainer } from './App.styled';
 
 const gameOneRows = ["A", "B", "C"]
 const gameTwoRows = ["D", "E", "F"]
@@ -29,9 +32,9 @@ function App() {
   const { playerTurn, setPlayerTurn, determinePlayerWin, determineGameTwoPlayerWin, determineGameThreePlayerWin } = usePlayer()
   const { gameCount, setGameCount } = useGameContext()
   // TODO: make more dynamic
-  const boardGame = (initBoard(gameOneRows))
-  const [ secondBoardGame, setSecondBoardGame ] = useState<ReactNode | null>(null)
-  const [ thirdBoardGame, setThirdBoardGame ] = useState<ReactNode | null>(null)
+  const boardGame = initBoard(gameOneRows)
+  const [ secondBoardGame, setSecondBoardGame ] = useState<JSX.Element | null>(null)
+  const [ thirdBoardGame, setThirdBoardGame ] = useState<JSX.Element | null>(null)
   const [ isGameOver, setIsGameOver ] = useState(false)
   const [ isGameTwoOver, setIsGameTwoOver ] = useState(false)
   const [ isGameThreeOver, setIsGameThreeOver ] = useState(false)
@@ -144,51 +147,28 @@ function App() {
       <h2>This is a best of 3 game</h2>
       <h3>Current game count: {gameCount}</h3>
 
-      <div style={{display: 'grid', gridTemplateColumns: "repeat(3, 1fr)"}}>
-        <div>
-          <h4>1st Game: Won by {gameWinner}</h4>
-          {boardGame}
-        </div>
-        
-        <div>
-          <h4>2nd Game: Won by {gameTwoWinner}</h4>
-          {secondBoardGame}
-        </div>
-
-        <div>
-          <h4>3rd Game: Won by {gameThreeWinner}</h4>
-          {thirdBoardGame}
-        </div>
-      </div>
+      <StyledGameBoardsContainer>
+        <GameBoard gameWinner={gameWinner} boardGame={boardGame} gameString='1st' />
+        <GameBoard gameWinner={gameTwoWinner} boardGame={secondBoardGame} gameString='2nd' />
+        <GameBoard gameWinner={gameThreeWinner} boardGame={thirdBoardGame} gameString='3rd' />
+      </StyledGameBoardsContainer>
 
       <div style={{ textAlign: 'center'}}>
         <h2>Player Turn: {playerTurn}</h2>
         <h3>Available Moves for Game: {gameCount}</h3>
-        <ul style={{ listStyle: 'none', display: 'flex', justifyContent: 'center'}}>
+        <StyledAvailableMovesContainer>
           {availableMoves.map(move => {
-            return (
-              <li key={`available-move-${move}`}>
-                <button onClick={() => handlePieceMove(move)}>{move}</button>
-              </li>
-            )
+            return <AvailableMove key={`available-move-${move}`} move={move} handleMove={handlePieceMove} />
           })}
-          {/* TODO: Clean up to work dynamically with available moves */}
+
           {secondGameAvMoves !== null && secondGameAvMoves.map(move => {
-            return (
-              <li key={`available-move-${move}`}>
-                <button onClick={() => handleGameTwoPieceMove(move)}>{move}</button>                
-              </li>
-            )
+            return <AvailableMove key={`available-move-${move}`} move={move} handleMove={handleGameTwoPieceMove} />
           })}
 
           {thirdGameAvMoves !== null && thirdGameAvMoves.map(move => {
-            return (
-              <li key={`available-move-${move}`}>
-                <button onClick={() => handleGameThreePieceMove(move)}>{move}</button>
-              </li>
-            )
+            return <AvailableMove key={`available-move-${move}`} move={move} handleMove={handleGameThreePieceMove} />
           })}
-        </ul>
+        </StyledAvailableMovesContainer>
       </div>
     </div>
   );
