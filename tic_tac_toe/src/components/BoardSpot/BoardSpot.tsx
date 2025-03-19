@@ -1,12 +1,13 @@
-import { useBoard } from "../../context/boardContext"
-import { StyledBoardSpot } from "./BoardSpot.styled"
+import { JSX } from 'react'
+import { useBoard } from '../../context/boardContext'
+import { StyledBoardSpot } from './BoardSpot.styled'
 
 interface BoardSpotProps {
   row: string
   index: number
 }
 
-export const BoardSpot = ({ row, index }: BoardSpotProps) => {
+export const BoardSpot = ({ row, index }: BoardSpotProps): JSX.Element => {
   const { gamePieces, secondGamePieces, thirdGamePieces } = useBoard()
   const spotTitle = `${row}${index}`
 
@@ -32,7 +33,7 @@ export const BoardSpot = ({ row, index }: BoardSpotProps) => {
       }
     })
   }
-  
+
   return (
     <StyledBoardSpot data-testid={`board-spot-${spotTitle}`} $player={checkPlayerStatus}>
       {spotTitle}

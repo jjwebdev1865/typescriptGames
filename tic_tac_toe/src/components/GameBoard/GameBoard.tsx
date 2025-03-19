@@ -1,5 +1,4 @@
-import { JSX } from "react"
-
+import { JSX } from 'react'
 
 interface GameBoardProps {
   gameWinner: string | null
@@ -7,7 +6,7 @@ interface GameBoardProps {
   gameString: string
 }
 
-export const GameBoard = ({gameWinner, boardGame, gameString}: GameBoardProps) => (
+export const GameBoard = ({gameWinner, boardGame, gameString}: GameBoardProps): JSX.Element => (
   <div data-testid={`${gameString}-board-game-container`}>
     <h4>{gameString} Game: Won by {gameWinner}</h4>
     {boardGame}

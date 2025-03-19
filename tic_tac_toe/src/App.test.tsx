@@ -6,7 +6,6 @@ import { BoardContext } from './context/boardContext';
 import { BoardInfo, PlayerOptions } from './models';
 import { PlayerContext } from './context/playerContext';
 import { GamesContext } from './context/gameContext';
-import exp from 'constants';
 
 const mockGamePieces: BoardInfo = {
   A1: {isOpen: true, player: 'P1'},
@@ -27,35 +26,35 @@ const mockThirdGamePieces: BoardInfo = {
 };
 
 
-const initBoardContextValues = { 
+const initBoardContextValues = {
   gamePieces: mockGamePieces,
-  initBoard: jest.fn(), 
+  initBoard: jest.fn(),
   availableMoves: [],
-  boardInfo: jest.fn(), 
-  setGamePieces: jest.fn(), 
+  boardInfo: jest.fn(),
+  setGamePieces: jest.fn(),
   setAvailableMoves: jest.fn(),
   initMoves: jest.fn(),
   secondGameAvMoves: [],
   setSecondGameAvMoves: jest.fn(),
   secondGamePieces: null,
   setSecondGamePieces: jest.fn(),
-  thirdGameAvMoves: [], 
+  thirdGameAvMoves: [],
   setThirdGameAvMoves: jest.fn(),
-  thirdGamePieces: null, 
+  thirdGamePieces: null,
   setThirdGamePieces: jest.fn(),
 }
 
 // Mock context data
 const mockPlayerValues = {
-  playerTurn: 'P1' as PlayerOptions, 
+  playerTurn: 'P1' as PlayerOptions,
   setPlayerTurn: jest.fn(),
-  determinePlayerWin: jest.fn(), 
-  determineGameTwoPlayerWin: jest.fn(), 
+  determinePlayerWin: jest.fn(),
+  determineGameTwoPlayerWin: jest.fn(),
   determineGameThreePlayerWin: jest.fn()
 };
 
 const mockGameBoardValues = {
-  gameCount: 1, 
+  gameCount: 1,
   setGameCount: jest.fn()
 };
 
@@ -75,8 +74,8 @@ describe('App', () => {
         </PlayerContext.Provider>
       </GamesContext.Provider>
     )
-    const availableMoves = screen.getByText("Available Moves for Game: 1")
-    const currentGame = screen.getByText("Current game count: 1")
+    const availableMoves = screen.getByText('Available Moves for Game: 1')
+    const currentGame = screen.getByText('Current game count: 1')
 
     expect(availableMoves).toBeVisible()
     expect(currentGame).toBeVisible()
@@ -117,15 +116,15 @@ describe('App', () => {
       </GamesContext.Provider>
     )
     const b1Piece = screen.getByRole('button', {name: 'B1'})
-    
+
     // TODO: need to update this
     fireEvent.click(b1Piece)
     expect(b1Piece).toBeVisible()
-    
+
     const c1Piece = screen.getByRole('button', {name: 'C1'})
     expect(c1Piece).toBeVisible()
 
-    const playerTurn = screen.getByText("Player Turn: P2")
+    const playerTurn = screen.getByText('Player Turn: P2')
     expect(playerTurn).toBeVisible()
   })
 
@@ -142,16 +141,16 @@ describe('App', () => {
           <BoardContext.Provider value={{
             ...initBoardContextValues,
             secondGamePieces: mockSecondGamePieces
-            }}>
+          }}>
             <App />
           </BoardContext.Provider>
         </PlayerContext.Provider>
       </GamesContext.Provider>
     )
-    const availableMoves = screen.getByText("Available Moves for Game: 2")
-    const currentGame = screen.getByText("Current game count: 2")
-    const playerOneWin = screen.getByText("1st Game: Won by P1")
-    
+    const availableMoves = screen.getByText('Available Moves for Game: 2')
+    const currentGame = screen.getByText('Current game count: 2')
+    const playerOneWin = screen.getByText('1st Game: Won by P1')
+
     expect(availableMoves).toBeVisible()
     expect(currentGame).toBeVisible()
     expect(playerOneWin).toBeVisible()
@@ -204,17 +203,17 @@ describe('App', () => {
             ...initBoardContextValues,
             secondGamePieces: mockSecondGamePieces,
             thirdGamePieces: mockThirdGamePieces
-            }}>
+          }}>
             <App />
           </BoardContext.Provider>
         </PlayerContext.Provider>
       </GamesContext.Provider>
     )
-    const availableMoves = screen.getByText("Available Moves for Game: 3")
-    const currentGame = screen.getByText("Current game count: 3")
-    const gameOneWin = screen.getByText("1st Game: Won by P1")
-    const gameTwoWin = screen.getByText("2nd Game: Won by P2")
-    
+    const availableMoves = screen.getByText('Available Moves for Game: 3')
+    const currentGame = screen.getByText('Current game count: 3')
+    const gameOneWin = screen.getByText('1st Game: Won by P1')
+    const gameTwoWin = screen.getByText('2nd Game: Won by P2')
+
     expect(availableMoves).toBeVisible()
     expect(currentGame).toBeVisible()
     expect(gameOneWin).toBeVisible()
@@ -270,18 +269,18 @@ describe('App', () => {
             ...initBoardContextValues,
             secondGamePieces: mockSecondGamePieces,
             thirdGamePieces: mockThirdGamePieces
-            }}>
+          }}>
             <App />
           </BoardContext.Provider>
         </PlayerContext.Provider>
       </GamesContext.Provider>
     )
-    const availableMoves = screen.getByText("Available Moves for Game: 3")
-    const currentGame = screen.getByText("Current game count: 3")
-    const gameOneWin = screen.getByText("1st Game: Won by P1")
-    const gameTwoWin = screen.getByText("2nd Game: Won by P2")
-    const gameThreeWin = screen.getByText("3rd Game: Won by P1")
-    
+    const availableMoves = screen.getByText('Available Moves for Game: 3')
+    const currentGame = screen.getByText('Current game count: 3')
+    const gameOneWin = screen.getByText('1st Game: Won by P1')
+    const gameTwoWin = screen.getByText('2nd Game: Won by P2')
+    const gameThreeWin = screen.getByText('3rd Game: Won by P1')
+
     expect(availableMoves).toBeVisible()
     expect(currentGame).toBeVisible()
     expect(gameOneWin).toBeVisible()

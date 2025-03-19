@@ -7,21 +7,21 @@ import { AvailableMove } from './components/AvailableMove/AvailableMove';
 import { GameBoard } from './components/GameBoard/GameBoard';
 import { StyledAvailableMovesContainer, StyledGameBoardsContainer } from './App.styled';
 
-const gameOneRows = ["A", "B", "C"]
-const gameTwoRows = ["D", "E", "F"]
-const gameThreeRows = ["G", "H", "I"]
+const gameOneRows = ['A', 'B', 'C']
+const gameTwoRows = ['D', 'E', 'F']
+const gameThreeRows = ['G', 'H', 'I']
 
-function App() {
-  const { 
-    initBoard, 
-    availableMoves, 
-    gamePieces, 
-    boardInfo, 
-    setGamePieces, 
-    setAvailableMoves, 
-    initMoves, 
-    secondGameAvMoves, 
-    setSecondGameAvMoves ,
+function App(): JSX.Element {
+  const {
+    initBoard,
+    availableMoves,
+    gamePieces,
+    boardInfo,
+    setGamePieces,
+    setAvailableMoves,
+    initMoves,
+    secondGameAvMoves,
+    setSecondGameAvMoves,
     secondGamePieces,
     setSecondGamePieces,
     thirdGameAvMoves,
@@ -38,9 +38,9 @@ function App() {
   const [ isGameOver, setIsGameOver ] = useState(false)
   const [ isGameTwoOver, setIsGameTwoOver ] = useState(false)
   const [ isGameThreeOver, setIsGameThreeOver ] = useState(false)
-  const [ gameWinner, setGameWinner ] = useState<string | null>("")
-  const [ gameTwoWinner, setGameTwoWinner ] = useState<string | null>("")
-  const [ gameThreeWinner, setGameThreeWinner ] = useState<string | null>("")
+  const [ gameWinner, setGameWinner ] = useState<string | null>('')
+  const [ gameTwoWinner, setGameTwoWinner ] = useState<string | null>('')
+  const [ gameThreeWinner, setGameThreeWinner ] = useState<string | null>('')
 
   useEffect(() => {
     if (isGameOver && isGameTwoOver && isGameThreeOver) {
@@ -50,7 +50,7 @@ function App() {
     } else if (isGameOver) {
       setGameCount(gameCount + 1)
     }
-    // eslint-disable-next-line 
+    // eslint-disable-next-line
   }, [isGameOver, isGameTwoOver, isGameThreeOver])
 
   useEffect(() => {
@@ -58,14 +58,14 @@ function App() {
       setSecondBoardGame(initBoard(gameTwoRows))
       setSecondGameAvMoves(initMoves(gameTwoRows))
       setSecondGamePieces(boardInfo(undefined, undefined, 2))
-      setPlayerTurn("P1") // TODO: update this so that its the loser of the previous game
+      setPlayerTurn('P1') // TODO: update this so that its the loser of the previous game
     } else if ( gameCount === 3) {
       setThirdBoardGame(initBoard(gameThreeRows))
       setThirdGameAvMoves(initMoves(gameThreeRows))
       setThirdGamePieces(boardInfo(undefined, undefined, 3))
-      setPlayerTurn("P1") // TODO: update this so that its the loser of the previous game
+      setPlayerTurn('P1') // TODO: update this so that its the loser of the previous game
     }
-    // eslint-disable-next-line 
+    // eslint-disable-next-line
   }, [gameCount])
 
   useEffect(() => {
@@ -75,7 +75,7 @@ function App() {
       setGameWinner(check)
       setIsGameOver(true)
     }
-    // eslint-disable-next-line 
+    // eslint-disable-next-line
   }, [availableMoves.length])
 
   useEffect(() => {
@@ -87,7 +87,7 @@ function App() {
         setIsGameTwoOver(true)
       }
     }
-    // eslint-disable-next-line 
+    // eslint-disable-next-line
   }, [secondGameAvMoves?.length])
 
   useEffect(() => {
@@ -99,7 +99,7 @@ function App() {
         setIsGameThreeOver(true)
       }
     }
-    // eslint-disable-next-line 
+    // eslint-disable-next-line
   }, [thirdGameAvMoves?.length])
 
   function handlePlayerTurn(moves: string[]) {
@@ -142,7 +142,7 @@ function App() {
   }
 
   return (
-    <div className="App" style={{ textAlign: 'center'}}>
+    <div className='App' style={{ textAlign: 'center'}}>
       <h1>Tic Tac Toe</h1>
       <h2>This is a best of 3 game</h2>
       <h3>Current game count: {gameCount}</h3>
