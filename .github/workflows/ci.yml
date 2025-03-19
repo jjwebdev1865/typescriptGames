@@ -8,7 +8,7 @@ on:
     branches: [ master ] # or your main branch name
 
 jobs:
-  test:
+  test-checkers:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,6 +28,27 @@ jobs:
       - name: Run unit tests
         run: |
           cd checkers
+          npm run test
+  test-ticTacToe:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20 # or your preferred Node.js version
+
+      - name: Install dependencies
+        run: |
+          cd tic_tac_toe
+          npm install
+
+      - name: Run unit tests
+        run: |
+          cd tic_tac_toe
           npm run test
   cypress-tests:
     runs-on: ubuntu-latest
