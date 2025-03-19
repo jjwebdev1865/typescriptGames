@@ -41,21 +41,21 @@ const mockThirdGamePieces: BoardInfo = {
   I3: {isOpen: true, player: null},
 };
 
-const initBoardContextValues = { 
+const initBoardContextValues = {
   gamePieces: mockGamePieces,
-  initBoard: jest.fn(), 
+  initBoard: jest.fn(),
   availableMoves: [],
-  boardInfo: jest.fn(), 
-  setGamePieces: jest.fn(), 
+  boardInfo: jest.fn(),
+  setGamePieces: jest.fn(),
   setAvailableMoves: jest.fn(),
   initMoves: jest.fn(),
   secondGameAvMoves: [],
   setSecondGameAvMoves: jest.fn(),
   secondGamePieces: null,
   setSecondGamePieces: jest.fn(),
-  thirdGameAvMoves: [], 
+  thirdGameAvMoves: [],
   setThirdGameAvMoves: jest.fn(),
-  thirdGamePieces: null, 
+  thirdGamePieces: null,
   setThirdGamePieces: jest.fn(),
 }
 

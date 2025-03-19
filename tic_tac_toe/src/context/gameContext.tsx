@@ -17,7 +17,7 @@ export const GamesProvider: React.FC<GamesProviderProps> = ({children}) => {
 
 
   return <GamesContext.Provider value={{ gameCount, setGameCount }}>
-     {children}
+    {children}
   </GamesContext.Provider>
 }
 

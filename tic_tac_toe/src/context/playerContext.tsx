@@ -304,9 +304,9 @@ export const PlayerProvider: React.FC<PlayerProviderProps> = ({children}) => {
 
     return playerWin
   }
-  
+
   return <PlayerContext.Provider value={{ playerTurn, setPlayerTurn, determinePlayerWin, determineGameTwoPlayerWin, determineGameThreePlayerWin }}>
-     {children}
+    {children}
   </PlayerContext.Provider>
 }
 
