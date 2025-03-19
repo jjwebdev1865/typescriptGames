@@ -46,10 +46,15 @@ jobs:
           cd tic_tac_toe
           npm install
 
+      # - name: Run unit tests
+      #   run: |
+      #     cd tic_tac_toe
+      #     npm run test
+
       - name: Run unit tests
-        run: |
-          cd tic_tac_toe
-          npm run test
+      run: |
+        cd tic_tac_toe
+        npm test -- --json --outputFile=test-results.json
   cypress-tests-checkers:
     runs-on: ubuntu-latest
 
