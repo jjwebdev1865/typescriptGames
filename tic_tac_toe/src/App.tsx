@@ -35,7 +35,6 @@ function App(): JSX.Element {
   const boardGame = initBoard(gameOneRows)
   const [ secondBoardGame, setSecondBoardGame ] = useState<JSX.Element | null>(null)
   const [ thirdBoardGame, setThirdBoardGame ] = useState<JSX.Element | null>(null)
-  // const [ isGameOver, setIsGameOver ] = useState(false)
   const [ gameWinner, setGameWinner ] = useState<string | null>('')
   const [ gameTwoWinner, setGameTwoWinner ] = useState<string | null>('')
   const [ gameThreeWinner, setGameThreeWinner ] = useState<string | null>('')
@@ -115,28 +114,15 @@ function App(): JSX.Element {
     }
   }
 
-  function handlePieceMove(move: string) {
+  function handlePieceMove(move: string, gamePieces: BoardInfo, setGamePieces: (newBoard: BoardInfo) => void): void {
     const newBoard = boardInfo(move, gamePieces)
     setGamePieces(newBoard)
-    const newAvailableMoves = availableMoves.filter(avm => avm !== move)
-    setAvailableMoves(newAvailableMoves)
+  }
+
+  function handleMovesChange(move: string, moveOptions: string[], setAvMoves: (newAvailableMoves: string[]) => void) {
+    const newAvailableMoves = moveOptions.filter(avm => avm !== move)
+    setAvMoves(newAvailableMoves)
     handlePlayerTurn(newAvailableMoves)
-  }
-
-  function handleGameTwoPieceMove(move: string) {
-    const secondNewBoard = boardInfo(move, secondGamePieces as BoardInfo)
-    setSecondGamePieces(secondNewBoard)
-    const secondAvMoves = (secondGameAvMoves as string[]).filter(avm => avm !== move)
-    setSecondGameAvMoves(secondAvMoves)
-    handlePlayerTurn(secondAvMoves)
-  }
-
-  function handleGameThreePieceMove(move:string) {
-    const thirdNewBoard = boardInfo(move, thirdGamePieces as BoardInfo)
-    setThirdGamePieces(thirdNewBoard)
-    const thirdAvMoves = (thirdGameAvMoves as string[]).filter(avm => avm !== move)
-    setThirdGameAvMoves(thirdAvMoves)
-    handlePlayerTurn(thirdAvMoves)
   }
 
   return (
@@ -156,15 +142,24 @@ function App(): JSX.Element {
         <h3>Available Moves for Game: {gameCount}</h3>
         <StyledAvailableMovesContainer>
           {availableMoves.map(move => {
-            return <AvailableMove key={`available-move-${move}`} move={move} handleMove={handlePieceMove} />
+            return <AvailableMove key={`available-move-${move}`} move={move} handleMove={() => {
+              handlePieceMove(move, gamePieces, setGamePieces)
+              handleMovesChange(move, availableMoves, setAvailableMoves)
+            }} />
           })}
 
           {secondGameAvMoves !== null && secondGameAvMoves.map(move => {
-            return <AvailableMove key={`available-move-${move}`} move={move} handleMove={handleGameTwoPieceMove} />
+            return <AvailableMove key={`available-move-${move}`} move={move} handleMove={() => {
+              handlePieceMove(move, secondGamePieces as BoardInfo, setSecondGamePieces)
+              handleMovesChange(move, secondGameAvMoves, setSecondGameAvMoves)
+            }} />
           })}
 
           {thirdGameAvMoves !== null && thirdGameAvMoves.map(move => {
-            return <AvailableMove key={`available-move-${move}`} move={move} handleMove={handleGameThreePieceMove} />
+            return <AvailableMove key={`available-move-${move}`} move={move} handleMove={() => {
+              handlePieceMove(move, thirdGamePieces as BoardInfo, setThirdGamePieces)
+              handleMovesChange(move, thirdGameAvMoves, setThirdGameAvMoves)
+            }} />
           })}
         </StyledAvailableMovesContainer>
       </div>

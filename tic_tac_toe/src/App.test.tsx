@@ -232,7 +232,7 @@ describe('App', () => {
   })
 
   it('All three games are over', () => {
-    const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => {});
+    // const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => {});
 
     render(
       <GamesContext.Provider value={{
