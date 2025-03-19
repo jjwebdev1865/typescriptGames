@@ -1,5 +1,5 @@
 import { useBoard } from "../../context/boardContext"
-import { StyledBoardSpot } from "./BoardSpot.styles"
+import { StyledBoardSpot } from "./BoardSpot.styled"
 
 interface BoardSpotProps {
   row: string
