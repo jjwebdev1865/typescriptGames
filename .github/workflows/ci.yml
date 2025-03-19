@@ -50,7 +50,7 @@ jobs:
         run: |
           cd tic_tac_toe
           npm run test
-  cypress-tests:
+  cypress-tests-checkers:
     runs-on: ubuntu-latest
 
     steps:
@@ -77,6 +77,36 @@ jobs:
       - name: Run Cypress tests
         run: |
           cd checkers
+          npx cypress run
+        env:
+          CYPRESS_BASE_URL: http://localhost:3000  # Point Cypress to the local server
+  cypress-tests-ticTacToe:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20  # Use the Node.js version compatible with your project
+
+      - name: Install dependencies
+        run: |
+          cd tic_tac_toe
+          npm install
+      
+      - name: Start application
+        run: |
+          cd tic_tac_toe
+          npm start &
+        env:
+          NODE_ENV: test  # Set environment variables if needed
+      
+      - name: Run Cypress tests
+        run: |
+          cd tic_tac_toe
           npx cypress run
         env:
           CYPRESS_BASE_URL: http://localhost:3000  # Point Cypress to the local server
