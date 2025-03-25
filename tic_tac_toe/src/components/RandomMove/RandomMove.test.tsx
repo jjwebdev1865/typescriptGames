@@ -4,55 +4,40 @@ import '@testing-library/jest-dom';
 import { RandomMove } from './RandomMove';
 import { BoardContext } from '../../context/boardContext';
 import { BoardInfo } from '../../models';
+import { initBoardContextValues } from '../../utils/mockingUtils';
 
 const mockGamePieces: BoardInfo = {
   A1: {isOpen: true, player: null},
 };
 
-
-const initBoardContextValues = {
+const boardContextValues = {
+  ...initBoardContextValues,
   gamePieces: mockGamePieces,
-  initBoard: jest.fn(),
-  availableMoves: [],
-  boardInfo: jest.fn(),
-  setGamePieces: jest.fn(),
-  setAvailableMoves: jest.fn(),
-  initMoves: jest.fn(),
-  secondGameAvMoves: [],
-  setSecondGameAvMoves: jest.fn(),
-  secondGamePieces: null,
-  setSecondGamePieces: jest.fn(),
-  thirdGameAvMoves: [],
-  setThirdGameAvMoves: jest.fn(),
-  thirdGamePieces: null,
-  setThirdGamePieces: jest.fn(),
 }
 
 const mockHandlePieceMove = jest.fn()
+const mockHandleMovesChange = jest.fn()
 
 describe('GameBoard', () => {
   beforeEach(() => {
+    render(
+      <BoardContext.Provider value={boardContextValues}>
+        <RandomMove gameCount={1} setAvMoves={jest.fn()} setPieces={jest.fn()} handlePieceMove={mockHandlePieceMove} handleMovesChange={mockHandleMovesChange} />
+      </BoardContext.Provider>
+    );
+
     jest.clearAllMocks()
   })
 
   it('Generates a Random Move Button', () => {
-    render(
-      <BoardContext.Provider value={initBoardContextValues}>
-        <RandomMove gameCount={1} setAvMoves={jest.fn()} setPieces={jest.fn()} handlePieceMove={mockHandlePieceMove} handleMovesChange={jest.fn()} />
-      </BoardContext.Provider>
-    );
     const button = screen.getByTestId('random-move-btn-game-1')
     expect(button).toBeVisible()
   })
 
   it('Can click Random Move Button', () => {
-    render(
-      <BoardContext.Provider value={initBoardContextValues}>
-        <RandomMove gameCount={1} setAvMoves={jest.fn()} setPieces={jest.fn()} handlePieceMove={jest.fn()} handleMovesChange={jest.fn()} />
-      </BoardContext.Provider>
-    );
     const button = screen.getByTestId('random-move-btn-game-1')
     fireEvent.click(button);
     expect(mockHandlePieceMove).toHaveBeenCalledTimes(1);
+    expect(mockHandleMovesChange).toHaveBeenCalledTimes(1);
   })
 })

@@ -1,0 +1,17 @@
+export const initBoardContextValues = {
+    gamePieces: {},
+    initBoard: jest.fn(),
+    availableMoves: [],
+    boardInfo: jest.fn(),
+    setGamePieces: jest.fn(),
+    setAvailableMoves: jest.fn(),
+    initMoves: jest.fn(),
+    secondGameAvMoves: [],
+    setSecondGameAvMoves: jest.fn(),
+    secondGamePieces: null,
+    setSecondGamePieces: jest.fn(),
+    thirdGameAvMoves: [],
+    setThirdGameAvMoves: jest.fn(),
+    thirdGamePieces: null,
+    setThirdGamePieces: jest.fn(),
+  }

@@ -4,8 +4,8 @@ import { BoardInfo } from "../../models"
 
 interface RandomMoveProps {
   gameCount: number
-  handlePieceMove(move: string, gamePieces: BoardInfo, setGamePieces: (newBoard: BoardInfo) => void): void
-  handleMovesChange(move: string, moveOptions: string[], setAvMoves: (newAvailableMoves: string[]) => void): void
+  handlePieceMove: (move: string, gamePieces: BoardInfo, setGamePieces: (newBoard: BoardInfo) => void) => void
+  handleMovesChange: (move: string, moveOptions: string[], setAvMoves: (newAvailableMoves: string[]) => void) => void
   // TODO: fix later. both have a null option and also just a single instance
   setPieces: Dispatch<SetStateAction<any>> 
   setAvMoves: Dispatch<SetStateAction<any>>
