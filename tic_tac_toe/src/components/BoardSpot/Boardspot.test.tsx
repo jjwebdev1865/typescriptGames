@@ -4,6 +4,7 @@ import '@testing-library/jest-dom';
 import { BoardSpot } from './BoardSpot';
 import { BoardContext } from '../../context/boardContext';
 import { BoardInfo } from '../../models';
+import { initBoardContextValues } from '../../utils/mockingUtils';
 
 const mockGamePieces: BoardInfo = {
   A1: {isOpen: true, player: 'P1'},
@@ -41,24 +42,10 @@ const mockThirdGamePieces: BoardInfo = {
   I3: {isOpen: true, player: null},
 };
 
-const initBoardContextValues = {
+const boardContextValues = {
+  ...initBoardContextValues,
   gamePieces: mockGamePieces,
-  initBoard: jest.fn(),
-  availableMoves: [],
-  boardInfo: jest.fn(),
-  setGamePieces: jest.fn(),
-  setAvailableMoves: jest.fn(),
-  initMoves: jest.fn(),
-  secondGameAvMoves: [],
-  setSecondGameAvMoves: jest.fn(),
-  secondGamePieces: null,
-  setSecondGamePieces: jest.fn(),
-  thirdGameAvMoves: [],
-  setThirdGameAvMoves: jest.fn(),
-  thirdGamePieces: null,
-  setThirdGamePieces: jest.fn(),
 }
-
 
 describe('Boardspot', () => {
   beforeEach(() => {
@@ -67,7 +54,7 @@ describe('Boardspot', () => {
 
   it('Initial single board renders correctly and player is not null', () => {
     render(
-      <BoardContext.Provider value={initBoardContextValues}>
+      <BoardContext.Provider value={boardContextValues}>
         <BoardSpot row='A' index={1} />
       </BoardContext.Provider>
     );
@@ -79,7 +66,7 @@ describe('Boardspot', () => {
   it('Second board renders correctly and player is not null', () => {
     render(
       <BoardContext.Provider value={{
-        ...initBoardContextValues,
+        ...boardContextValues,
         secondGamePieces: mockSecondGamePieces
       }}>
         <BoardSpot row='E' index={1} />
@@ -93,7 +80,7 @@ describe('Boardspot', () => {
   it('Third board renders correctly and player is not null', () => {
     render(
       <BoardContext.Provider value={{
-        ...initBoardContextValues,
+        ...boardContextValues,
         secondGamePieces: mockSecondGamePieces,
         thirdGamePieces: mockThirdGamePieces
       }}>

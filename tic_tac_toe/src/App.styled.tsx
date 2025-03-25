@@ -9,4 +9,5 @@ export const StyledAvailableMovesContainer = styled.ul`
     list-style: none;
     display: flex;
     justify-content: center;
+    padding: 0
 `

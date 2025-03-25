@@ -6,6 +6,8 @@ import { BoardContext } from './context/boardContext';
 import { BoardInfo, PlayerOptions } from './models';
 import { PlayerContext } from './context/playerContext';
 import { GamesContext } from './context/gameContext';
+import { initBoardContextValues } from './utils/mockingUtils';
+
 
 const mockGamePieces: BoardInfo = {
   A1: {isOpen: true, player: 'P1'},
@@ -25,23 +27,9 @@ const mockThirdGamePieces: BoardInfo = {
   I1: {isOpen: true, player: null},
 };
 
-
-const initBoardContextValues = {
+const boardContextValues = {
+  ...initBoardContextValues,
   gamePieces: mockGamePieces,
-  initBoard: jest.fn(),
-  availableMoves: [],
-  boardInfo: jest.fn(),
-  setGamePieces: jest.fn(),
-  setAvailableMoves: jest.fn(),
-  initMoves: jest.fn(),
-  secondGameAvMoves: [],
-  setSecondGameAvMoves: jest.fn(),
-  secondGamePieces: null,
-  setSecondGamePieces: jest.fn(),
-  thirdGameAvMoves: [],
-  setThirdGameAvMoves: jest.fn(),
-  thirdGamePieces: null,
-  setThirdGamePieces: jest.fn(),
 }
 
 // Mock context data
@@ -74,7 +62,7 @@ describe('App', () => {
     render(
       <GamesContext.Provider value={mockGameBoardValues}>
         <PlayerContext.Provider value={mockPlayerValues}>
-          <BoardContext.Provider value={initBoardContextValues}>
+          <BoardContext.Provider value={boardContextValues}>
             <App />
           </BoardContext.Provider>
         </PlayerContext.Provider>
@@ -92,7 +80,7 @@ describe('App', () => {
       <GamesContext.Provider value={mockGameBoardValues}>
         <PlayerContext.Provider value={mockPlayerValues}>
           <BoardContext.Provider value={{
-            ...initBoardContextValues,
+            ...boardContextValues,
             availableMoves: ['B1']
           }}>
             <App />
@@ -119,7 +107,7 @@ describe('App', () => {
           determinePlayerWin: jest.fn().mockReturnValue('P1')
         }}>
           <BoardContext.Provider value={{
-            ...initBoardContextValues,
+            ...boardContextValues,
             secondGamePieces: mockSecondGamePieces
           }}>
             <App />
@@ -148,7 +136,7 @@ describe('App', () => {
           determinePlayerWin: jest.fn().mockReturnValue('P1')
         }}>
           <BoardContext.Provider value={{
-            ...initBoardContextValues,
+            ...boardContextValues,
             secondGamePieces: mockSecondGamePieces,
             secondGameAvMoves: ['F1']
           }}>
@@ -180,7 +168,7 @@ describe('App', () => {
           determineGameThreePlayerWin: jest.fn().mockReturnValue(null)
         }}>
           <BoardContext.Provider value={{
-            ...initBoardContextValues,
+            ...boardContextValues,
             secondGamePieces: mockSecondGamePieces,
             thirdGamePieces: mockThirdGamePieces
           }}>
@@ -214,7 +202,7 @@ describe('App', () => {
           determineGameThreePlayerWin: jest.fn().mockReturnValue(null)
         }}>
           <BoardContext.Provider value={{
-            ...initBoardContextValues,
+            ...boardContextValues,
             thirdGamePieces: mockSecondGamePieces,
             thirdGameAvMoves: ['I1']
           }}>
@@ -246,7 +234,7 @@ describe('App', () => {
           determineGameThreePlayerWin: jest.fn().mockReturnValue('P1')
         }}>
           <BoardContext.Provider value={{
-            ...initBoardContextValues,
+            ...boardContextValues,
             secondGamePieces: mockSecondGamePieces,
             thirdGamePieces: mockThirdGamePieces
           }}>

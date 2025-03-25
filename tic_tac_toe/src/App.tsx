@@ -6,6 +6,7 @@ import { BoardInfo } from './models';
 import { AvailableMove } from './components/AvailableMove/AvailableMove';
 import { GameBoard } from './components/GameBoard/GameBoard';
 import { StyledAvailableMovesContainer, StyledGameBoardsContainer } from './App.styled';
+import { RandomMove } from './components/RandomMove/RandomMove';
 
 const gameOneRows = ['A', 'B', 'C']
 const gameTwoRows = ['D', 'E', 'F']
@@ -41,6 +42,7 @@ function App(): JSX.Element {
 
   useEffect(() => {
     if (isGameOver && isGameTwoOver && isGameThreeOver) {
+      setGameCount(0)
       alert('Conclusion of this game!!')
     } else if (isGameOver && isGameTwoOver) {
       setGameCount(gameCount + 1)
@@ -124,6 +126,7 @@ function App(): JSX.Element {
     setAvMoves(newAvailableMoves)
     handlePlayerTurn(newAvailableMoves)
   }
+  // TODO: add a option for using min max formula to pic a random position
 
   return (
     <div className='App' style={{ textAlign: 'center'}}>
@@ -161,7 +164,41 @@ function App(): JSX.Element {
               handleMovesChange(move, thirdGameAvMoves, setThirdGameAvMoves)
             }} />
           })}
+
         </StyledAvailableMovesContainer>
+
+        <h3>Computer to Decide Random Move</h3>
+        <div style={{ display: 'flex', justifyContent: 'center'}}>
+          {gameCount === 1 && (
+            <RandomMove 
+              gameCount={gameCount} 
+              handlePieceMove={handlePieceMove} 
+              handleMovesChange={handleMovesChange} 
+              setPieces={setGamePieces} 
+              setAvMoves={setAvailableMoves}
+            />
+          )}
+
+          {gameCount === 2 && (
+            <RandomMove 
+              gameCount={gameCount} 
+              handlePieceMove={handlePieceMove} 
+              handleMovesChange={handleMovesChange} 
+              setPieces={setSecondGamePieces} 
+              setAvMoves={setSecondGameAvMoves}
+            />
+          )}
+
+          {gameCount === 3 && (
+            <RandomMove 
+              gameCount={gameCount} 
+              handlePieceMove={handlePieceMove} 
+              handleMovesChange={handleMovesChange} 
+              setPieces={setThirdGamePieces} 
+              setAvMoves={setThirdGameAvMoves}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
