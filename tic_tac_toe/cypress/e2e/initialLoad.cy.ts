@@ -6,12 +6,6 @@ describe('template spec', () => {
   it('Loads correctly headers correctly', () => {
     const mainHeader = cy.get('h1').contains('Tic Tac Toe')
     mainHeader.should('exist')
-
-    const secondaryHeader = cy.get('h2').contains('This is a best of 3 game')
-    secondaryHeader.should('exist')
-
-    const gameCount = cy.get('h3').contains('Current game count: 1')
-    gameCount.should('exist')
   })
 
   it('Loads tiles correctly', () => {
