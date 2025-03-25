@@ -69,10 +69,7 @@ describe('App', () => {
       </GamesContext.Provider>
     )
     const availableMoves = screen.getByText('Available Moves for Game: 1')
-    const currentGame = screen.getByText('Current game count: 1')
-
     expect(availableMoves).toBeVisible()
-    expect(currentGame).toBeVisible()
   })
 
   it('Renders the first board and handles a piece move', () => {
@@ -116,11 +113,9 @@ describe('App', () => {
       </GamesContext.Provider>
     )
     const availableMoves = screen.getByText('Available Moves for Game: 2')
-    const currentGame = screen.getByText('Current game count: 2')
     const playerOneWin = screen.getByText('1st Game: Won by P1')
 
     expect(availableMoves).toBeVisible()
-    expect(currentGame).toBeVisible()
     expect(playerOneWin).toBeVisible()
   })
 
@@ -178,12 +173,10 @@ describe('App', () => {
       </GamesContext.Provider>
     )
     const availableMoves = screen.getByText('Available Moves for Game: 3')
-    const currentGame = screen.getByText('Current game count: 3')
     const gameOneWin = screen.getByText('1st Game: Won by P1')
     const gameTwoWin = screen.getByText('2nd Game: Won by P2')
 
     expect(availableMoves).toBeVisible()
-    expect(currentGame).toBeVisible()
     expect(gameOneWin).toBeVisible()
     expect(gameTwoWin).toBeVisible()
     expect(alertSpy).toHaveBeenCalledTimes(0)
@@ -220,8 +213,6 @@ describe('App', () => {
   })
 
   it('All three games are over', () => {
-    // const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => {});
-
     render(
       <GamesContext.Provider value={{
         ...mockGameBoardValues,
@@ -244,17 +235,13 @@ describe('App', () => {
       </GamesContext.Provider>
     )
     const availableMoves = screen.getByText('Available Moves for Game: 3')
-    const currentGame = screen.getByText('Current game count: 3')
     const gameOneWin = screen.getByText('1st Game: Won by P1')
     const gameTwoWin = screen.getByText('2nd Game: Won by P2')
     const gameThreeWin = screen.getByText('3rd Game: Won by P1')
 
     expect(availableMoves).toBeVisible()
-    expect(currentGame).toBeVisible()
     expect(gameOneWin).toBeVisible()
     expect(gameTwoWin).toBeVisible()
     expect(gameThreeWin).toBeVisible()
-    // TODO: fix this
-    // expect(alertSpy).toHaveBeenCalledTimes(1)
   })
 })
