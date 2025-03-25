@@ -36,17 +36,25 @@ function App(): JSX.Element {
   const boardGame = initBoard(gameOneRows)
   const [ secondBoardGame, setSecondBoardGame ] = useState<JSX.Element | null>(null)
   const [ thirdBoardGame, setThirdBoardGame ] = useState<JSX.Element | null>(null)
-  const [ gameWinner, setGameWinner ] = useState<string | null>('')
-  const [ gameTwoWinner, setGameTwoWinner ] = useState<string | null>('')
-  const [ gameThreeWinner, setGameThreeWinner ] = useState<string | null>('')
+  const [ gameWinner, setGameWinner ] = useState<string | null>(null)
+  const [ gameTwoWinner, setGameTwoWinner ] = useState<string | null>(null)
+  const [ gameThreeWinner, setGameThreeWinner ] = useState<string | null>(null)
 
   useEffect(() => {
     if (isGameOver && isGameTwoOver && isGameThreeOver) {
       setGameCount(0)
-      alert('Conclusion of this game!!')
+      if (gameTwoWinner === null) {
+        setGameTwoWinner('')
+      }
     } else if (isGameOver && isGameTwoOver) {
+      if (gameTwoWinner === null) {
+        setGameTwoWinner('')
+      }
       setGameCount(gameCount + 1)
     } else if (isGameOver) {
+      if (gameWinner === null) {
+        setGameWinner('')
+      }
       setGameCount(gameCount + 1)
     }
     // eslint-disable-next-line
@@ -131,8 +139,6 @@ function App(): JSX.Element {
   return (
     <div className='App' style={{ textAlign: 'center'}}>
       <h1>Tic Tac Toe</h1>
-      <h2>This is a best of 3 game</h2>
-      <h3>Current game count: {gameCount}</h3>
 
       <StyledGameBoardsContainer>
         <GameBoard gameWinner={gameWinner} boardGame={boardGame} gameString='1st' />
@@ -167,37 +173,47 @@ function App(): JSX.Element {
 
         </StyledAvailableMovesContainer>
 
-        <h3>Computer to Decide Random Move</h3>
-        <div style={{ display: 'flex', justifyContent: 'center'}}>
-          {gameCount === 1 && (
-            <RandomMove 
-              gameCount={gameCount} 
-              handlePieceMove={handlePieceMove} 
-              handleMovesChange={handleMovesChange} 
-              setPieces={setGamePieces} 
-              setAvMoves={setAvailableMoves}
-            />
-          )}
+        <div style={{ display: 'grid', gridTemplateColumns: '50% 50%'}}>
+          <div>
+            <h3>Computer to Decide Random Move</h3>
+            <div style={{ display: 'flex', justifyContent: 'center'}}>
+              {gameCount === 1 && (
+                <RandomMove 
+                  gameCount={gameCount} 
+                  handlePieceMove={handlePieceMove} 
+                  handleMovesChange={handleMovesChange} 
+                  setPieces={setGamePieces} 
+                  setAvMoves={setAvailableMoves}
+                />
+              )}
 
-          {gameCount === 2 && (
-            <RandomMove 
-              gameCount={gameCount} 
-              handlePieceMove={handlePieceMove} 
-              handleMovesChange={handleMovesChange} 
-              setPieces={setSecondGamePieces} 
-              setAvMoves={setSecondGameAvMoves}
-            />
-          )}
+              {gameCount === 2 && (
+                <RandomMove 
+                  gameCount={gameCount} 
+                  handlePieceMove={handlePieceMove} 
+                  handleMovesChange={handleMovesChange} 
+                  setPieces={setSecondGamePieces} 
+                  setAvMoves={setSecondGameAvMoves}
+                />
+              )}
 
-          {gameCount === 3 && (
-            <RandomMove 
-              gameCount={gameCount} 
-              handlePieceMove={handlePieceMove} 
-              handleMovesChange={handleMovesChange} 
-              setPieces={setThirdGamePieces} 
-              setAvMoves={setThirdGameAvMoves}
-            />
-          )}
+              {gameCount === 3 && (
+                <RandomMove 
+                  gameCount={gameCount} 
+                  handlePieceMove={handlePieceMove} 
+                  handleMovesChange={handleMovesChange} 
+                  setPieces={setThirdGamePieces} 
+                  setAvMoves={setThirdGameAvMoves}
+                />
+              )}
+            </div>
+          </div>
+          <div>
+            <h3>Computer to use MiniMax Alg</h3>
+            <div style={{ display: 'flex', justifyContent: 'center'}}>
+              <p>TODO</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
