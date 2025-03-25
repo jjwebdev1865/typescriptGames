@@ -39,13 +39,16 @@ function App(): JSX.Element {
   const [ gameWinner, setGameWinner ] = useState<string | null>(null)
   const [ gameTwoWinner, setGameTwoWinner ] = useState<string | null>(null)
   const [ gameThreeWinner, setGameThreeWinner ] = useState<string | null>(null)
+  const [ determineMatchWinner, setDetermineMatchWinner ] = useState<boolean>(false)
+  const [ matchWinner, setMatchWinner ] = useState<string | null>(null)
 
   useEffect(() => {
     if (isGameOver && isGameTwoOver && isGameThreeOver) {
-      setGameCount(0)
-      if (gameTwoWinner === null) {
-        setGameTwoWinner('')
+      if (gameThreeWinner === null) {
+        setGameThreeWinner('')
       }
+      setGameCount(0)
+      setDetermineMatchWinner(true)
     } else if (isGameOver && isGameTwoOver) {
       if (gameTwoWinner === null) {
         setGameTwoWinner('')
@@ -59,6 +62,14 @@ function App(): JSX.Element {
     }
     // eslint-disable-next-line
   }, [isGameOver, isGameTwoOver, isGameThreeOver])
+
+  useEffect(() => {
+    if (determineMatchWinner) {
+      const playerOneCount = [gameWinner, gameTwoWinner, gameThreeWinner].filter(obj => obj === 'P1').length
+      const playerTwoCount = [gameWinner, gameTwoWinner, gameThreeWinner].filter(obj => obj === 'P2').length
+      playerOneCount === playerTwoCount ? setMatchWinner('Split Decision') : playerOneCount > playerTwoCount ? setMatchWinner('P1') : setMatchWinner('P2')
+    }
+  }, [determineMatchWinner])
 
   useEffect(() => {
     if (gameCount === 2) {
@@ -147,74 +158,88 @@ function App(): JSX.Element {
       </StyledGameBoardsContainer>
 
       <div style={{ textAlign: 'center'}}>
-        <h2>Player Turn: {playerTurn}</h2>
-        <h3>Available Moves for Game: {gameCount}</h3>
-        <StyledAvailableMovesContainer>
-          {availableMoves.map(move => {
-            return <AvailableMove key={`available-move-${move}`} move={move} handleMove={() => {
-              handlePieceMove(move, gamePieces, setGamePieces)
-              handleMovesChange(move, availableMoves, setAvailableMoves)
-            }} />
-          })}
+        {!determineMatchWinner ? (
+          <>
+            <h2>Player Turn: {playerTurn}</h2>
+            <h3>Available Moves for Game: {gameCount}</h3>
+          </>
+        ): (
+          <>
+            <h2>Match Winner is: {matchWinner}</h2>
+          </>
+        )}
 
-          {secondGameAvMoves !== null && secondGameAvMoves.map(move => {
-            return <AvailableMove key={`available-move-${move}`} move={move} handleMove={() => {
-              handlePieceMove(move, secondGamePieces as BoardInfo, setSecondGamePieces)
-              handleMovesChange(move, secondGameAvMoves, setSecondGameAvMoves)
-            }} />
-          })}
+        {!determineMatchWinner && (
+          <>
+            <StyledAvailableMovesContainer>
+              {availableMoves.map(move => {
+                return <AvailableMove key={`available-move-${move}`} move={move} handleMove={() => {
+                  handlePieceMove(move, gamePieces, setGamePieces)
+                  handleMovesChange(move, availableMoves, setAvailableMoves)
+                }} />
+              })}
 
-          {thirdGameAvMoves !== null && thirdGameAvMoves.map(move => {
-            return <AvailableMove key={`available-move-${move}`} move={move} handleMove={() => {
-              handlePieceMove(move, thirdGamePieces as BoardInfo, setThirdGamePieces)
-              handleMovesChange(move, thirdGameAvMoves, setThirdGameAvMoves)
-            }} />
-          })}
+              {secondGameAvMoves !== null && secondGameAvMoves.map(move => {
+                return <AvailableMove key={`available-move-${move}`} move={move} handleMove={() => {
+                  handlePieceMove(move, secondGamePieces as BoardInfo, setSecondGamePieces)
+                  handleMovesChange(move, secondGameAvMoves, setSecondGameAvMoves)
+                }} />
+              })}
 
-        </StyledAvailableMovesContainer>
+              {thirdGameAvMoves !== null && thirdGameAvMoves.map(move => {
+                return <AvailableMove key={`available-move-${move}`} move={move} handleMove={() => {
+                  handlePieceMove(move, thirdGamePieces as BoardInfo, setThirdGamePieces)
+                  handleMovesChange(move, thirdGameAvMoves, setThirdGameAvMoves)
+                }} />
+              })}
 
-        <div style={{ display: 'grid', gridTemplateColumns: '50% 50%'}}>
-          <div>
-            <h3>Computer to Decide Random Move</h3>
-            <div style={{ display: 'flex', justifyContent: 'center'}}>
-              {gameCount === 1 && (
-                <RandomMove 
-                  gameCount={gameCount} 
-                  handlePieceMove={handlePieceMove} 
-                  handleMovesChange={handleMovesChange} 
-                  setPieces={setGamePieces} 
-                  setAvMoves={setAvailableMoves}
-                />
-              )}
+            </StyledAvailableMovesContainer>
+            <div style={{ display: 'grid', gridTemplateColumns: '50% 50%'}}>
+              <div>
+                <h3>Computer to Decide Random Move</h3>
+                <div style={{ display: 'flex', justifyContent: 'center'}}>
+                  {gameCount === 1 && (
+                    <RandomMove
+                      gameCount={gameCount}
+                      handlePieceMove={handlePieceMove}
+                      handleMovesChange={handleMovesChange}
+                      setPieces={setGamePieces}
+                      setAvMoves={setAvailableMoves}
+                    />
+                  )}
 
-              {gameCount === 2 && (
-                <RandomMove 
-                  gameCount={gameCount} 
-                  handlePieceMove={handlePieceMove} 
-                  handleMovesChange={handleMovesChange} 
-                  setPieces={setSecondGamePieces} 
-                  setAvMoves={setSecondGameAvMoves}
-                />
-              )}
+                  {gameCount === 2 && (
+                    <RandomMove
+                      gameCount={gameCount}
+                      handlePieceMove={handlePieceMove}
+                      handleMovesChange={handleMovesChange}
+                      setPieces={setSecondGamePieces}
+                      setAvMoves={setSecondGameAvMoves}
+                    />
+                  )}
 
-              {gameCount === 3 && (
-                <RandomMove 
-                  gameCount={gameCount} 
-                  handlePieceMove={handlePieceMove} 
-                  handleMovesChange={handleMovesChange} 
-                  setPieces={setThirdGamePieces} 
-                  setAvMoves={setThirdGameAvMoves}
-                />
-              )}
+                  {gameCount === 3 && (
+                    <RandomMove
+                      gameCount={gameCount}
+                      handlePieceMove={handlePieceMove}
+                      handleMovesChange={handleMovesChange}
+                      setPieces={setThirdGamePieces}
+                      setAvMoves={setThirdGameAvMoves}
+                    />
+                  )}
+                </div>
+              </div>
+              <div>
+                <h3>Computer to use MiniMax Alg</h3>
+                <div style={{ display: 'flex', justifyContent: 'center'}}>
+                  <p>TODO</p>
+                </div>
+              </div>
             </div>
-          </div>
-          <div>
-            <h3>Computer to use MiniMax Alg</h3>
-            <div style={{ display: 'flex', justifyContent: 'center'}}>
-              <p>TODO</p>
-            </div>
-          </div>
-        </div>
+          </>
+        )}
+
+
       </div>
     </div>
   );
