@@ -8,9 +8,7 @@ interface GameBoardProps {
 
 export const GameBoard = ({gameWinner, boardGame, gameString}: GameBoardProps): JSX.Element => {
   let winner = ''
-  if (gameWinner === null) {
-    winner = 'null'
-  } else if (gameWinner === '') {
+  if (gameWinner === '') {
     winner = 'Scratch'
   } else if (gameWinner !== null && gameWinner !== '') {
     winner = gameWinner

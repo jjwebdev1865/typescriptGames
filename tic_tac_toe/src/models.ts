@@ -8,3 +8,9 @@ export type SpotInfo = {
 export type BoardInfo = {
     [key: string]: SpotInfo
 }
+
+export type MatchWinner = {
+    gameOne: PlayerOptions | null | ''
+    gameTwo: PlayerOptions | null | ''
+    gameThree: PlayerOptions | null | ''
+}

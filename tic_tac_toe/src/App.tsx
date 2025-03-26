@@ -2,7 +2,7 @@ import React, { JSX, useEffect, useState } from 'react';
 import { useBoard } from './context/boardContext';
 import { usePlayer } from './context/playerContext';
 import { useGameContext } from './context/gameContext';
-import { BoardInfo } from './models';
+import { BoardInfo, MatchWinner } from './models';
 import { AvailableMove } from './components/AvailableMove/AvailableMove';
 import { GameBoard } from './components/GameBoard/GameBoard';
 import { StyledAvailableMovesContainer, StyledGameBoardsContainer } from './App.styled';
@@ -36,27 +36,38 @@ function App(): JSX.Element {
   const boardGame = initBoard(gameOneRows)
   const [ secondBoardGame, setSecondBoardGame ] = useState<JSX.Element | null>(null)
   const [ thirdBoardGame, setThirdBoardGame ] = useState<JSX.Element | null>(null)
-  const [ gameWinner, setGameWinner ] = useState<string | null>(null)
-  const [ gameTwoWinner, setGameTwoWinner ] = useState<string | null>(null)
-  const [ gameThreeWinner, setGameThreeWinner ] = useState<string | null>(null)
   const [ determineMatchWinner, setDetermineMatchWinner ] = useState<boolean>(false)
   const [ matchWinner, setMatchWinner ] = useState<string | null>(null)
+  const [ gameWinnerTemp, setGameWinnerTemp ] = useState<MatchWinner>({
+    gameOne: null,
+    gameTwo: null,
+    gameThree: null
+  })
 
   useEffect(() => {
     if (isGameOver && isGameTwoOver && isGameThreeOver) {
-      if (gameThreeWinner === null) {
-        setGameThreeWinner('')
+      if (gameWinnerTemp.gameThree === null) {
+        setGameWinnerTemp({
+          ...gameWinnerTemp,
+          gameThree: ''
+        })
       }
       setGameCount(0)
       setDetermineMatchWinner(true)
     } else if (isGameOver && isGameTwoOver) {
-      if (gameTwoWinner === null) {
-        setGameTwoWinner('')
+      if (gameWinnerTemp.gameTwo === null) {
+        setGameWinnerTemp({
+          ...gameWinnerTemp,
+          gameTwo: ''
+        })
       }
       setGameCount(gameCount + 1)
     } else if (isGameOver) {
-      if (gameWinner === null) {
-        setGameWinner('')
+      if (gameWinnerTemp.gameOne === null) {
+        setGameWinnerTemp({
+          ...gameWinnerTemp,
+          gameOne: ''
+        })
       }
       setGameCount(gameCount + 1)
     }
@@ -65,10 +76,11 @@ function App(): JSX.Element {
 
   useEffect(() => {
     if (determineMatchWinner) {
-      const playerOneCount = [gameWinner, gameTwoWinner, gameThreeWinner].filter(obj => obj === 'P1').length
-      const playerTwoCount = [gameWinner, gameTwoWinner, gameThreeWinner].filter(obj => obj === 'P2').length
+      const playerOneCount = [gameWinnerTemp.gameOne, gameWinnerTemp.gameTwo, gameWinnerTemp.gameThree].filter(obj => obj === 'P1').length
+      const playerTwoCount = [gameWinnerTemp.gameOne, gameWinnerTemp.gameTwo, gameWinnerTemp.gameThree].filter(obj => obj === 'P2').length
       playerOneCount === playerTwoCount ? setMatchWinner('Split Decision') : playerOneCount > playerTwoCount ? setMatchWinner('P1') : setMatchWinner('P2')
     }
+    // eslint-disable-next-line
   }, [determineMatchWinner])
 
   useEffect(() => {
@@ -90,7 +102,10 @@ function App(): JSX.Element {
     const check = determinePlayerWin(gamePieces)
     if (check !== null) {
       setAvailableMoves([])
-      setGameWinner(check)
+      setGameWinnerTemp({
+        ...gameWinnerTemp,
+        gameOne: check
+      })
       setIsGameOver(true)
     }
     // eslint-disable-next-line
@@ -101,7 +116,10 @@ function App(): JSX.Element {
       const check = determineGameTwoPlayerWin(secondGamePieces)
       if (check !== null) {
         setSecondGameAvMoves([])
-        setGameTwoWinner(check)
+        setGameWinnerTemp({
+          ...gameWinnerTemp,
+          gameTwo: check
+        })
         setIsGameTwoOver(true)
       }
     }
@@ -113,7 +131,10 @@ function App(): JSX.Element {
       const check = determineGameThreePlayerWin(thirdGamePieces)
       if (check !== null) {
         setThirdGameAvMoves([])
-        setGameThreeWinner(check)
+        setGameWinnerTemp({
+          ...gameWinnerTemp,
+          gameThree: check
+        })
         setIsGameThreeOver(true)
       }
     }
@@ -152,9 +173,9 @@ function App(): JSX.Element {
       <h1>Tic Tac Toe</h1>
 
       <StyledGameBoardsContainer>
-        <GameBoard gameWinner={gameWinner} boardGame={boardGame} gameString='1st' />
-        <GameBoard gameWinner={gameTwoWinner} boardGame={secondBoardGame} gameString='2nd' />
-        <GameBoard gameWinner={gameThreeWinner} boardGame={thirdBoardGame} gameString='3rd' />
+        <GameBoard gameWinner={gameWinnerTemp.gameOne} boardGame={boardGame} gameString='1st' />
+        <GameBoard gameWinner={gameWinnerTemp.gameTwo} boardGame={secondBoardGame} gameString='2nd' />
+        <GameBoard gameWinner={gameWinnerTemp.gameThree} boardGame={thirdBoardGame} gameString='3rd' />
       </StyledGameBoardsContainer>
 
       <div style={{ textAlign: 'center'}}>
