@@ -5,21 +5,17 @@ import { usePlayer } from './playerContext';
 
 interface BoardContextType {
   initBoard: (row: string[]) => JSX.Element
-  availableMoves: string[]
   gamePieces: BoardInfo
   boardInfo: (move?: string, existingBoard?: BoardInfo, gameCount?: number) => BoardInfo
   setGamePieces: Dispatch<SetStateAction<BoardInfo>>
-  setAvailableMoves: Dispatch<SetStateAction<string[]>>
   initMoves: (updatedRows?: string[]) => string[]
   // TODO: this is temp
-  secondGameAvMoves: string[] | null
-  setSecondGameAvMoves: Dispatch<SetStateAction<string[] | null>>
   secondGamePieces: BoardInfo | null
   setSecondGamePieces: Dispatch<SetStateAction<BoardInfo | null>>
-  thirdGameAvMoves: string[] | null
-  setThirdGameAvMoves: Dispatch<SetStateAction<string[] | null>>
   thirdGamePieces: BoardInfo | null
   setThirdGamePieces: Dispatch<SetStateAction<BoardInfo | null>>
+  currentAvMoves: string[]
+  setCurrentAvMoves: Dispatch<SetStateAction<string[]>>
 }
 
 export const BoardContext = createContext<BoardContextType | undefined>(undefined);
@@ -30,13 +26,10 @@ interface BoardProviderProps {
 
 export const BoardProvider: React.FC<BoardProviderProps> = ({children}) => {
   const { playerTurn } = usePlayer()
-  const [availableMoves, setAvailableMoves] = useState<string[]>(initMoves())
+  const [currentAvMoves, setCurrentAvMoves] = useState<string[]>(initMoves())
+  // TODO: make more dynamic
   const [gamePieces, setGamePieces] = useState<BoardInfo>(boardInfo())
-  // TODO: make more dynamic
-  const [secondGameAvMoves, setSecondGameAvMoves] = useState<string[] | null>(null)
   const [secondGamePieces, setSecondGamePieces] = useState<BoardInfo | null>(null)
-  // TODO: make more dynamic
-  const [thirdGameAvMoves, setThirdGameAvMoves] = useState<string[] | null>(null)
   const [thirdGamePieces, setThirdGamePieces] = useState<BoardInfo | null>(null)
 
   function initMoves(updatedRows?: string[]): string[] {
@@ -124,20 +117,16 @@ export const BoardProvider: React.FC<BoardProviderProps> = ({children}) => {
 
   return <BoardContext.Provider value={{
     initBoard,
-    availableMoves,
     gamePieces,
     boardInfo,
     setGamePieces,
-    setAvailableMoves,
     initMoves,
-    secondGameAvMoves,
-    setSecondGameAvMoves,
     secondGamePieces,
     setSecondGamePieces,
-    thirdGameAvMoves,
-    setThirdGameAvMoves,
     thirdGamePieces,
-    setThirdGamePieces
+    setThirdGamePieces,
+    currentAvMoves,
+    setCurrentAvMoves
   }}>
     {children}
   </BoardContext.Provider>
