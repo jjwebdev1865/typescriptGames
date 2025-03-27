@@ -12,18 +12,18 @@ interface RandomMoveProps {
 }
 
 export const RandomMove = ({gameCount, handlePieceMove, handleMovesChange, setPieces, setAvMoves}: RandomMoveProps): JSX.Element => {
-  const { gamePieces, availableMoves, secondGameAvMoves, secondGamePieces, thirdGamePieces, thirdGameAvMoves} = useBoard()
+  const { gamePieces, secondGamePieces, thirdGamePieces, currentAvMoves} = useBoard()
   let avMoves: string[] = []
   let pieces: BoardInfo = {}
 
-  if (gameCount === 1) {
-    avMoves = availableMoves
+  if (currentAvMoves && gameCount === 1) {
+    avMoves = currentAvMoves
     pieces = gamePieces
-  } else if (gameCount === 2 && secondGameAvMoves !== null && secondGamePieces !== null) {
-    avMoves = secondGameAvMoves
+  } else if (currentAvMoves && gameCount === 2 && secondGamePieces !== null) {
+    avMoves = currentAvMoves
     pieces = secondGamePieces
-  } else if (gameCount === 3 && thirdGameAvMoves !== null && thirdGamePieces !== null) {
-    avMoves = thirdGameAvMoves
+  } else if (currentAvMoves && gameCount === 3 && thirdGamePieces !== null) {
+    avMoves = currentAvMoves
     pieces = thirdGamePieces
   }
 

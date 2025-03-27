@@ -15,20 +15,16 @@ const gameThreeRows = ['G', 'H', 'I']
 function App(): JSX.Element {
   const {
     initBoard,
-    availableMoves,
     gamePieces,
     boardInfo,
     setGamePieces,
-    setAvailableMoves,
     initMoves,
-    secondGameAvMoves,
-    setSecondGameAvMoves,
     secondGamePieces,
     setSecondGamePieces,
-    thirdGameAvMoves,
-    setThirdGameAvMoves,
     thirdGamePieces,
-    setThirdGamePieces
+    setThirdGamePieces,
+    currentAvMoves,
+    setCurrentAvMoves
   } = useBoard()
   const { playerTurn, setPlayerTurn, determinePlayerWin, determineGameTwoPlayerWin, determineGameThreePlayerWin } = usePlayer()
   const { gameCount, setGameCount, isGameOver, setIsGameOver, isGameTwoOver, setIsGameTwoOver, isGameThreeOver, setIsGameThreeOver } = useGameContext()
@@ -74,12 +70,12 @@ function App(): JSX.Element {
   useEffect(() => {
     if (gameCount === 2) {
       setSecondBoardGame(initBoard(gameTwoRows))
-      setSecondGameAvMoves(initMoves(gameTwoRows))
+      setCurrentAvMoves(initMoves(gameTwoRows))
       setSecondGamePieces(boardInfo(undefined, undefined, 2))
       setPlayerTurn('P1') // TODO: update this so that its the loser of the previous game
     } else if ( gameCount === 3) {
       setThirdBoardGame(initBoard(gameThreeRows))
-      setThirdGameAvMoves(initMoves(gameThreeRows))
+      setCurrentAvMoves(initMoves(gameThreeRows))
       setThirdGamePieces(boardInfo(undefined, undefined, 3))
       setPlayerTurn('P1') // TODO: update this so that its the loser of the previous game
     }
@@ -89,36 +85,34 @@ function App(): JSX.Element {
   useEffect(() => {
     const check = determinePlayerWin(gamePieces)
     if (check !== null) {
-      setAvailableMoves([])
       setGameWinner(check)
       setIsGameOver(true)
     }
     // eslint-disable-next-line
-  }, [availableMoves.length])
+}, [currentAvMoves.length])
 
   useEffect(() => {
-    if ((isGameOver && !isGameTwoOver && secondGamePieces !== null) || (secondGamePieces !== null && secondGameAvMoves?.length === 0)) {
+    if ((isGameOver && !isGameTwoOver && secondGamePieces !== null) || (secondGamePieces !== null && currentAvMoves?.length === 0)) {
       const check = determineGameTwoPlayerWin(secondGamePieces)
       if (check !== null) {
-        setSecondGameAvMoves([])
         setGameTwoWinner(check)
         setIsGameTwoOver(true)
       }
     }
     // eslint-disable-next-line
-  }, [secondGameAvMoves?.length])
+  }, [currentAvMoves?.length, secondGamePieces])
 
   useEffect(() => {
-    if ((isGameOver && isGameTwoOver && !isGameThreeOver && thirdGamePieces !== null) || (thirdGamePieces !== null && thirdGameAvMoves?.length === 0)) {
+    if ((isGameOver && isGameTwoOver && !isGameThreeOver && thirdGamePieces !== null) || (thirdGamePieces !== null && currentAvMoves?.length === 0)) {
       const check = determineGameThreePlayerWin(thirdGamePieces)
       if (check !== null) {
-        setThirdGameAvMoves([])
+        setCurrentAvMoves([])
         setGameThreeWinner(check)
         setIsGameThreeOver(true)
       }
     }
     // eslint-disable-next-line
-  }, [thirdGameAvMoves?.length])
+  }, [currentAvMoves?.length, thirdGamePieces])
 
   function handlePlayerTurn(moves: string[]) {
     if (moves.length === 0 && gameCount === 1) {
@@ -172,24 +166,24 @@ function App(): JSX.Element {
         {!determineMatchWinner && (
           <>
             <StyledAvailableMovesContainer>
-              {availableMoves.map(move => {
+              {gameCount === 1 && currentAvMoves.map(move => {
                 return <AvailableMove key={`available-move-${move}`} move={move} handleMove={() => {
                   handlePieceMove(move, gamePieces, setGamePieces)
-                  handleMovesChange(move, availableMoves, setAvailableMoves)
+                  handleMovesChange(move, currentAvMoves, setCurrentAvMoves)
                 }} />
               })}
 
-              {secondGameAvMoves !== null && secondGameAvMoves.map(move => {
+              {gameCount === 2 && currentAvMoves.length > 0 && currentAvMoves.map(move => {
                 return <AvailableMove key={`available-move-${move}`} move={move} handleMove={() => {
                   handlePieceMove(move, secondGamePieces as BoardInfo, setSecondGamePieces)
-                  handleMovesChange(move, secondGameAvMoves, setSecondGameAvMoves)
+                  handleMovesChange(move, currentAvMoves, setCurrentAvMoves)
                 }} />
               })}
 
-              {thirdGameAvMoves !== null && thirdGameAvMoves.map(move => {
+              {gameCount === 3 && currentAvMoves.length > 0 && currentAvMoves.map(move => {
                 return <AvailableMove key={`available-move-${move}`} move={move} handleMove={() => {
                   handlePieceMove(move, thirdGamePieces as BoardInfo, setThirdGamePieces)
-                  handleMovesChange(move, thirdGameAvMoves, setThirdGameAvMoves)
+                  handleMovesChange(move, currentAvMoves, setCurrentAvMoves)
                 }} />
               })}
 
@@ -204,7 +198,7 @@ function App(): JSX.Element {
                       handlePieceMove={handlePieceMove}
                       handleMovesChange={handleMovesChange}
                       setPieces={setGamePieces}
-                      setAvMoves={setAvailableMoves}
+                      setAvMoves={setCurrentAvMoves}
                     />
                   )}
 
@@ -214,7 +208,7 @@ function App(): JSX.Element {
                       handlePieceMove={handlePieceMove}
                       handleMovesChange={handleMovesChange}
                       setPieces={setSecondGamePieces}
-                      setAvMoves={setSecondGameAvMoves}
+                      setAvMoves={setCurrentAvMoves}
                     />
                   )}
 
@@ -224,7 +218,7 @@ function App(): JSX.Element {
                       handlePieceMove={handlePieceMove}
                       handleMovesChange={handleMovesChange}
                       setPieces={setThirdGamePieces}
-                      setAvMoves={setThirdGameAvMoves}
+                      setAvMoves={setCurrentAvMoves}
                     />
                   )}
                 </div>

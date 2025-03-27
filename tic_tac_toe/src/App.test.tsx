@@ -78,7 +78,7 @@ describe('App', () => {
         <PlayerContext.Provider value={mockPlayerValues}>
           <BoardContext.Provider value={{
             ...boardContextValues,
-            availableMoves: ['B1']
+            currentAvMoves: ['B1']
           }}>
             <App />
           </BoardContext.Provider>
@@ -133,7 +133,7 @@ describe('App', () => {
           <BoardContext.Provider value={{
             ...boardContextValues,
             secondGamePieces: mockSecondGamePieces,
-            secondGameAvMoves: ['F1']
+            currentAvMoves: ['F1']
           }}>
             <App />
           </BoardContext.Provider>
@@ -197,7 +197,7 @@ describe('App', () => {
           <BoardContext.Provider value={{
             ...boardContextValues,
             thirdGamePieces: mockSecondGamePieces,
-            thirdGameAvMoves: ['I1']
+            currentAvMoves: ['I1']
           }}>
             <App />
           </BoardContext.Provider>
